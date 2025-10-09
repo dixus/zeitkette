@@ -1,7 +1,12 @@
+// Pages
+export { LandingPage } from './pages/LandingPage';
+
 // UI Components
 export { PersonAvatar } from './ui/PersonAvatar';
 export { Header } from './ui/Header';
 export { StatsBar } from './ui/StatsBar';
+export { FunFacts } from './ui/FunFacts';
+export { KeyboardShortcuts } from './ui/KeyboardShortcuts';
 
 // Views
 export { TimelineView } from './views/TimelineView';
