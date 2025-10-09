@@ -42,16 +42,17 @@ function getOccupation(person) {
 // Chain algorithm - shortest path from start to today
 // Each person's BIRTH should be close to the previous person's DEATH
 // minOverlap controls how much people's lives should overlap for realistic connections
-function chainFrom(start, people, minOverlap = 20) {
+// minFame controls minimum sitelinks required
+function chainFrom(start, people, minOverlap = 20, minFame = 100) {
   const byName = new Map(people.map(p => [p.name, p]));
   const visited = new Set();
   const result = [];
   let curr = typeof start === 'string' ? byName.get(start) : start;
   if (!curr) return result;
   
-  // Filter for well-known people (lower threshold to get better coverage)
+  // Filter for well-known people (using user's fame filter)
   const topPeople = people
-    .filter(p => (p.sitelinks || 0) >= 30) // Lowered from 60 to 30 for better historical coverage
+    .filter(p => (p.sitelinks || 0) >= minFame) // Use minFame parameter for filtering
     .sort((a, b) => (b.sitelinks || 0) - (a.sitelinks || 0));
   
   while (true) {
@@ -123,6 +124,7 @@ function App() {
   const [showLanding, setShowLanding] = useState(true);
   const [hoveredQid, setHoveredQid] = useState(null);
   const [minOverlapYears, setMinOverlapYears] = useState(20); // Minimum overlap for realistic connections
+  const [minFame, setMinFame] = useState(100); // Minimum sitelinks (fame level)
 
   useEffect(() => {
     loadAllData().then(({ people, relations }) => {
@@ -135,8 +137,8 @@ function App() {
   // Build chain from target person to today (chronological order)
   const chain = useMemo(() => {
     if (!people.length || !targetPerson) return [];
-    return chainFrom(targetPerson, people, minOverlapYears);
-  }, [people, targetPerson, minOverlapYears]);
+    return chainFrom(targetPerson, people, minOverlapYears, minFame);
+  }, [people, targetPerson, minOverlapYears, minFame]);
 
   // Calculate metrics
   const totalYears = chain.length > 0 
@@ -265,21 +267,21 @@ function App() {
     <div className="min-h-screen bg-gradient-to-br from-violet-50 via-purple-50 to-fuchsia-50">
       {/* Header */}
       <header className="sticky top-0 z-20 glass-strong border-b border-white/30 backdrop-blur-xl shadow-lg">
-        <div className="max-w-6xl mx-auto px-4 md:px-6 py-4">
+        <div className="max-w-7xl mx-auto px-4 md:px-6 py-5">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-2xl md:text-3xl font-extrabold bg-gradient-to-r from-violet-600 via-purple-600 to-fuchsia-600 bg-clip-text text-transparent">
+              <h1 className="text-3xl md:text-4xl font-extrabold bg-gradient-to-r from-violet-600 via-purple-600 to-fuchsia-600 bg-clip-text text-transparent mb-1">
                 Zeitkette
               </h1>
-              <p className="text-sm md:text-base text-neutral-700 font-medium">
+              <p className="text-base md:text-lg text-neutral-700 font-semibold">
                 Zu: <strong className="text-purple-700">{targetPerson}</strong>
               </p>
             </div>
             <button
               onClick={() => setShowLanding(true)}
-              className="px-4 py-2 bg-white/90 backdrop-blur-sm rounded-xl hover:shadow-lg transition-all duration-300 flex items-center gap-2 border-2 border-white hover:border-purple-300 hover:scale-105 font-semibold text-sm"
+              className="px-5 py-3 bg-white/90 backdrop-blur-sm rounded-xl hover:shadow-lg transition-all duration-300 flex items-center gap-2 border-2 border-white hover:border-purple-300 hover:scale-105 font-semibold text-base"
             >
-              <RotateCcw className="w-4 h-4" />
+              <RotateCcw className="w-5 h-5" />
               <span className="hidden sm:inline">Andere Person</span>
             </button>
           </div>
@@ -288,39 +290,65 @@ function App() {
 
       {/* Stats Bar + Controls */}
       <div className="max-w-7xl mx-auto px-4 md:px-6 py-6">
-        <div className="grid grid-cols-1 lg:grid-cols-[3fr_1fr] gap-4">
+        <div className="grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-4">
           <div className="grid grid-cols-3 gap-3 md:gap-4">
-            <div className="glass-strong rounded-2xl p-4 md:p-6 text-center hover:scale-105 transition-transform duration-300">
-              <div className="text-3xl md:text-4xl font-extrabold bg-gradient-to-br from-purple-600 to-purple-400 bg-clip-text text-transparent mb-1">{chain.length}</div>
-              <div className="text-xs md:text-sm text-neutral-700 font-semibold">Personen in der Kette</div>
+            <div className="glass-strong rounded-2xl p-4 md:p-6 hover:scale-105 transition-transform duration-300 flex flex-col items-center justify-center">
+              <div className="text-4xl md:text-5xl font-extrabold bg-gradient-to-br from-purple-600 to-purple-400 bg-clip-text text-transparent mb-2">{chain.length}</div>
+              <div className="text-xs md:text-sm text-neutral-700 font-semibold text-center">Personen in der Kette</div>
             </div>
-            <div className="glass-strong rounded-2xl p-4 md:p-6 text-center hover:scale-105 transition-transform duration-300">
-              <div className="text-3xl md:text-4xl font-extrabold bg-gradient-to-br from-violet-600 to-violet-400 bg-clip-text text-transparent mb-1">{lifetimeCount}</div>
-              <div className="text-xs md:text-sm text-neutral-700 font-semibold">Lebenszeiten zurück</div>
+            <div className="glass-strong rounded-2xl p-4 md:p-6 hover:scale-105 transition-transform duration-300 flex flex-col items-center justify-center">
+              <div className="text-4xl md:text-5xl font-extrabold bg-gradient-to-br from-violet-600 to-violet-400 bg-clip-text text-transparent mb-2">{lifetimeCount}</div>
+              <div className="text-xs md:text-sm text-neutral-700 font-semibold text-center">Lebenszeiten zurück</div>
             </div>
-            <div className="glass-strong rounded-2xl p-4 md:p-6 text-center hover:scale-105 transition-transform duration-300">
-              <div className="text-3xl md:text-4xl font-extrabold bg-gradient-to-br from-fuchsia-600 to-fuchsia-400 bg-clip-text text-transparent mb-1">{totalYears}</div>
-              <div className="text-xs md:text-sm text-neutral-700 font-semibold">Jahre überbrückt</div>
+            <div className="glass-strong rounded-2xl p-4 md:p-6 hover:scale-105 transition-transform duration-300 flex flex-col items-center justify-center">
+              <div className="text-4xl md:text-5xl font-extrabold bg-gradient-to-br from-fuchsia-600 to-fuchsia-400 bg-clip-text text-transparent mb-2">{totalYears}</div>
+              <div className="text-xs md:text-sm text-neutral-700 font-semibold text-center">Jahre überbrückt</div>
             </div>
           </div>
           
-          {/* Overlap Control */}
-          <div className="glass-strong rounded-2xl p-4 md:p-6">
-            <label className="block text-sm md:text-base font-bold text-neutral-800 mb-2">
-              Min. Überlappung: {minOverlapYears} Jahre
-            </label>
-            <input
-              type="range"
-              min="0"
-              max="60"
-              step="5"
-              value={minOverlapYears}
-              onChange={(e) => setMinOverlapYears(parseInt(e.target.value))}
-              className="w-full h-2 bg-gradient-to-r from-green-300 via-yellow-300 to-red-300 rounded-lg appearance-none cursor-pointer slider"
-            />
-            <div className="flex justify-between text-xs text-neutral-600 mt-1 font-medium">
-              <span>Kurz</span>
-              <span>Realistisch</span>
+          {/* Controls */}
+          <div className="glass-strong rounded-2xl p-4 md:p-6 space-y-4">
+            {/* Overlap Control */}
+            <div>
+              <label className="block text-sm md:text-base font-bold text-neutral-800 mb-2">
+                Min. Überlappung: {minOverlapYears} Jahre
+              </label>
+              <input
+                type="range"
+                min="0"
+                max="60"
+                step="5"
+                value={minOverlapYears}
+                onChange={(e) => setMinOverlapYears(parseInt(e.target.value))}
+                className="w-full h-2 bg-gradient-to-r from-green-300 via-yellow-300 to-red-300 rounded-lg appearance-none cursor-pointer slider"
+              />
+              <div className="flex justify-between text-xs text-neutral-600 mt-1 font-medium">
+                <span>Kurz</span>
+                <span>Realistisch</span>
+              </div>
+            </div>
+
+            {/* Fame Control */}
+            <div>
+              <label className="block text-sm md:text-base font-bold text-neutral-800 mb-2">
+                Min. Bekanntheit: {minFame} Wikipedia-Artikel
+              </label>
+              <input
+                type="range"
+                min="100"
+                max="220"
+                step="10"
+                value={minFame}
+                onChange={(e) => {
+                  const newValue = parseInt(e.target.value);
+                  setMinFame(newValue);
+                }}
+                className="w-full h-2 bg-gradient-to-r from-blue-300 via-purple-300 to-pink-300 rounded-lg appearance-none cursor-pointer slider"
+              />
+              <div className="flex justify-between text-xs text-neutral-600 mt-1 font-medium">
+                <span>Weniger bekannt (100+)</span>
+                <span>Sehr bekannt (220)</span>
+              </div>
             </div>
           </div>
         </div>
