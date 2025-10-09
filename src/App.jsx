@@ -125,6 +125,7 @@ function App() {
   const [hoveredQid, setHoveredQid] = useState(null);
   const [minOverlapYears, setMinOverlapYears] = useState(20); // Minimum overlap for realistic connections
   const [minFame, setMinFame] = useState(100); // Minimum sitelinks (fame level)
+  const [expandedGap, setExpandedGap] = useState(null); // Which gap is expanded (index)
 
   useEffect(() => {
     loadAllData().then(({ people, relations }) => {
@@ -462,22 +463,140 @@ function App() {
                     )}
                   </div>
 
-                  {/* Connection Info */}
+                  {/* Connection Info with Explore Button */}
                   {nextPerson && (
-                    <div className="mt-3 ml-2 md:ml-4 flex items-center gap-2 md:gap-3">
-                      <ArrowRight className="w-4 h-4 md:w-5 md:h-5 text-purple-400" />
-                      {hasGap ? (
-                        <div className="text-sm md:text-base">
-                          <span className="text-red-600 font-bold">{gapYears} Jahre Lücke</span>
-                          <span className="text-neutral-600 font-medium hidden sm:inline"> → hätten sich nicht treffen können</span>
-                        </div>
-                      ) : (
-                        <div className="text-sm md:text-base">
-                          <span className="text-green-600 font-bold">{overlapYears} Jahre Überlappung</span>
-                          <span className="text-neutral-600 font-medium hidden sm:inline"> → hätten sich treffen können! ✨</span>
-                        </div>
-                      )}
-                    </div>
+                    <>
+                      <div className="mt-3 ml-2 md:ml-4 flex items-center gap-2 md:gap-3">
+                        <ArrowRight className="w-4 h-4 md:w-5 md:h-5 text-purple-400" />
+                        {hasGap ? (
+                          <div className="text-sm md:text-base flex-1">
+                            <span className="text-red-600 font-bold">{gapYears} Jahre Lücke</span>
+                            <span className="text-neutral-600 font-medium hidden sm:inline"> → hätten sich nicht treffen können</span>
+                          </div>
+                        ) : (
+                          <div className="text-sm md:text-base flex-1">
+                            <span className="text-green-600 font-bold">{overlapYears} Jahre Überlappung</span>
+                            <span className="text-neutral-600 font-medium hidden sm:inline"> → hätten sich treffen können! ✨</span>
+                          </div>
+                        )}
+                        
+                        {/* Explore Button */}
+                        <button
+                          onClick={() => setExpandedGap(expandedGap === idx ? null : idx)}
+                          className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-gradient-to-br from-purple-500 to-fuchsia-500 text-white flex items-center justify-center hover:scale-110 transition-all shadow-md hover:shadow-lg"
+                          title="Weitere Personen aus dieser Zeit entdecken"
+                        >
+                          {expandedGap === idx ? '−' : '+'}
+                        </button>
+                      </div>
+                      
+                      {/* Expanded alternatives */}
+                      {expandedGap === idx && (() => {
+                        const currEnd = person.died === 9999 ? THIS_YEAR : person.died;
+                        const nextStart = nextPerson.born;
+                        const nextEnd = nextPerson.died === 9999 ? THIS_YEAR : nextPerson.died;
+                        
+                        // Find people who overlap with BOTH current and next person
+                        // Group by fame levels for drill-down exploration
+                        const allAlternatives = people
+                          .filter(p => {
+                            if (chain.find(c => c.qid === p.qid)) return false; // Not in chain
+                            const pEnd = p.died === 9999 ? THIS_YEAR : p.died;
+                            // Must overlap with current person AND next person
+                            const overlapWithCurr = Math.min(currEnd, pEnd) - Math.max(person.born, p.born);
+                            const overlapWithNext = Math.min(nextEnd, pEnd) - Math.max(nextStart, p.born);
+                            return overlapWithCurr > 0 && overlapWithNext > 0;
+                          })
+                          .sort((a, b) => (b.sitelinks || 0) - (a.sitelinks || 0));
+                        
+                        // Split into fame tiers for exploration
+                        const veryFamous = allAlternatives.filter(p => (p.sitelinks || 0) >= 180).slice(0, 4);
+                        const famous = allAlternatives.filter(p => (p.sitelinks || 0) >= 140 && (p.sitelinks || 0) < 180).slice(0, 4);
+                        const lessFamous = allAlternatives.filter(p => (p.sitelinks || 0) < 140).slice(0, 4);
+                        
+                        const alternatives = [...veryFamous, ...famous, ...lessFamous];
+                        
+                        return (
+                          <div className="mt-4 ml-2 md:ml-4 animate-fade-in">
+                            <div className="glass-strong rounded-2xl p-4">
+                              <div className="flex items-center justify-between mb-3">
+                                <h4 className="text-sm font-bold text-neutral-800 flex items-center gap-2">
+                                  <span className="text-purple-600">🔍</span>
+                                  Weitere Personen aus dieser Zeit
+                                </h4>
+                                <span className="text-xs text-neutral-500 font-medium">
+                                  {allAlternatives.length} gefunden
+                                </span>
+                              </div>
+                              
+                              {/* Fame tier indicator */}
+                              {alternatives.length > 0 && (
+                                <div className="mb-3 flex flex-wrap gap-2 text-xs">
+                                  {veryFamous.length > 0 && (
+                                    <span className="px-2 py-1 bg-yellow-100 text-yellow-700 rounded-full font-medium">
+                                      ⭐⭐⭐ Sehr bekannt ({veryFamous.length})
+                                    </span>
+                                  )}
+                                  {famous.length > 0 && (
+                                    <span className="px-2 py-1 bg-blue-100 text-blue-700 rounded-full font-medium">
+                                      ⭐⭐ Bekannt ({famous.length})
+                                    </span>
+                                  )}
+                                  {lessFamous.length > 0 && (
+                                    <span className="px-2 py-1 bg-purple-100 text-purple-700 rounded-full font-medium">
+                                      ⭐ Weniger bekannt ({lessFamous.length})
+                                    </span>
+                                  )}
+                                </div>
+                              )}
+                              
+                              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+                                {alternatives.length === 0 ? (
+                                  <p className="col-span-full text-sm text-neutral-500">Keine weiteren passenden Personen gefunden</p>
+                                ) : (
+                                  alternatives.map(p => {
+                                    // Determine fame tier color
+                                    const fameLevel = (p.sitelinks || 0) >= 180 ? 'gold' : (p.sitelinks || 0) >= 140 ? 'blue' : 'purple';
+                                    const bgGradient = fameLevel === 'gold' 
+                                      ? 'from-yellow-300 to-orange-300' 
+                                      : fameLevel === 'blue' 
+                                      ? 'from-blue-300 to-cyan-300'
+                                      : 'from-purple-300 to-fuchsia-300';
+                                    
+                                    return (
+                                      <button
+                                        key={p.qid}
+                                        onClick={() => setSelectedPerson(p)}
+                                        className="p-3 bg-white/70 backdrop-blur-sm rounded-xl hover:bg-white hover:shadow-md transition-all text-left group"
+                                      >
+                                        <div className={`w-12 h-12 mx-auto mb-2 rounded-full bg-gradient-to-br ${bgGradient} flex items-center justify-center text-white text-lg font-bold group-hover:scale-110 transition-transform`}>
+                                          {p.name.charAt(0)}
+                                        </div>
+                                        <div className="font-semibold text-xs text-neutral-800 text-center line-clamp-2 mb-1">
+                                          {p.name}
+                                        </div>
+                                        <div className="text-xs text-purple-600 font-medium text-center truncate">
+                                          {getOccupation(p)}
+                                        </div>
+                                        <div className="text-xs text-neutral-500 text-center mt-1">
+                                          {p.born}–{p.died === 9999 ? 'heute' : p.died}
+                                        </div>
+                                        <div className="text-xs text-neutral-400 text-center mt-1 flex items-center justify-center gap-1">
+                                          {fameLevel === 'gold' && '⭐⭐⭐'}
+                                          {fameLevel === 'blue' && '⭐⭐'}
+                                          {fameLevel === 'purple' && '⭐'}
+                                          <span>{p.sitelinks}</span>
+                                        </div>
+                                      </button>
+                                    );
+                                  })
+                                )}
+                              </div>
+                            </div>
+                          </div>
+                        );
+                      })()}
+                    </>
                   )}
                 </div>
               );
