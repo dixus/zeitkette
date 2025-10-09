@@ -6,6 +6,7 @@ export { StatsBar } from './ui/StatsBar';
 // Views
 export { TimelineView } from './views/TimelineView';
 export { NetworkView } from './views/NetworkView';
+export { ListView } from './views/ListView';
 
 // Modals
 export { SearchModal } from './modals/SearchModal';
