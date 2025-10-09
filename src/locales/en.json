@@ -200,6 +200,38 @@
     "Music": "Music",
     "Religion": "Religion",
     "Military": "Military"
+  },
+  "yearExplorer": {
+    "title": "🗓️ Time Explorer",
+    "subtitle": "Explore who was alive in any year",
+    "year": "Year: {{year}}",
+    "peopleAlive": "{{count}} famous people were alive in {{year}}",
+    "peopleAliveOne": "{{count}} famous person was alive in {{year}}",
+    "noPeople": "No famous people found for this year",
+    "filterByDomain": "Filter by domain:",
+    "allDomains": "All Domains",
+    "filterByFame": "Min. Fame:",
+    "fameAny": "Any",
+    "fameMedium": "Medium (140+)",
+    "fameHigh": "High (180+)",
+    "fameVeryHigh": "Very High (220+)",
+    "closeButton": "Close",
+    "actions": {
+      "viewDetails": "View Details",
+      "startChain": "Start Chain from {{name}}",
+      "addWaypoint": "Add to Current Chain"
+    },
+    "era": {
+      "ancient": "Ancient Times",
+      "classical": "Classical Antiquity",
+      "medieval": "Middle Ages",
+      "renaissance": "Renaissance",
+      "enlightenment": "Age of Enlightenment",
+      "industrial": "Industrial Era",
+      "modern": "Modern Era",
+      "contemporary": "Contemporary"
+    },
+    "shortcut": "Keyboard shortcut: Y"
   }
 }
 

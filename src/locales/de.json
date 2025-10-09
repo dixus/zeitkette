@@ -200,6 +200,38 @@
     "Music": "Musik",
     "Religion": "Religion",
     "Military": "Militär"
+  },
+  "yearExplorer": {
+    "title": "🗓️ Zeit-Explorer",
+    "subtitle": "Entdecke, wer in einem beliebigen Jahr lebte",
+    "year": "Jahr: {{year}}",
+    "peopleAlive": "{{count}} berühmte Personen lebten im Jahr {{year}}",
+    "peopleAliveOne": "{{count}} berühmte Person lebte im Jahr {{year}}",
+    "noPeople": "Keine berühmten Personen für dieses Jahr gefunden",
+    "filterByDomain": "Nach Bereich filtern:",
+    "allDomains": "Alle Bereiche",
+    "filterByFame": "Min. Bekanntheit:",
+    "fameAny": "Beliebig",
+    "fameMedium": "Mittel (140+)",
+    "fameHigh": "Hoch (180+)",
+    "fameVeryHigh": "Sehr hoch (220+)",
+    "closeButton": "Schließen",
+    "actions": {
+      "viewDetails": "Details ansehen",
+      "startChain": "Kette starten von {{name}}",
+      "addWaypoint": "Zur aktuellen Kette hinzufügen"
+    },
+    "era": {
+      "ancient": "Antike",
+      "classical": "Klassisches Altertum",
+      "medieval": "Mittelalter",
+      "renaissance": "Renaissance",
+      "enlightenment": "Aufklärung",
+      "industrial": "Industriezeitalter",
+      "modern": "Moderne",
+      "contemporary": "Gegenwart"
+    },
+    "shortcut": "Tastaturkürzel: Y"
   }
 }
 

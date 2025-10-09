@@ -997,6 +997,10 @@ function App() {
   const [chainMode, setChainMode] = useState('toToday'); // 'toToday' or 'between'
   const [startPerson, setStartPerson] = useState('Leonardo da Vinci'); // For 'between' mode
   const [endPerson, setEndPerson] = useState('Albert Einstein'); // For 'between' mode
+  const [showYearExplorer, setShowYearExplorer] = useState(false); // Show year explorer modal
+  const [explorerYear, setExplorerYear] = useState(1500); // Year to explore
+  const [explorerDomain, setExplorerDomain] = useState('all'); // Domain filter
+  const [explorerFame, setExplorerFame] = useState(140); // Fame filter for explorer
 
   useEffect(() => {
     loadAllData().then(({ people, relations }) => {
@@ -1034,6 +1038,31 @@ function App() {
       .slice(0, 20);
   }, [searchQuery, people]);
 
+  // People alive in explorer year
+  const explorerPeople = useMemo(() => {
+    if (!showYearExplorer || !people.length) return [];
+    
+    return people
+      .filter(p => {
+        // Filter by year (person was alive during this year)
+        if (p.born > explorerYear) return false;
+        const pDied = p.died === 9999 ? THIS_YEAR : p.died;
+        if (pDied < explorerYear) return false;
+        
+        // Filter by fame
+        if ((p.sitelinks || 0) < explorerFame) return false;
+        
+        // Filter by domain
+        if (explorerDomain !== 'all') {
+          if (!p.domains || !p.domains.includes(explorerDomain)) return false;
+        }
+        
+        return true;
+      })
+      .sort((a, b) => (b.sitelinks || 0) - (a.sitelinks || 0))
+      .slice(0, 50); // Limit to 50 for performance
+  }, [people, explorerYear, explorerDomain, explorerFame, showYearExplorer]);
+
   // Keyboard shortcuts
   useEffect(() => {
     const handleKeyPress = (e) => {
@@ -1045,8 +1074,14 @@ function App() {
           e.preventDefault();
           setShowSearch(true);
           break;
+        case 'y':
+        case 'Y':
+          e.preventDefault();
+          setShowYearExplorer(true);
+          break;
         case 'Escape':
           if (showSearch) setShowSearch(false);
+          if (showYearExplorer) setShowYearExplorer(false);
           if (selectedPerson) setSelectedPerson(null);
           if (expandedGap !== null) setExpandedGap(null);
           break;
@@ -1067,7 +1102,7 @@ function App() {
     
     window.addEventListener('keydown', handleKeyPress);
     return () => window.removeEventListener('keydown', handleKeyPress);
-  }, [showSearch, selectedPerson]);
+  }, [showSearch, showYearExplorer, selectedPerson]);
 
   // Calculate metrics
   const totalYears = chain.length > 0 
@@ -1534,6 +1569,16 @@ function App() {
               >
                 <Search className="w-5 h-5" />
                 <span className="hidden sm:inline">{t('header.search')}</span>
+              </button>
+              
+              {/* Year Explorer */}
+              <button
+                onClick={() => setShowYearExplorer(true)}
+                className="px-5 py-3 bg-white/90 backdrop-blur-sm rounded-xl hover:shadow-lg transition-all duration-300 flex items-center gap-2 border-2 border-white hover:border-purple-300 hover:scale-105 font-semibold text-base"
+                title={t('yearExplorer.shortcut')}
+              >
+                <span className="text-xl">🗓️</span>
+                <span className="hidden sm:inline">{t('yearExplorer.title').replace('🗓️ ', '')}</span>
               </button>
               
               {/* Language Switcher */}
@@ -2197,6 +2242,192 @@ function App() {
         </div>
       )}
 
+      {/* Year Explorer Modal */}
+      {showYearExplorer && (
+        <div
+          className="fixed inset-0 bg-neutral-900/50 backdrop-blur-sm z-50 flex items-start justify-center p-4 animate-fade-in overflow-y-auto pt-10"
+          onClick={() => setShowYearExplorer(false)}
+        >
+          <div
+            className="bg-gradient-to-br from-white via-purple-50/30 to-white rounded-2xl p-6 max-w-6xl w-full shadow-2xl border-2 border-white animate-scale-in"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Header */}
+            <div className="mb-6">
+              <h3 className="text-3xl font-bold mb-2 text-neutral-900 flex items-center gap-2">
+                <span className="text-3xl">🗓️</span>
+                {t('yearExplorer.title').replace('🗓️ ', '')}
+              </h3>
+              <p className="text-sm text-neutral-600">{t('yearExplorer.subtitle')}</p>
+            </div>
+            
+            {/* Year Slider */}
+            <div className="mb-6 glass-strong rounded-2xl p-6">
+              <label className="block text-xl font-bold text-neutral-800 mb-4">
+                {t('yearExplorer.year', { year: explorerYear })}
+              </label>
+              <input
+                type="range"
+                min={-600}
+                max={THIS_YEAR}
+                step={10}
+                value={explorerYear}
+                onChange={(e) => setExplorerYear(parseInt(e.target.value))}
+                className="w-full h-3 bg-gradient-to-r from-violet-300 via-purple-300 to-fuchsia-300 rounded-lg appearance-none cursor-pointer slider"
+              />
+              <div className="flex justify-between text-xs text-neutral-600 mt-2 font-medium">
+                <span>600 BC</span>
+                <span>1 AD</span>
+                <span>1000</span>
+                <span>1500</span>
+                <span>2000</span>
+                <span>{THIS_YEAR}</span>
+              </div>
+              
+              {/* Era Label */}
+              <div className="mt-4 text-center">
+                <span className="px-4 py-2 bg-gradient-to-r from-purple-500 to-fuchsia-500 text-white rounded-full font-semibold text-sm">
+                  {explorerYear < 0 ? t('yearExplorer.era.ancient') :
+                   explorerYear < 500 ? t('yearExplorer.era.classical') :
+                   explorerYear < 1400 ? t('yearExplorer.era.medieval') :
+                   explorerYear < 1600 ? t('yearExplorer.era.renaissance') :
+                   explorerYear < 1800 ? t('yearExplorer.era.enlightenment') :
+                   explorerYear < 1900 ? t('yearExplorer.era.industrial') :
+                   explorerYear < 2000 ? t('yearExplorer.era.modern') :
+                   t('yearExplorer.era.contemporary')}
+                </span>
+              </div>
+            </div>
+            
+            {/* Filters */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+              {/* Domain Filter */}
+              <div className="glass rounded-xl p-4">
+                <label className="block text-sm font-bold text-neutral-800 mb-2">
+                  {t('yearExplorer.filterByDomain')}
+                </label>
+                <select
+                  value={explorerDomain}
+                  onChange={(e) => setExplorerDomain(e.target.value)}
+                  className="w-full px-3 py-2 rounded-lg border-2 border-neutral-300 focus:border-purple-500 focus:ring-2 focus:ring-purple-200 outline-none transition-all bg-white font-medium"
+                >
+                  <option value="all">{t('yearExplorer.allDomains')}</option>
+                  <option value="Art">{t('domains.Art')}</option>
+                  <option value="Science">{t('domains.Science')}</option>
+                  <option value="Philosophy">{t('domains.Philosophy')}</option>
+                  <option value="Politics">{t('domains.Politics')}</option>
+                  <option value="Literature">{t('domains.Literature')}</option>
+                  <option value="Music">{t('domains.Music')}</option>
+                  <option value="Religion">{t('domains.Religion')}</option>
+                  <option value="Military">{t('domains.Military')}</option>
+                </select>
+              </div>
+              
+              {/* Fame Filter */}
+              <div className="glass rounded-xl p-4">
+                <label className="block text-sm font-bold text-neutral-800 mb-2">
+                  {t('yearExplorer.filterByFame')}
+                </label>
+                <select
+                  value={explorerFame}
+                  onChange={(e) => setExplorerFame(parseInt(e.target.value))}
+                  className="w-full px-3 py-2 rounded-lg border-2 border-neutral-300 focus:border-purple-500 focus:ring-2 focus:ring-purple-200 outline-none transition-all bg-white font-medium"
+                >
+                  <option value={0}>{t('yearExplorer.fameAny')}</option>
+                  <option value={140}>{t('yearExplorer.fameMedium')}</option>
+                  <option value={180}>{t('yearExplorer.fameHigh')}</option>
+                  <option value={220}>{t('yearExplorer.fameVeryHigh')}</option>
+                </select>
+              </div>
+            </div>
+            
+            {/* Results Count */}
+            <div className="mb-4 text-center">
+              <span className="text-lg font-semibold text-purple-700">
+                {explorerPeople.length === 1 ? 
+                  t('yearExplorer.peopleAliveOne', { count: explorerPeople.length, year: explorerYear }) :
+                  t('yearExplorer.peopleAlive', { count: explorerPeople.length, year: explorerYear })}
+              </span>
+            </div>
+            
+            {/* People Grid */}
+            <div className="max-h-[500px] overflow-y-auto space-y-3">
+              {explorerPeople.length === 0 ? (
+                <div className="text-center text-neutral-500 py-12">
+                  <div className="text-6xl mb-4">🤷</div>
+                  <p className="text-lg font-semibold">{t('yearExplorer.noPeople')}</p>
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                  {explorerPeople.map(person => (
+                    <div
+                      key={person.qid}
+                      className="glass-strong rounded-xl p-4 hover:shadow-xl transition-all group cursor-pointer"
+                      onClick={() => {
+                        setSelectedPerson(person);
+                      }}
+                    >
+                      <div className="flex items-start gap-3 mb-3">
+                        <PersonAvatar person={person} size="md" className="rounded-xl flex-shrink-0" />
+                        <div className="flex-1 min-w-0">
+                          <div className="font-bold text-neutral-800 group-hover:text-purple-600 transition-colors text-sm mb-1">
+                            {person.name}
+                          </div>
+                          <div className="text-xs text-purple-600 font-medium mb-1">
+                            {getOccupation(person)}
+                          </div>
+                          <div className="text-xs text-neutral-600">
+                            {person.born}–{person.died === 9999 ? t('person.today') : person.died}
+                          </div>
+                        </div>
+                      </div>
+                      
+                      {/* Action Buttons */}
+                      <div className="flex gap-2">
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setTargetPerson(person.name);
+                            setChainMode('toToday');
+                            setShowLanding(false);
+                            setShowYearExplorer(false);
+                          }}
+                          className="flex-1 px-2 py-1.5 bg-gradient-to-r from-purple-500 to-fuchsia-500 text-white rounded-lg text-xs font-semibold hover:shadow-md transition-all"
+                          title={t('yearExplorer.actions.startChain', { name: person.name })}
+                        >
+                          🎯 {t('endMarker.newChain').replace('🔗 ', '').replace('Start ', '').replace('Starten', '').replace('Neue Kette ', '')}
+                        </button>
+                        {!showLanding && chain.length > 0 && (
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setPinnedWaypoints([...pinnedWaypoints, person.name]);
+                              setShowYearExplorer(false);
+                            }}
+                            className="px-3 py-1.5 bg-white border-2 border-purple-400 text-purple-600 rounded-lg text-xs font-semibold hover:bg-purple-50 transition-all"
+                            title={t('yearExplorer.actions.addWaypoint')}
+                          >
+                            ➕
+                          </button>
+                        )}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+            
+            {/* Close Button */}
+            <button
+              onClick={() => setShowYearExplorer(false)}
+              className="mt-6 w-full px-4 py-3 bg-neutral-200 hover:bg-neutral-300 rounded-xl font-semibold transition-colors"
+            >
+              {t('yearExplorer.closeButton')}
+            </button>
+          </div>
+        </div>
+      )}
+
       {/* Person Detail Modal - Enhanced */}
       {selectedPerson && (
         <div
@@ -2426,6 +2657,10 @@ function App() {
                 <div className="flex justify-between">
                   <kbd className="px-2 py-1 bg-white rounded font-mono text-xs">/</kbd>
                   <span className="text-neutral-700">{t('keyboard.search')}</span>
+                </div>
+                <div className="flex justify-between">
+                  <kbd className="px-2 py-1 bg-white rounded font-mono text-xs">Y</kbd>
+                  <span className="text-neutral-700">{t('yearExplorer.title').replace('🗓️ ', '')}</span>
                 </div>
                 <div className="flex justify-between">
                   <kbd className="px-2 py-1 bg-white rounded font-mono text-xs">ESC</kbd>
