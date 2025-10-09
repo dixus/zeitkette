@@ -186,10 +186,16 @@ input[type="range"].slider::-moz-range-thumb:hover {
 
 /* Mobile Optimizations */
 @media (max-width: 768px) {
-  /* Larger touch targets */
-  button, select, input {
+  /* Prevent zoom on input focus (iOS Safari) */
+  input[type="text"],
+  input[type="search"],
+  select {
+    font-size: 16px !important; /* Prevents zoom on iOS */
+  }
+  
+  /* Larger touch targets for better UX */
+  button:not([class*="p-0"]):not([class*="p-1"]) {
     min-height: 44px;
-    min-width: 44px;
   }
   
   /* Prevent text selection on touch */
@@ -207,5 +213,18 @@ input[type="range"].slider::-moz-range-thumb:hover {
   /* Hide scrollbar on mobile for cleaner look */
   ::-webkit-scrollbar {
     display: none;
+  }
+  
+  /* Better modal sizing on mobile */
+  .modal-container {
+    max-height: calc(100vh - 2rem);
+    max-height: calc(100dvh - 2rem); /* Dynamic viewport height */
+  }
+  
+  /* Optimize animations on mobile (performance) */
+  .hover\\:scale-\\[1\\.02\\],
+  .hover\\:scale-105,
+  .hover\\:-translate-y-1 {
+    transition-duration: 200ms;
   }
 }

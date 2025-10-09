@@ -28,11 +28,11 @@ export function YearExplorerModal({
 
   return (
     <div
-      className="fixed inset-0 bg-neutral-900/50 backdrop-blur-sm z-50 flex items-start justify-center p-4 animate-fade-in overflow-y-auto pt-10"
+      className="fixed inset-0 bg-neutral-900/50 backdrop-blur-sm z-50 flex items-start md:items-center justify-center p-0 md:p-4 animate-fade-in overflow-y-auto"
       onClick={onClose}
     >
       <div
-        className="bg-gradient-to-br from-white via-purple-50/30 to-white rounded-2xl p-6 max-w-6xl w-full shadow-2xl border-2 border-white animate-scale-in"
+        className="modal-container bg-gradient-to-br from-white via-purple-50/30 to-white rounded-none md:rounded-2xl p-4 md:p-6 max-w-6xl w-full min-h-screen md:min-h-0 shadow-2xl border-0 md:border-2 border-white animate-scale-in"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}

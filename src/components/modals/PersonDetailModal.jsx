@@ -23,11 +23,11 @@ export function PersonDetailModal({
 
   return (
     <div
-      className="fixed inset-0 bg-black/70 backdrop-blur-lg flex items-center justify-center p-4 z-50 animate-fade-in"
+      className="fixed inset-0 bg-black/70 backdrop-blur-lg flex items-start md:items-center justify-center p-0 md:p-4 z-50 animate-fade-in overflow-y-auto"
       onClick={onClose}
     >
       <div
-        className="bg-gradient-to-br from-white via-purple-50/30 to-white rounded-2xl p-6 max-w-2xl w-full max-h-[85vh] overflow-y-auto animate-scale-in shadow-2xl border-2 border-white"
+        className="modal-container bg-gradient-to-br from-white via-purple-50/30 to-white rounded-none md:rounded-2xl p-4 md:p-6 max-w-2xl w-full min-h-screen md:min-h-0 max-h-screen md:max-h-[85vh] overflow-y-auto animate-scale-in shadow-2xl border-0 md:border-2 border-white"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}

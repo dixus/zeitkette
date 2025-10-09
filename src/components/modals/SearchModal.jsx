@@ -22,19 +22,19 @@ export function SearchModal({
 
   return (
     <div
-      className="fixed inset-0 bg-neutral-900/50 backdrop-blur-sm z-50 flex items-start justify-center p-4 animate-fade-in overflow-y-auto pt-20"
+      className="fixed inset-0 bg-neutral-900/50 backdrop-blur-sm z-50 flex items-start md:items-center justify-center p-0 md:p-4 animate-fade-in overflow-y-auto"
       onClick={onClose}
     >
       <div
-        className="bg-gradient-to-br from-white via-purple-50/30 to-white rounded-2xl p-6 max-w-2xl w-full shadow-2xl border-2 border-white animate-scale-in"
+        className="modal-container bg-gradient-to-br from-white via-purple-50/30 to-white rounded-none md:rounded-2xl p-4 md:p-6 max-w-2xl w-full min-h-screen md:min-h-0 shadow-2xl border-0 md:border-2 border-white animate-scale-in"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="mb-4">
-          <h3 className="text-2xl font-bold mb-2 text-neutral-900 flex items-center gap-2">
-            <Search className="w-6 h-6 text-purple-600" />
+        <div className="mb-3 md:mb-4">
+          <h3 className="text-xl md:text-2xl font-bold mb-1 md:mb-2 text-neutral-900 flex items-center gap-2">
+            <Search className="w-5 h-5 md:w-6 md:h-6 text-purple-600" />
             {t('search.title')}
           </h3>
-          <p className="text-sm text-neutral-600">{t('search.placeholder')}</p>
+          <p className="text-xs md:text-sm text-neutral-600">{t('search.placeholder')}</p>
         </div>
         
         <input
@@ -42,11 +42,11 @@ export function SearchModal({
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           placeholder={t('search.placeholder')}
-          className="w-full px-4 py-3 rounded-xl border-2 border-purple-200 focus:border-purple-400 focus:ring-2 focus:ring-purple-200 outline-none transition-all mb-4 text-lg"
+          className="w-full px-3 md:px-4 py-2.5 md:py-3 rounded-xl border-2 border-purple-200 focus:border-purple-400 focus:ring-2 focus:ring-purple-200 outline-none transition-all mb-3 md:mb-4 text-base md:text-lg"
           autoFocus
         />
         
-        <div className="max-h-96 overflow-y-auto space-y-2">
+        <div className="max-h-[calc(100vh-200px)] md:max-h-96 overflow-y-auto space-y-2">
           {searchQuery === '' ? (
             <div className="text-center text-neutral-500 py-8">
               {t('search.placeholder')}...
