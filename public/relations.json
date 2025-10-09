@@ -1,0 +1,636 @@
+{
+  "Q10261": {
+    "knew": [
+      {
+        "name": "Heraklit",
+        "type": "Zeitgenosse",
+        "confidence": 0.8
+      }
+    ]
+  },
+  "Q913": {
+    "knew": [
+      {
+        "name": "Platon",
+        "type": "Lehrer von",
+        "confidence": 1
+      }
+    ]
+  },
+  "Q859": {
+    "knew": [
+      {
+        "name": "Sokrates",
+        "type": "Schüler von",
+        "confidence": 1
+      },
+      {
+        "name": "Aristoteles",
+        "type": "Lehrer von",
+        "confidence": 1
+      }
+    ]
+  },
+  "Q868": {
+    "knew": [
+      {
+        "name": "Platon",
+        "type": "Schüler von",
+        "confidence": 1
+      }
+    ]
+  },
+  "Q1541": {
+    "knew": [
+      {
+        "name": "Julius Caesar",
+        "type": "Politischer Rivale",
+        "confidence": 1
+      }
+    ]
+  },
+  "Q1048": {
+    "knew": [
+      {
+        "name": "Cicero",
+        "type": "Zeitgenosse",
+        "confidence": 1
+      },
+      {
+        "name": "Kleopatra",
+        "type": "Verbündete",
+        "confidence": 1
+      },
+      {
+        "name": "Marcus Antonius",
+        "type": "Verbündeter",
+        "confidence": 1
+      }
+    ]
+  },
+  "Q635": {
+    "knew": [
+      {
+        "name": "Julius Caesar",
+        "type": "Verbündete",
+        "confidence": 1
+      },
+      {
+        "name": "Marcus Antonius",
+        "type": "Verbündete",
+        "confidence": 1
+      }
+    ]
+  },
+  "Q762": {
+    "knew": [
+      {
+        "name": "Michelangelo",
+        "type": "Zeitgenosse/Rivale",
+        "confidence": 1
+      }
+    ]
+  },
+  "Q5592": {
+    "knew": [
+      {
+        "name": "Leonardo da Vinci",
+        "type": "Zeitgenosse/Rivale",
+        "confidence": 1
+      },
+      {
+        "name": "Raphael",
+        "type": "Zeitgenosse",
+        "confidence": 1
+      }
+    ]
+  },
+  "Q9554": {
+    "knew": [
+      {
+        "name": "Erasmus von Rotterdam",
+        "type": "Korrespondent",
+        "confidence": 0.9
+      }
+    ]
+  },
+  "Q9191": {
+    "knew": [
+      {
+        "name": "Blaise Pascal",
+        "type": "Zeitgenosse",
+        "confidence": 0.8
+      }
+    ]
+  },
+  "Q935": {
+    "knew": [
+      {
+        "name": "Gottfried Wilhelm Leibniz",
+        "type": "Rivale (Infinitesimalrechnung)",
+        "confidence": 1
+      }
+    ]
+  },
+  "Q9047": {
+    "knew": [
+      {
+        "name": "Isaac Newton",
+        "type": "Rivale",
+        "confidence": 1
+      }
+    ]
+  },
+  "Q9068": {
+    "knew": [
+      {
+        "name": "Jean-Jacques Rousseau",
+        "type": "Zeitgenosse/Rivale",
+        "confidence": 1
+      },
+      {
+        "name": "Denis Diderot",
+        "type": "Freund",
+        "confidence": 0.9
+      }
+    ]
+  },
+  "Q6527": {
+    "knew": [
+      {
+        "name": "Voltaire",
+        "type": "Zeitgenosse/Rivale",
+        "confidence": 1
+      },
+      {
+        "name": "David Hume",
+        "type": "Freund",
+        "confidence": 0.9
+      }
+    ]
+  },
+  "Q34969": {
+    "knew": [
+      {
+        "name": "Thomas Jefferson",
+        "type": "Freund/Mitgründer",
+        "confidence": 1
+      },
+      {
+        "name": "George Washington",
+        "type": "Kollege",
+        "confidence": 1
+      }
+    ]
+  },
+  "Q23": {
+    "knew": [
+      {
+        "name": "Thomas Jefferson",
+        "type": "Kollege",
+        "confidence": 1
+      },
+      {
+        "name": "Benjamin Franklin",
+        "type": "Kollege",
+        "confidence": 1
+      }
+    ]
+  },
+  "Q11812": {
+    "knew": [
+      {
+        "name": "George Washington",
+        "type": "Präsident unter",
+        "confidence": 1
+      },
+      {
+        "name": "Benjamin Franklin",
+        "type": "Mentor",
+        "confidence": 0.9
+      }
+    ]
+  },
+  "Q5879": {
+    "knew": [
+      {
+        "name": "Friedrich Schiller",
+        "type": "Enger Freund",
+        "confidence": 1
+      },
+      {
+        "name": "Ludwig van Beethoven",
+        "type": "Traf persönlich",
+        "confidence": 1
+      }
+    ]
+  },
+  "Q22670": {
+    "knew": [
+      {
+        "name": "Johann Wolfgang von Goethe",
+        "type": "Enger Freund",
+        "confidence": 1
+      }
+    ]
+  },
+  "Q255": {
+    "knew": [
+      {
+        "name": "Johann Wolfgang von Goethe",
+        "type": "Traf persönlich",
+        "confidence": 1
+      },
+      {
+        "name": "Wolfgang Amadeus Mozart",
+        "type": "Möglicherweise getroffen",
+        "confidence": 0.5
+      }
+    ]
+  },
+  "Q517": {
+    "knew": [
+      {
+        "name": "Ludwig van Beethoven",
+        "type": "Bewundert von (urspr.)",
+        "confidence": 0.8
+      }
+    ]
+  },
+  "Q9235": {
+    "knew": [
+      {
+        "name": "Arthur Schopenhauer",
+        "type": "Akademischer Rivale",
+        "confidence": 1
+      }
+    ]
+  },
+  "Q38193": {
+    "knew": [
+      {
+        "name": "Hegel",
+        "type": "Verachtete",
+        "confidence": 1
+      }
+    ]
+  },
+  "Q1035": {
+    "knew": [
+      {
+        "name": "Karl Marx",
+        "type": "Zeitgenosse (Marx las Darwin)",
+        "confidence": 0.8
+      },
+      {
+        "name": "Thomas Henry Huxley",
+        "type": "Freund/Verteidiger",
+        "confidence": 1
+      }
+    ]
+  },
+  "Q9061": {
+    "knew": [
+      {
+        "name": "Friedrich Engels",
+        "type": "Enger Freund/Kollaborateur",
+        "confidence": 1
+      },
+      {
+        "name": "Charles Darwin",
+        "type": "Las seine Werke",
+        "confidence": 0.8
+      }
+    ]
+  },
+  "Q34787": {
+    "knew": [
+      {
+        "name": "Karl Marx",
+        "type": "Enger Freund/Kollaborateur",
+        "confidence": 1
+      }
+    ]
+  },
+  "Q535": {
+    "knew": [
+      {
+        "name": "Honoré de Balzac",
+        "type": "Zeitgenosse",
+        "confidence": 0.9
+      }
+    ]
+  },
+  "Q1511": {
+    "knew": [
+      {
+        "name": "Friedrich Nietzsche",
+        "type": "Freund (später Bruch)",
+        "confidence": 1
+      }
+    ]
+  },
+  "Q9358": {
+    "knew": [
+      {
+        "name": "Richard Wagner",
+        "type": "Freund (später Bruch)",
+        "confidence": 1
+      },
+      {
+        "name": "Lou Andreas-Salomé",
+        "type": "Liebe",
+        "confidence": 1
+      }
+    ]
+  },
+  "Q9215": {
+    "knew": [
+      {
+        "name": "Carl Jung",
+        "type": "Freund/später Rivale",
+        "confidence": 1
+      }
+    ]
+  },
+  "Q41532": {
+    "knew": [
+      {
+        "name": "Sigmund Freud",
+        "type": "Mentor/später Bruch",
+        "confidence": 1
+      }
+    ]
+  },
+  "Q7186": {
+    "knew": [
+      {
+        "name": "Albert Einstein",
+        "type": "Kollege/Freund",
+        "confidence": 1
+      }
+    ]
+  },
+  "Q937": {
+    "knew": [
+      {
+        "name": "Marie Curie",
+        "type": "Kollegin/Freundin",
+        "confidence": 1
+      },
+      {
+        "name": "Niels Bohr",
+        "type": "Kollege/Debattenpartner",
+        "confidence": 1
+      },
+      {
+        "name": "J. Robert Oppenheimer",
+        "type": "Kollege",
+        "confidence": 0.9
+      }
+    ]
+  },
+  "Q9007": {
+    "knew": [
+      {
+        "name": "Albert Einstein",
+        "type": "Kollege/Debattenpartner",
+        "confidence": 1
+      }
+    ]
+  },
+  "Q1394": {
+    "knew": [
+      {
+        "name": "Josef Stalin",
+        "type": "Nachfolger",
+        "confidence": 1
+      },
+      {
+        "name": "Leo Trotzki",
+        "type": "Kollege/Rivale",
+        "confidence": 1
+      }
+    ]
+  },
+  "Q855": {
+    "knew": [
+      {
+        "name": "Vladimir Lenin",
+        "type": "Vorgänger",
+        "confidence": 1
+      },
+      {
+        "name": "Leo Trotzki",
+        "type": "Erzrivale",
+        "confidence": 1
+      }
+    ]
+  },
+  "Q33391": {
+    "knew": [
+      {
+        "name": "Vladimir Lenin",
+        "type": "Kollege",
+        "confidence": 1
+      },
+      {
+        "name": "Josef Stalin",
+        "type": "Erzrivale",
+        "confidence": 1
+      }
+    ]
+  },
+  "Q5593": {
+    "knew": [
+      {
+        "name": "Henri Matisse",
+        "type": "Freund/Rivale",
+        "confidence": 1
+      },
+      {
+        "name": "Georges Braque",
+        "type": "Kubismus-Partner",
+        "confidence": 1
+      }
+    ]
+  },
+  "Q40909": {
+    "knew": [
+      {
+        "name": "T.S. Eliot",
+        "type": "Freund/Verleger",
+        "confidence": 1
+      },
+      {
+        "name": "James Joyce",
+        "type": "Zeitgenosse",
+        "confidence": 0.7
+      }
+    ]
+  },
+  "Q6882": {
+    "knew": [
+      {
+        "name": "Virginia Woolf",
+        "type": "Zeitgenosse",
+        "confidence": 0.7
+      }
+    ]
+  },
+  "Q8016": {
+    "knew": [
+      {
+        "name": "Franklin D. Roosevelt",
+        "type": "Verbündeter",
+        "confidence": 1
+      },
+      {
+        "name": "George Bernard Shaw",
+        "type": "Zeitgenosse",
+        "confidence": 0.8
+      }
+    ]
+  },
+  "Q8007": {
+    "knew": [
+      {
+        "name": "Winston Churchill",
+        "type": "Verbündeter",
+        "confidence": 1
+      }
+    ]
+  },
+  "Q133507": {
+    "knew": [
+      {
+        "name": "Albert Einstein",
+        "type": "Kollege",
+        "confidence": 0.9
+      },
+      {
+        "name": "Richard Feynman",
+        "type": "Manhattan-Projekt",
+        "confidence": 1
+      }
+    ]
+  },
+  "Q39246": {
+    "knew": [
+      {
+        "name": "J. Robert Oppenheimer",
+        "type": "Manhattan-Projekt",
+        "confidence": 1
+      }
+    ]
+  },
+  "Q9364": {
+    "knew": [
+      {
+        "name": "Simone de Beauvoir",
+        "type": "Lebensgefährtin",
+        "confidence": 1
+      },
+      {
+        "name": "Albert Camus",
+        "type": "Freund/später Bruch",
+        "confidence": 1
+      }
+    ]
+  },
+  "Q7197": {
+    "knew": [
+      {
+        "name": "Jean-Paul Sartre",
+        "type": "Lebensgefährte",
+        "confidence": 1
+      }
+    ]
+  },
+  "Q34670": {
+    "knew": [
+      {
+        "name": "Jean-Paul Sartre",
+        "type": "Freund/später Bruch",
+        "confidence": 1
+      }
+    ]
+  },
+  "Q7251": {
+    "knew": [
+      {
+        "name": "Ludwig Wittgenstein",
+        "type": "Lehrer",
+        "confidence": 0.9
+      }
+    ]
+  },
+  "Q8023": {
+    "knew": [
+      {
+        "name": "Desmond Tutu",
+        "type": "Verbündeter",
+        "confidence": 1
+      }
+    ]
+  },
+  "Q8027": {
+    "knew": [
+      {
+        "name": "Malcolm X",
+        "type": "Rivale/später Annäherung",
+        "confidence": 0.9
+      }
+    ]
+  },
+  "Q43858": {
+    "knew": [
+      {
+        "name": "Martin Luther King Jr.",
+        "type": "Rivale/später Annäherung",
+        "confidence": 0.9
+      }
+    ]
+  },
+  "Q19837": {
+    "knew": [
+      {
+        "name": "Bill Gates",
+        "type": "Rivale/Kollege",
+        "confidence": 1
+      },
+      {
+        "name": "Steve Wozniak",
+        "type": "Mitgründer Apple",
+        "confidence": 1
+      }
+    ]
+  },
+  "Q5284": {
+    "knew": [
+      {
+        "name": "Steve Jobs",
+        "type": "Rivale/Kollege",
+        "confidence": 1
+      }
+    ]
+  },
+  "Q207969": {
+    "knew": [
+      {
+        "name": "Steve Jobs",
+        "type": "Mitgründer Apple",
+        "confidence": 1
+      }
+    ]
+  },
+  "Q17714": {
+    "knew": [
+      {
+        "name": "Albert Einstein",
+        "type": "Beeinflusst von (nicht persönlich)",
+        "confidence": 0.5
+      }
+    ]
+  }
+}

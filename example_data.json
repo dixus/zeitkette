@@ -1,0 +1,127 @@
+{
+  "comment": "Beispiel: So werden die Daten aus Wikidata aussehen",
+  "people": [
+    {
+      "name": "Johann Wolfgang von Goethe",
+      "born": 1749,
+      "died": 1832,
+      "domains": ["Literature", "Science"],
+      "region": "DE",
+      "qid": "Q5879",
+      "description": "deutscher Dichter, Dramatiker, Naturwissenschaftler, Kunsttheoretiker, Staatsmann",
+      "wikipedia": "https://de.wikipedia.org/wiki/Johann_Wolfgang_von_Goethe",
+      "image": "http://commons.wikimedia.org/wiki/Special:FilePath/Goethe%20%28Stieler%201828%29.jpg",
+      "sitelinks": 178
+    },
+    {
+      "name": "Ada Lovelace",
+      "born": 1815,
+      "died": 1852,
+      "domains": ["Math", "Computing"],
+      "region": "UK",
+      "qid": "Q7259",
+      "description": "britische Mathematikerin",
+      "wikipedia": "https://de.wikipedia.org/wiki/Ada_Lovelace",
+      "image": "http://commons.wikimedia.org/wiki/Special:FilePath/Ada%20Lovelace%20portrait.jpg",
+      "sitelinks": 142
+    },
+    {
+      "name": "Albert Einstein",
+      "born": 1879,
+      "died": 1955,
+      "domains": ["Science"],
+      "region": "DE/US",
+      "qid": "Q937",
+      "description": "deutsch-US-amerikanischer theoretischer Physiker",
+      "wikipedia": "https://de.wikipedia.org/wiki/Albert_Einstein",
+      "image": "http://commons.wikimedia.org/wiki/Special:FilePath/Einstein%201921%20by%20F%20Schmutzer%20-%20restoration.jpg",
+      "sitelinks": 297
+    },
+    {
+      "name": "Marie Curie",
+      "born": 1867,
+      "died": 1934,
+      "domains": ["Science"],
+      "region": "PL/FR",
+      "qid": "Q7186",
+      "description": "polnisch-französische Physikerin und Chemikerin",
+      "wikipedia": "https://de.wikipedia.org/wiki/Marie_Curie",
+      "image": "http://commons.wikimedia.org/wiki/Special:FilePath/Marie%20Curie%20c1920.jpg",
+      "sitelinks": 245
+    },
+    {
+      "name": "Frida Kahlo",
+      "born": 1907,
+      "died": 1954,
+      "domains": ["Art"],
+      "region": "MX",
+      "qid": "Q5588",
+      "description": "mexikanische Malerin",
+      "wikipedia": "https://de.wikipedia.org/wiki/Frida_Kahlo",
+      "image": "http://commons.wikimedia.org/wiki/Special:FilePath/Frida%20Kahlo%2C%20by%20Guillermo%20Kahlo.jpg",
+      "sitelinks": 198
+    }
+  ],
+  
+  "relations": {
+    "Q5879": {
+      "name": "Johann Wolfgang von Goethe",
+      "knew": [
+        {
+          "qid": "Q22670",
+          "name": "Friedrich Schiller",
+          "type": "close friend and collaborator",
+          "source": "wikidata_P737",
+          "confidence": 1.0
+        },
+        {
+          "qid": "Q77022",
+          "name": "Christoph Martin Wieland",
+          "type": "influenced by",
+          "source": "wikidata_P737",
+          "confidence": 0.9
+        },
+        {
+          "qid": "Q76504",
+          "name": "Alexander von Humboldt",
+          "type": "acquaintance",
+          "source": "llm",
+          "confidence": 0.85
+        }
+      ]
+    },
+    "Q7259": {
+      "name": "Ada Lovelace",
+      "knew": [
+        {
+          "qid": "Q46622",
+          "name": "Charles Babbage",
+          "type": "mentor/collaborator",
+          "source": "wikidata_P802",
+          "confidence": 1.0
+        },
+        {
+          "qid": "Q36322",
+          "name": "Mary Somerville",
+          "type": "friend and mentor",
+          "source": "wikidata",
+          "confidence": 0.95
+        }
+      ]
+    }
+  },
+  
+  "statistics": {
+    "total_people": 2000,
+    "with_images": 1850,
+    "with_descriptions": 2000,
+    "with_wikipedia": 2000,
+    "total_relations": 4500,
+    "avg_relations_per_person": 2.25,
+    "time_span": {
+      "earliest": 1400,
+      "latest": 2024
+    }
+  }
+}
+
