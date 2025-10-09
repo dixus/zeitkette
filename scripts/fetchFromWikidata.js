@@ -81,15 +81,15 @@ WHERE {
   FILTER(?died >= -2975 && ?died <= 2024)
   FILTER(?died - ?born >= 25)
   
-  # Nur extrem relevante Personen (mindestens 100 Wikipedia-Artikel)
-  FILTER(?sitelinks >= 100)
+  # Relevante Personen (mindestens 80 Wikipedia-Artikel für breitere Abdeckung)
+  FILTER(?sitelinks >= 80)
   
   SERVICE wikibase:label { 
     bd:serviceParam wikibase:language "de,en". 
   }
 }
 ORDER BY DESC(?sitelinks)
-LIMIT 20
+LIMIT 100
 `;
 
 /**
@@ -191,11 +191,12 @@ async function loadPeopleByTimePeriods() {
   const allPeople = [];
   
   // Zeit-Perioden: RÜCKWÄRTS (von heute → Vergangenheit)
-  // Kleinere Zeiträume (50 Jahre) für bessere Performance
+  // 50-Jahre-Perioden für gute Performance UND vollständige historische Abdeckung
   const timePeriods = [];
   
-  // Von 2025 rückwärts bis 1000 (erstmal ohne Antike)
-  for (let year = 2025; year >= 1000; year -= 50) {
+  // ERWEITERT: Von 2025 rückwärts bis -600 (gesamte dokumentierte Geschichte!)
+  // -600 = Antike Griechenland (Thales, Pythagoras, etc.)
+  for (let year = 2025; year >= -600; year -= 50) {
     const start = year - 50;
     const end = year;
     timePeriods.push({
@@ -205,8 +206,9 @@ async function loadPeopleByTimePeriods() {
     });
   }
   
-  console.log(`📊 Total batches: ${timePeriods.length} (50-year periods from 2025 → 1000)`);
-  console.log(`⏱  Estimated time: ${Math.ceil(timePeriods.length * 10 / 60)} minutes\n`);
+  console.log(`📊 Total batches: ${timePeriods.length} (50-year periods from 2025 → -600)`);
+  console.log(`⏱  Estimated time: ${Math.ceil(timePeriods.length * 10 / 60)} minutes`);
+  console.log(`🎯 Target: ~1500-2000 people with 80+ Wikipedia articles\n`);
   
   for (let i = 0; i < timePeriods.length; i++) {
     const period = timePeriods[i];
@@ -215,9 +217,8 @@ async function loadPeopleByTimePeriods() {
     
     // Query für diese Zeit-Periode (ohne OFFSET!)
     const query = PEOPLE_QUERY
-      .replace('FILTER(?born >= 1400 && ?born <= 2020)', 
+      .replace('FILTER(?born >= -3000 && ?born <= 2020)', 
                `FILTER(?born >= ${period.start} && ?born <= ${period.end})`)
-      .replace('LIMIT 300', 'LIMIT 20'); // Pro 50 Jahre max 20 (ultra konservativ)
     
     let retries = 3;
     let success = false;

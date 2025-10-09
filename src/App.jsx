@@ -1,7 +1,6 @@
 import { useState, useEffect, useMemo, useCallback } from 'react';
 import { ArrowRight, Clock, Users, Sparkles, RotateCcw, List, BarChart3, Image as ImageIcon, Search } from 'lucide-react';
 import { loadAllData } from './dataLoader';
-import confetti from 'canvas-confetti';
 
 const THIS_YEAR = new Date().getFullYear();
 
@@ -274,7 +273,23 @@ function TimelineView({ chain, people, targetPerson, zoom, setZoom, onPersonClic
                   onClick={() => onPersonClick(person)}
                 />
                 
-                {/* Person indicator dot */}
+                {/* Person avatar at end of bar */}
+                <foreignObject
+                  x={endX - 20}
+                  y={y + BAR_HEIGHT / 2 - 20}
+                  width="40"
+                  height="40"
+                  className="cursor-pointer overflow-visible"
+                  onClick={() => onPersonClick(person)}
+                  onMouseEnter={() => setHoveredQid(person.qid)}
+                  onMouseLeave={() => setHoveredQid(null)}
+                >
+                  <div style={{ width: '40px', height: '40px' }}>
+                    <PersonAvatar person={person} size="sm" className="rounded-full border-3 border-white shadow-lg w-10 h-10" />
+                  </div>
+                </foreignObject>
+                
+                {/* Birth indicator dot */}
                 <circle
                   cx={startX}
                   cy={y + BAR_HEIGHT / 2}
@@ -365,6 +380,10 @@ function TimelineView({ chain, people, targetPerson, zoom, setZoom, onPersonClic
             <span className="text-neutral-700 font-medium">Geburt</span>
           </div>
           <div className="flex items-center gap-2">
+            <div className="w-6 h-6 rounded-full bg-gradient-to-br from-violet-400 to-purple-400 border-2 border-white"></div>
+            <span className="text-neutral-700 font-medium">Portrait (am Ende)</span>
+          </div>
+          <div className="flex items-center gap-2">
             <span className="text-purple-600 font-bold text-lg">1</span>
             <span className="text-neutral-700 font-medium">Position in der Kette</span>
           </div>
@@ -375,6 +394,98 @@ function TimelineView({ chain, people, targetPerson, zoom, setZoom, onPersonClic
       </div>
     </div>
   );
+}
+
+// Find shortest path between any two people using BFS
+function findPathBetween(startPerson, endPerson, people, minOverlap = 20, minFame = 100) {
+  const byName = new Map(people.map(p => [p.name, p]));
+  const start = typeof startPerson === 'string' ? byName.get(startPerson) : startPerson;
+  const end = typeof endPerson === 'string' ? byName.get(endPerson) : endPerson;
+  
+  if (!start || !end) return [];
+  if (start.name === end.name) return [start];
+  
+  // Filter for well-known people
+  const topPeople = people.filter(p => (p.sitelinks || 0) >= minFame);
+  const peopleByName = new Map(topPeople.map(p => [p.name, p]));
+  
+  // Helper: Check if two people can be connected (bidirectional, allow gaps)
+  const canConnect = (p1, p2) => {
+    const p1End = p1.died === 9999 ? THIS_YEAR : p1.died;
+    const p2End = p2.died === 9999 ? THIS_YEAR : p2.died;
+    
+    // Check for overlap
+    const overlapStart = Math.max(p1.born, p2.born);
+    const overlapEnd = Math.min(p1End, p2End);
+    const overlap = overlapEnd - overlapStart;
+    
+    // Prefer connections with good overlap
+    if (overlap >= minOverlap) return true;
+    
+    // Fallback: Allow connections with gaps up to 200 years in either direction
+    // This ensures we can find paths even across time periods
+    const timeDiff = Math.abs(p1.born - p2.born);
+    return timeDiff <= 200;
+  };
+  
+  // BFS from both ends
+  const queueStart = [[start]];
+  const queueEnd = [[end]];
+  const visitedStart = new Map([[start.name, [start]]]);
+  const visitedEnd = new Map([[end.name, [end]]]);
+  const MAX_DEPTH = 10; // Prevent infinite search
+  
+  while (queueStart.length > 0 || queueEnd.length > 0) {
+    // Expand from start
+    if (queueStart.length > 0) {
+      const path = queueStart.shift();
+      const current = path[path.length - 1];
+      
+      // Stop if path is too long
+      if (path.length > MAX_DEPTH) continue;
+      
+      // Check if we've met a path from the end
+      if (visitedEnd.has(current.name)) {
+        const endPath = visitedEnd.get(current.name);
+        return [...path, ...endPath.slice(1).reverse()];
+      }
+      
+      // Find neighbors
+      for (const neighbor of topPeople) {
+        if (!visitedStart.has(neighbor.name) && canConnect(current, neighbor)) {
+          const newPath = [...path, neighbor];
+          visitedStart.set(neighbor.name, newPath);
+          queueStart.push(newPath);
+        }
+      }
+    }
+    
+    // Expand from end
+    if (queueEnd.length > 0) {
+      const path = queueEnd.shift();
+      const current = path[path.length - 1];
+      
+      // Stop if path is too long
+      if (path.length > MAX_DEPTH) continue;
+      
+      // Check if we've met a path from the start
+      if (visitedStart.has(current.name)) {
+        const startPath = visitedStart.get(current.name);
+        return [...startPath, ...path.slice(1).reverse()];
+      }
+      
+      // Find neighbors
+      for (const neighbor of topPeople) {
+        if (!visitedEnd.has(neighbor.name) && canConnect(current, neighbor)) {
+          const newPath = [...path, neighbor];
+          visitedEnd.set(neighbor.name, newPath);
+          queueEnd.push(newPath);
+        }
+      }
+    }
+  }
+  
+  return []; // No path found
 }
 
 // Chain algorithm - shortest path from start to today
@@ -468,6 +579,9 @@ function App() {
   const [timelineZoom, setTimelineZoom] = useState(1); // Timeline zoom level
   const [searchQuery, setSearchQuery] = useState(''); // Search query
   const [showSearch, setShowSearch] = useState(false); // Show search modal
+  const [chainMode, setChainMode] = useState('toToday'); // 'toToday' or 'between'
+  const [startPerson, setStartPerson] = useState('Leonardo da Vinci'); // For 'between' mode
+  const [endPerson, setEndPerson] = useState('Albert Einstein'); // For 'between' mode
 
   useEffect(() => {
     loadAllData().then(({ people, relations }) => {
@@ -477,11 +591,19 @@ function App() {
     });
   }, []);
 
-  // Build chain from target person to today (chronological order)
+  // Build chain based on mode
   const chain = useMemo(() => {
-    if (!people.length || !targetPerson) return [];
-    return chainFrom(targetPerson, people, minOverlapYears, minFame);
-  }, [people, targetPerson, minOverlapYears, minFame]);
+    if (!people.length) return [];
+    
+    if (chainMode === 'toToday') {
+      if (!targetPerson) return [];
+      return chainFrom(targetPerson, people, minOverlapYears, minFame);
+    } else {
+      // 'between' mode
+      if (!startPerson || !endPerson) return [];
+      return findPathBetween(startPerson, endPerson, people, minOverlapYears, minFame);
+    }
+  }, [people, chainMode, targetPerson, startPerson, endPerson, minOverlapYears, minFame]);
 
   // Search filtered people
   const searchResults = useMemo(() => {
@@ -495,21 +617,6 @@ function App() {
       .slice(0, 20);
   }, [searchQuery, people]);
 
-  // Confetti celebration when chain loads
-  useEffect(() => {
-    if (chain.length > 0 && !loading) {
-      // Small delay to let page render
-      const timer = setTimeout(() => {
-        confetti({
-          particleCount: 100,
-          spread: 70,
-          origin: { y: 0.6 },
-          colors: ['#8b5cf6', '#a78bfa', '#c084fc', '#ec4899', '#f472b6']
-        });
-      }, 300);
-      return () => clearTimeout(timer);
-    }
-  }, [chain.length, loading]);
 
   // Keyboard shortcuts
   useEffect(() => {
@@ -625,56 +732,175 @@ function App() {
             </p>
           </div>
 
+          {/* Mode Selection */}
+          <div className="glass-strong rounded-3xl p-6 mb-6 shadow-2xl animate-scale-in">
+            <h2 className="text-lg font-bold text-center mb-4 text-neutral-800">Wähle deinen Modus</h2>
+            <div className="grid grid-cols-2 gap-3">
+              <button
+                onClick={() => setChainMode('toToday')}
+                className={`p-4 rounded-xl border-2 transition-all ${
+                  chainMode === 'toToday'
+                    ? 'bg-gradient-to-br from-violet-500 to-purple-500 text-white border-violet-600 shadow-lg scale-105'
+                    : 'bg-white/90 text-neutral-800 border-neutral-300 hover:border-purple-400'
+                }`}
+              >
+                <div className="text-2xl mb-2">📅</div>
+                <div className="font-bold text-sm">Bis Heute</div>
+                <div className="text-xs mt-1 opacity-90">Von Person X bis jetzt</div>
+              </button>
+              <button
+                onClick={() => setChainMode('between')}
+                className={`p-4 rounded-xl border-2 transition-all ${
+                  chainMode === 'between'
+                    ? 'bg-gradient-to-br from-violet-500 to-purple-500 text-white border-violet-600 shadow-lg scale-105'
+                    : 'bg-white/90 text-neutral-800 border-neutral-300 hover:border-purple-400'
+                }`}
+              >
+                <div className="text-2xl mb-2">🔗</div>
+                <div className="font-bold text-sm">Zwei Personen</div>
+                <div className="text-xs mt-1 opacity-90">Kürzester Pfad A → B</div>
+              </button>
+            </div>
+          </div>
+
           {/* Target Selection */}
           <div className="glass-strong rounded-3xl p-6 md:p-8 shadow-2xl animate-scale-in mb-6">
             <h2 className="text-xl md:text-2xl font-bold text-center mb-6 flex items-center justify-center gap-2 text-neutral-800">
               <Sparkles className="w-6 h-6 text-yellow-500 drop-shadow" />
-              Wähle dein Ziel
+              {chainMode === 'toToday' ? 'Wähle dein Ziel' : 'Wähle Start & Ziel'}
             </h2>
             
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4 mb-6">
-              {popularTargets.map((target) => (
-                <button
-                  key={target.name}
-                  onClick={() => {
-                    setTargetPerson(target.name);
-                    setShowLanding(false);
-                  }}
-                  className="group p-4 md:p-6 bg-white/90 backdrop-blur-sm rounded-2xl hover:shadow-xl transition-all duration-300 hover:scale-105 border-2 border-white hover:border-purple-400 hover:-translate-y-1"
-                >
-                  <div className="mb-3 group-hover:scale-110 transition-transform duration-300 flex justify-center">
-                    <PersonAvatar person={target.person} size="lg" className="rounded-2xl" />
+            {chainMode === 'toToday' ? (
+              // Single person selector for "To Today" mode
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4 mb-6">
+                {popularTargets.map((target) => (
+                  <button
+                    key={target.name}
+                    onClick={() => {
+                      setTargetPerson(target.name);
+                      setShowLanding(false);
+                    }}
+                    className="group p-4 md:p-6 bg-white/90 backdrop-blur-sm rounded-2xl hover:shadow-xl transition-all duration-300 hover:scale-105 border-2 border-white hover:border-purple-400 hover:-translate-y-1"
+                  >
+                    <div className="mb-3 group-hover:scale-110 transition-transform duration-300 flex justify-center">
+                      <PersonAvatar person={target.person} size="lg" className="rounded-2xl" />
+                    </div>
+                    <div className="font-bold text-sm mb-1 text-neutral-800">{target.name}</div>
+                    <div className="text-xs text-purple-600 font-medium">{target.era}</div>
+                  </button>
+                ))}
+              </div>
+            ) : (
+              // Dual person selector for "Between" mode
+              <div className="space-y-6 mb-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {/* Start Person */}
+                  <div className="bg-white/70 backdrop-blur-sm rounded-2xl p-4 border-2 border-violet-300">
+                    <div className="text-sm font-bold mb-2 text-violet-700 flex items-center gap-2">
+                      <span>🎯</span> Start Person
+                    </div>
+                    <select
+                      value={typeof startPerson === 'string' ? startPerson : startPerson?.name}
+                      onChange={(e) => setStartPerson(e.target.value)}
+                      className="w-full px-3 py-2 rounded-xl border-2 border-neutral-300 focus:border-violet-500 focus:ring-2 focus:ring-violet-200 outline-none transition-all text-sm bg-white font-medium"
+                    >
+                      {people
+                        .filter(p => p.died !== 9999)
+                        .sort((a, b) => a.name.localeCompare(b.name))
+                        .map(p => (
+                          <option key={p.qid} value={p.name}>
+                            {p.name} ({p.born}–{p.died})
+                          </option>
+                        ))}
+                    </select>
                   </div>
-                  <div className="font-bold text-sm mb-1 text-neutral-800">{target.name}</div>
-                  <div className="text-xs text-purple-600 font-medium">{target.era}</div>
-                </button>
-              ))}
-            </div>
+                  
+                  {/* End Person */}
+                  <div className="bg-white/70 backdrop-blur-sm rounded-2xl p-4 border-2 border-fuchsia-300">
+                    <div className="text-sm font-bold mb-2 text-fuchsia-700 flex items-center gap-2">
+                      <span>🏁</span> Ziel Person
+                    </div>
+                    <select
+                      value={typeof endPerson === 'string' ? endPerson : endPerson?.name}
+                      onChange={(e) => setEndPerson(e.target.value)}
+                      className="w-full px-3 py-2 rounded-xl border-2 border-neutral-300 focus:border-fuchsia-500 focus:ring-2 focus:ring-fuchsia-200 outline-none transition-all text-sm bg-white font-medium"
+                    >
+                      {people
+                        .filter(p => p.died !== 9999)
+                        .sort((a, b) => a.name.localeCompare(b.name))
+                        .map(p => (
+                          <option key={p.qid} value={p.name}>
+                            {p.name} ({p.born}–{p.died})
+                          </option>
+                        ))}
+                    </select>
+                  </div>
+                </div>
+                
+                {/* Quick suggestions for "Between" mode */}
+                <div className="text-center">
+                  <p className="text-xs text-neutral-600 mb-2 font-medium">🚀 Oder probiere diese spannenden Verbindungen:</p>
+                  <div className="flex flex-wrap justify-center gap-2">
+                    <button
+                      onClick={() => {
+                        setStartPerson('Leonardo da Vinci');
+                        setEndPerson('Albert Einstein');
+                      }}
+                      className="px-3 py-1 bg-white/90 rounded-full text-xs font-semibold text-purple-700 hover:bg-purple-100 transition-all border border-purple-300"
+                    >
+                      Da Vinci → Einstein
+                    </button>
+                    <button
+                      onClick={() => {
+                        setStartPerson('Kleopatra');
+                        setEndPerson('Napoleon Bonaparte');
+                      }}
+                      className="px-3 py-1 bg-white/90 rounded-full text-xs font-semibold text-purple-700 hover:bg-purple-100 transition-all border border-purple-300"
+                    >
+                      Kleopatra → Napoleon
+                    </button>
+                    <button
+                      onClick={() => {
+                        setStartPerson('Aristoteles');
+                        setEndPerson('Isaac Newton');
+                      }}
+                      className="px-3 py-1 bg-white/90 rounded-full text-xs font-semibold text-purple-700 hover:bg-purple-100 transition-all border border-purple-300"
+                    >
+                      Aristoteles → Newton
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
 
-            <div className="text-center">
-              <p className="text-sm text-neutral-600 mb-3 font-medium">oder wähle aus allen {people.length} Personen:</p>
-              <select
-                value={typeof targetPerson === 'string' ? targetPerson : targetPerson?.name}
-                onChange={(e) => setTargetPerson(e.target.value)}
-                className="px-4 py-3 rounded-xl border-2 border-neutral-300 focus:border-purple-500 focus:ring-4 focus:ring-purple-200 outline-none transition-all text-sm bg-white/90 backdrop-blur-sm font-medium"
-              >
-                {people
-                  .filter(p => p.died !== 9999)
-                  .sort((a, b) => a.name.localeCompare(b.name))
-                  .map(p => (
-                    <option key={p.qid} value={p.name}>
-                      {p.name} ({p.born}–{p.died})
-                    </option>
-                  ))}
-              </select>
-            </div>
+            {chainMode === 'toToday' && (
+              <div className="text-center">
+                <p className="text-sm text-neutral-600 mb-3 font-medium">oder wähle aus allen {people.length} Personen:</p>
+                <select
+                  value={typeof targetPerson === 'string' ? targetPerson : targetPerson?.name}
+                  onChange={(e) => setTargetPerson(e.target.value)}
+                  className="px-4 py-3 rounded-xl border-2 border-neutral-300 focus:border-purple-500 focus:ring-4 focus:ring-purple-200 outline-none transition-all text-sm bg-white/90 backdrop-blur-sm font-medium"
+                >
+                  {people
+                    .filter(p => p.died !== 9999)
+                    .sort((a, b) => a.name.localeCompare(b.name))
+                    .map(p => (
+                      <option key={p.qid} value={p.name}>
+                        {p.name} ({p.born}–{p.died})
+                      </option>
+                    ))}
+                </select>
+              </div>
+            )}
           </div>
 
           <button
             onClick={() => setShowLanding(false)}
             className="w-full py-5 bg-gradient-to-r from-violet-600 via-purple-600 to-fuchsia-600 text-white text-lg md:text-xl font-bold rounded-2xl hover:shadow-2xl transition-all duration-300 hover:scale-[1.02] hover:-translate-y-1"
           >
-            <span className="drop-shadow-lg">🚀 Zeitkette starten</span>
+            <span className="drop-shadow-lg">
+              {chainMode === 'toToday' ? '🚀 Zeitkette starten' : '🔗 Pfad finden'}
+            </span>
         </button>
 
           {/* Stats Preview */}
@@ -709,7 +935,11 @@ function App() {
                 Zeitkette
               </h1>
               <p className="text-base md:text-lg text-neutral-700 font-semibold">
-                Zu: <strong className="text-purple-700">{typeof targetPerson === 'string' ? targetPerson : targetPerson?.name}</strong>
+                {chainMode === 'toToday' ? (
+                  <>Zu: <strong className="text-purple-700">{typeof targetPerson === 'string' ? targetPerson : targetPerson?.name}</strong></>
+                ) : (
+                  <><strong className="text-violet-700">{typeof startPerson === 'string' ? startPerson : startPerson?.name}</strong> → <strong className="text-fuchsia-700">{typeof endPerson === 'string' ? endPerson : endPerson?.name}</strong></>
+                )}
               </p>
             </div>
             <div className="flex items-center gap-3">
@@ -831,7 +1061,35 @@ function App() {
 
           {/* The Chain - Views */}
       <main className="max-w-7xl mx-auto px-4 pb-12">
-        {viewMode === 'list' ? (
+        {chain.length === 0 ? (
+          /* No Path Found */
+          <div className="max-w-2xl mx-auto text-center py-12">
+            <div className="glass-strong rounded-3xl p-12 animate-fade-in">
+              <div className="text-7xl mb-6">😔</div>
+              <h2 className="text-3xl font-bold mb-4 text-neutral-800">
+                Keine Verbindung gefunden
+              </h2>
+              <p className="text-lg text-neutral-600 mb-6">
+                {chainMode === 'between' ? (
+                  <>
+                    Es konnte kein Pfad zwischen <strong className="text-violet-700">{typeof startPerson === 'string' ? startPerson : startPerson?.name}</strong> und <strong className="text-fuchsia-700">{typeof endPerson === 'string' ? endPerson : endPerson?.name}</strong> gefunden werden.
+                  </>
+                ) : (
+                  <>Keine Kette verfügbar.</>
+                )}
+              </p>
+              <p className="text-sm text-neutral-500 mb-8">
+                Versuche die Filter anzupassen oder wähle andere Personen.
+              </p>
+              <button
+                onClick={() => setShowLanding(true)}
+                className="px-6 py-3 bg-gradient-to-r from-violet-600 to-purple-600 text-white rounded-xl font-semibold hover:shadow-lg transition-all hover:scale-105"
+              >
+                ← Zurück zur Auswahl
+              </button>
+            </div>
+          </div>
+        ) : viewMode === 'list' ? (
           /* LIST VIEW */
           <div className="relative grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-6">
             {/* Timeline Line */}
@@ -1078,15 +1336,51 @@ function App() {
 
             {/* End Marker */}
             <div className="mt-8 glass-strong rounded-2xl p-6 md:p-8 text-center shadow-xl">
-              <div className="text-5xl md:text-6xl mb-4 drop-shadow-lg">🎯</div>
-              <h2 className="text-2xl md:text-3xl font-bold mb-3 text-neutral-800">Ziel erreicht!</h2>
+              <div className="text-5xl md:text-6xl mb-4 drop-shadow-lg">
+                {chainMode === 'toToday' ? '🎯' : '🔗'}
+              </div>
+              <h2 className="text-2xl md:text-3xl font-bold mb-3 text-neutral-800">
+                {chainMode === 'toToday' ? 'Ziel erreicht!' : 'Verbindung gefunden!'}
+              </h2>
               <p className="text-base md:text-lg text-neutral-700 mb-6 font-medium">
-                Von <strong className="text-purple-700">heute</strong> bis <strong className="text-purple-700">{typeof targetPerson === 'string' ? targetPerson : targetPerson?.name}</strong>
+                {chainMode === 'toToday' ? (
+                  <>Von <strong className="text-purple-700">heute</strong> bis <strong className="text-purple-700">{typeof targetPerson === 'string' ? targetPerson : targetPerson?.name}</strong></>
+                ) : (
+                  <>Von <strong className="text-violet-700">{typeof startPerson === 'string' ? startPerson : startPerson?.name}</strong> bis <strong className="text-fuchsia-700">{typeof endPerson === 'string' ? endPerson : endPerson?.name}</strong></>
+                )}
               </p>
-              <div className="inline-block px-6 md:px-8 py-4 bg-gradient-to-r from-purple-100 via-fuchsia-100 to-pink-100 rounded-2xl shadow-md">
-                <div className="text-3xl md:text-4xl font-extrabold bg-gradient-to-r from-violet-600 via-purple-600 to-fuchsia-600 bg-clip-text text-transparent">
-                  Nur {lifetimeCount} Lebenszeiten!
+              <div className="space-y-4">
+                <div className="inline-block px-6 md:px-8 py-4 bg-gradient-to-r from-purple-100 via-fuchsia-100 to-pink-100 rounded-2xl shadow-md">
+                  <div className="text-3xl md:text-4xl font-extrabold bg-gradient-to-r from-violet-600 via-purple-600 to-fuchsia-600 bg-clip-text text-transparent">
+                    {chainMode === 'toToday' ? (
+                      <>Nur {lifetimeCount} Lebenszeiten!</>
+                    ) : (
+                      <>Nur {chain.length} {chain.length === 1 ? 'Person' : 'Personen'}!</>
+                    )}
+                  </div>
                 </div>
+                
+                {/* Share Button */}
+                <button
+                  onClick={() => {
+                    const shareText = chainMode === 'toToday'
+                      ? `🎯 Ich habe ${typeof targetPerson === 'string' ? targetPerson : targetPerson?.name} erreicht in nur ${chain.length} Schritten und ${lifetimeCount} Lebenszeiten! ⏳ #Zeitkette`
+                      : `🔗 Ich habe ${typeof startPerson === 'string' ? startPerson : startPerson?.name} mit ${typeof endPerson === 'string' ? endPerson : endPerson?.name} verbunden in nur ${chain.length} Schritten! ⏳ #Zeitkette`;
+                    
+                    if (navigator.share) {
+                      navigator.share({
+                        title: 'Zeitkette',
+                        text: shareText
+                      }).catch(() => {});
+                    } else {
+                      navigator.clipboard.writeText(shareText);
+                      alert('Text in Zwischenablage kopiert! 📋');
+                    }
+                  }}
+                  className="px-6 py-3 bg-gradient-to-r from-violet-600 to-fuchsia-600 text-white rounded-xl font-semibold hover:shadow-lg transition-all hover:scale-105"
+                >
+                  📤 Teilen
+                </button>
               </div>
             </div>
           </div>

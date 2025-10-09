@@ -577,6 +577,17 @@
     "sitelinks": 170
   },
   {
+    "name": "Carl Linnaeus",
+    "born": 1707,
+    "died": 1778,
+    "domains": [
+      "Science"
+    ],
+    "region": "SE",
+    "qid": "Q1043",
+    "sitelinks": 165
+  },
+  {
     "name": "Sokrates",
     "born": -470,
     "died": -399,
@@ -931,6 +942,18 @@
     "region": "MN",
     "qid": "Q720",
     "sitelinks": 160
+  },
+  {
+    "name": "Blaise Pascal",
+    "born": 1623,
+    "died": 1662,
+    "domains": [
+      "Math",
+      "Philosophy"
+    ],
+    "region": "FR",
+    "qid": "Q14278",
+    "sitelinks": 155
   },
   {
     "name": "Pythagoras",
@@ -1468,6 +1491,85 @@
     "region": "UZ",
     "qid": "Q8011",
     "sitelinks": 150
+  },
+  {
+    "name": "Max Planck",
+    "born": 1858,
+    "died": 1947,
+    "domains": [
+      "Science"
+    ],
+    "region": "DE",
+    "qid": "Q7056",
+    "sitelinks": 148
+  },
+  {
+    "name": "Ovid",
+    "born": -43,
+    "died": 17,
+    "domains": [
+      "Literature"
+    ],
+    "region": "IT",
+    "qid": "Q7198",
+    "sitelinks": 148
+  },
+  {
+    "name": "Herodotus",
+    "born": -484,
+    "died": -425,
+    "domains": [
+      "Literature"
+    ],
+    "region": "GR",
+    "qid": "Q26825",
+    "sitelinks": 148
+  },
+  {
+    "name": "Erwin Schrödinger",
+    "born": 1887,
+    "died": 1961,
+    "domains": [
+      "Science"
+    ],
+    "region": "AT",
+    "qid": "Q9035",
+    "sitelinks": 145
+  },
+  {
+    "name": "John von Neumann",
+    "born": 1903,
+    "died": 1957,
+    "domains": [
+      "Math",
+      "Science"
+    ],
+    "region": "HU",
+    "qid": "Q17492",
+    "sitelinks": 142
+  },
+  {
+    "name": "Alexander Graham Bell",
+    "born": 1847,
+    "died": 1922,
+    "domains": [
+      "Science"
+    ],
+    "region": "GB",
+    "qid": "Q34286",
+    "sitelinks": 142
+  },
+  {
+    "name": "Ali ibn Abi Talib",
+    "born": 601,
+    "died": 661,
+    "domains": [
+      "Religion",
+      "Politics"
+    ],
+    "region": "SA",
+    "qid": "Q39646",
+    "sitelinks": 142
   },
   {
     "name": "Epikur",
@@ -2325,6 +2427,50 @@
     "sitelinks": 140
   },
   {
+    "name": "Werner Heisenberg",
+    "born": 1901,
+    "died": 1976,
+    "domains": [
+      "Science"
+    ],
+    "region": "DE",
+    "qid": "Q38096",
+    "sitelinks": 140
+  },
+  {
+    "name": "Dmitri Mendeleev",
+    "born": 1834,
+    "died": 1907,
+    "domains": [
+      "Science"
+    ],
+    "region": "RU",
+    "qid": "Q9106",
+    "sitelinks": 138
+  },
+  {
+    "name": "Hadrian",
+    "born": 76,
+    "died": 138,
+    "domains": [
+      "Politics"
+    ],
+    "region": "ES",
+    "qid": "Q1427",
+    "sitelinks": 135
+  },
+  {
+    "name": "Epicurus",
+    "born": -341,
+    "died": -270,
+    "domains": [
+      "Philosophy"
+    ],
+    "region": "GR",
+    "qid": "Q8479",
+    "sitelinks": 132
+  },
+  {
     "name": "Diogenes",
     "born": -412,
     "died": -323,
@@ -3078,6 +3224,63 @@
     "sitelinks": 130
   },
   {
+    "name": "Giordano Bruno",
+    "born": 1548,
+    "died": 1600,
+    "domains": [
+      "Philosophy"
+    ],
+    "region": "IT",
+    "qid": "Q36332",
+    "sitelinks": 128
+  },
+  {
+    "name": "Abu Bakr",
+    "born": 573,
+    "died": 634,
+    "domains": [
+      "Religion",
+      "Politics"
+    ],
+    "region": "SA",
+    "qid": "Q188736",
+    "sitelinks": 128
+  },
+  {
+    "name": "Trajan",
+    "born": 53,
+    "died": 117,
+    "domains": [
+      "Politics"
+    ],
+    "region": "ES",
+    "qid": "Q1425",
+    "sitelinks": 128
+  },
+  {
+    "name": "Al-Khwarizmi",
+    "born": 780,
+    "died": 850,
+    "domains": [
+      "Math",
+      "Science"
+    ],
+    "region": "UZ",
+    "qid": "Q8748",
+    "sitelinks": 125
+  },
+  {
+    "name": "Pericles",
+    "born": -495,
+    "died": -429,
+    "domains": [
+      "Politics"
+    ],
+    "region": "GR",
+    "qid": "Q5449",
+    "sitelinks": 125
+  },
+  {
     "name": "Heraklit",
     "born": -535,
     "died": -475,
@@ -3707,6 +3910,99 @@
     "sitelinks": 120
   },
   {
+    "name": "Ernest Rutherford",
+    "born": 1871,
+    "died": 1937,
+    "domains": [
+      "Science"
+    ],
+    "region": "NZ",
+    "qid": "Q9046",
+    "sitelinks": 118
+  },
+  {
+    "name": "Kurt Gödel",
+    "born": 1906,
+    "died": 1978,
+    "domains": [
+      "Math",
+      "Philosophy"
+    ],
+    "region": "AT",
+    "qid": "Q7307",
+    "sitelinks": 118
+  },
+  {
+    "name": "Omar Khayyam",
+    "born": 1048,
+    "died": 1131,
+    "domains": [
+      "Math",
+      "Literature"
+    ],
+    "region": "IR",
+    "qid": "Q35876",
+    "sitelinks": 118
+  },
+  {
+    "name": "Umar",
+    "born": 584,
+    "died": 644,
+    "domains": [
+      "Religion",
+      "Politics"
+    ],
+    "region": "SA",
+    "qid": "Q8878",
+    "sitelinks": 118
+  },
+  {
+    "name": "J. Robert Oppenheimer",
+    "born": 1904,
+    "died": 1967,
+    "domains": [
+      "Science"
+    ],
+    "region": "US",
+    "qid": "Q132537",
+    "sitelinks": 115
+  },
+  {
+    "name": "Pierre de Fermat",
+    "born": 1607,
+    "died": 1665,
+    "domains": [
+      "Math"
+    ],
+    "region": "FR",
+    "qid": "Q8906",
+    "sitelinks": 115
+  },
+  {
+    "name": "Thales",
+    "born": -624,
+    "died": -546,
+    "domains": [
+      "Philosophy",
+      "Science"
+    ],
+    "region": "GR",
+    "qid": "Q36303",
+    "sitelinks": 115
+  },
+  {
+    "name": "Eratosthenes",
+    "born": -276,
+    "died": -194,
+    "domains": [
+      "Math",
+      "Science"
+    ],
+    "region": "GR",
+    "qid": "Q43182",
+    "sitelinks": 112
+  },
+  {
     "name": "Cato der Ältere",
     "born": -234,
     "died": -149,
@@ -4324,6 +4620,40 @@
     "sitelinks": 110
   },
   {
+    "name": "Paul Dirac",
+    "born": 1902,
+    "died": 1984,
+    "domains": [
+      "Science"
+    ],
+    "region": "GB",
+    "qid": "Q39313",
+    "sitelinks": 108
+  },
+  {
+    "name": "Christiaan Huygens",
+    "born": 1629,
+    "died": 1695,
+    "domains": [
+      "Science",
+      "Math"
+    ],
+    "region": "NL",
+    "qid": "Q41711",
+    "sitelinks": 108
+  },
+  {
+    "name": "Saint Benedict",
+    "born": 480,
+    "died": 543,
+    "domains": [
+      "Religion"
+    ],
+    "region": "IT",
+    "qid": "Q167477",
+    "sitelinks": 102
+  },
+  {
     "name": "Duns Scotus",
     "born": 1266,
     "died": 1308,
@@ -4531,5 +4861,231 @@
     "region": "AT",
     "qid": "Q78513",
     "sitelinks": 100
+  },
+  {
+    "name": "Robert Hooke",
+    "born": 1635,
+    "died": 1703,
+    "domains": [
+      "Science"
+    ],
+    "region": "GB",
+    "qid": "Q46830",
+    "sitelinks": 98
+  },
+  {
+    "name": "Al-Biruni",
+    "born": 973,
+    "died": 1050,
+    "domains": [
+      "Science",
+      "Math"
+    ],
+    "region": "UZ",
+    "qid": "Q28981",
+    "sitelinks": 98
+  },
+  {
+    "name": "Pope Gregory I",
+    "born": 540,
+    "died": 604,
+    "domains": [
+      "Religion"
+    ],
+    "region": "IT",
+    "qid": "Q42827",
+    "sitelinks": 98
+  },
+  {
+    "name": "Saint Patrick",
+    "born": 385,
+    "died": 461,
+    "domains": [
+      "Religion"
+    ],
+    "region": "IE",
+    "qid": "Q165479",
+    "sitelinks": 98
+  },
+  {
+    "name": "Al-Razi",
+    "born": 865,
+    "died": 925,
+    "domains": [
+      "Medicine",
+      "Science"
+    ],
+    "region": "IR",
+    "qid": "Q39285",
+    "sitelinks": 95
+  },
+  {
+    "name": "Emmy Noether",
+    "born": 1882,
+    "died": 1935,
+    "domains": [
+      "Math"
+    ],
+    "region": "DE",
+    "qid": "Q7604",
+    "sitelinks": 92
+  },
+  {
+    "name": "William of Ockham",
+    "born": 1287,
+    "died": 1347,
+    "domains": [
+      "Philosophy"
+    ],
+    "region": "GB",
+    "qid": "Q45953",
+    "sitelinks": 92
+  },
+  {
+    "name": "Al-Ghazali",
+    "born": 1058,
+    "died": 1111,
+    "domains": [
+      "Philosophy"
+    ],
+    "region": "IR",
+    "qid": "Q190711",
+    "sitelinks": 92
+  },
+  {
+    "name": "Bede",
+    "born": 673,
+    "died": 735,
+    "domains": [
+      "Literature",
+      "Philosophy"
+    ],
+    "region": "GB",
+    "qid": "Q61042",
+    "sitelinks": 92
+  },
+  {
+    "name": "Clovis I",
+    "born": 466,
+    "died": 511,
+    "domains": [
+      "Politics"
+    ],
+    "region": "FR",
+    "qid": "Q83323",
+    "sitelinks": 92
+  },
+  {
+    "name": "Polybius",
+    "born": -200,
+    "died": -118,
+    "domains": [
+      "Literature"
+    ],
+    "region": "GR",
+    "qid": "Q193018",
+    "sitelinks": 92
+  },
+  {
+    "name": "Albertus Magnus",
+    "born": 1200,
+    "died": 1280,
+    "domains": [
+      "Philosophy",
+      "Science"
+    ],
+    "region": "DE",
+    "qid": "Q60059",
+    "sitelinks": 88
+  },
+  {
+    "name": "Theodora (Byzantine)",
+    "born": 500,
+    "died": 548,
+    "domains": [
+      "Politics"
+    ],
+    "region": "GR",
+    "qid": "Q168827",
+    "sitelinks": 88
+  },
+  {
+    "name": "Nicolaus Cusanus",
+    "born": 1401,
+    "died": 1464,
+    "domains": [
+      "Philosophy"
+    ],
+    "region": "DE",
+    "qid": "Q57415",
+    "sitelinks": 85
+  },
+  {
+    "name": "Isidore of Seville",
+    "born": 560,
+    "died": 636,
+    "domains": [
+      "Philosophy"
+    ],
+    "region": "ES",
+    "qid": "Q171144",
+    "sitelinks": 85
+  },
+  {
+    "name": "Saint Ambrose",
+    "born": 340,
+    "died": 397,
+    "domains": [
+      "Religion",
+      "Philosophy"
+    ],
+    "region": "IT",
+    "qid": "Q189499",
+    "sitelinks": 85
+  },
+  {
+    "name": "Duns Scotus",
+    "born": 1266,
+    "died": 1308,
+    "domains": [
+      "Philosophy"
+    ],
+    "region": "GB",
+    "qid": "Q152030",
+    "sitelinks": 82
+  },
+  {
+    "name": "Anselm of Canterbury",
+    "born": 1033,
+    "died": 1109,
+    "domains": [
+      "Philosophy"
+    ],
+    "region": "IT",
+    "qid": "Q102145",
+    "sitelinks": 82
+  },
+  {
+    "name": "Odoacer",
+    "born": 433,
+    "died": 493,
+    "domains": [
+      "Politics"
+    ],
+    "region": "IT",
+    "qid": "Q193258",
+    "sitelinks": 82
+  },
+  {
+    "name": "Origen",
+    "born": 185,
+    "died": 253,
+    "domains": [
+      "Philosophy",
+      "Religion"
+    ],
+    "region": "EG",
+    "qid": "Q191703",
+    "sitelinks": 82
   }
 ]
