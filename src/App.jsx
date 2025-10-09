@@ -1,6 +1,7 @@
-import { useState, useEffect, useMemo, useCallback } from 'react';
-import { ArrowRight, Clock, Users, Sparkles, RotateCcw, List, BarChart3, Image as ImageIcon, Search } from 'lucide-react';
+import { useState, useEffect, useMemo, useCallback, useRef } from 'react';
+import { ArrowRight, Clock, Users, Sparkles, RotateCcw, List, BarChart3, Image as ImageIcon, Search, Network } from 'lucide-react';
 import { loadAllData } from './dataLoader';
+import * as d3 from 'd3';
 
 const THIS_YEAR = new Date().getFullYear();
 
@@ -488,6 +489,83 @@ function findPathBetween(startPerson, endPerson, people, minOverlap = 20, minFam
   return []; // No path found
 }
 
+// Build chain through specific waypoints
+function buildChainThroughWaypoints(startPerson, waypoints, endPerson, people, minOverlap = 20, minFame = 100) {
+  if (!waypoints || waypoints.length === 0) {
+    // No waypoints, use regular pathfinding
+    if (endPerson) {
+      return findPathBetween(startPerson, endPerson, people, minOverlap, minFame);
+    } else {
+      return chainFrom(startPerson, people, minOverlap, minFame);
+    }
+  }
+  
+  // Build chain in segments through each waypoint
+  const byName = new Map(people.map(p => [p.name, p]));
+  const segments = [];
+  
+  // Build all the segments
+  let currentStart = typeof startPerson === 'string' ? byName.get(startPerson) : startPerson;
+  
+  for (const waypointName of waypoints) {
+    const waypoint = byName.get(waypointName);
+    if (!waypoint) continue;
+    
+    if (currentStart.name === waypoint.name) {
+      // Already at this waypoint, just include it
+      if (segments.length === 0) {
+        segments.push([currentStart]);
+      }
+      currentStart = waypoint;
+      continue;
+    }
+    
+    // Find path from current to waypoint
+    const segment = findPathBetween(currentStart, waypoint, people, minOverlap, minFame);
+    
+    if (segment.length === 0) {
+      // Can't reach this waypoint, skip it
+      console.warn(`Cannot reach waypoint ${waypointName} from ${currentStart.name}`);
+      continue;
+    }
+    
+    segments.push(segment);
+    currentStart = waypoint;
+  }
+  
+  // Add final segment to end person (if specified)
+  if (endPerson) {
+    const end = typeof endPerson === 'string' ? byName.get(endPerson) : endPerson;
+    if (end && currentStart.name !== end.name) {
+      const finalSegment = findPathBetween(currentStart, end, people, minOverlap, minFame);
+      if (finalSegment.length > 0) {
+        segments.push(finalSegment);
+      }
+    } else if (end && currentStart.name === end.name) {
+      // Already at end, nothing to add
+    }
+  } else {
+    // No end specified, chain to today
+    const toTodaySegment = chainFrom(currentStart, people, minOverlap, minFame);
+    if (toTodaySegment.length > 0) {
+      segments.push(toTodaySegment);
+    }
+  }
+  
+  // Merge segments, removing duplicates at connection points
+  if (segments.length === 0) return [];
+  
+  const result = [...segments[0]];
+  
+  for (let i = 1; i < segments.length; i++) {
+    const segment = segments[i];
+    // Skip first person of each segment (it's the last of the previous)
+    result.push(...segment.slice(1));
+  }
+  
+  return result;
+}
+
 // Chain algorithm - shortest path from start to today
 // Each person's BIRTH should be close to the previous person's DEATH
 // minOverlap controls how much people's lives should overlap for realistic connections
@@ -564,6 +642,340 @@ function chainFrom(start, people, minOverlap = 20, minFame = 100) {
   return result;
 }
 
+// Network View Component - Force-Directed Graph
+function NetworkView({ chain, people, onPersonClick, hoveredQid, setHoveredQid }) {
+  const svgRef = useRef(null);
+  const [dimensions, setDimensions] = useState({ width: 1200, height: 800 });
+  const [showAllConnections, setShowAllConnections] = useState(true);
+  const [stats, setStats] = useState({ totalNodes: chain.length, totalLinks: 0, nearbyPeople: 0 });
+  
+  useEffect(() => {
+    if (!svgRef.current || chain.length === 0) return;
+    
+    // Clear previous visualization
+    d3.select(svgRef.current).selectAll('*').remove();
+    
+    const width = dimensions.width;
+    const height = dimensions.height;
+    
+    // Create nodes from chain
+    const chainQids = new Set(chain.map(p => p.qid));
+    const chainQidToIndex = new Map(chain.map((p, i) => [p.qid, i]));
+    
+    // Create graph data - start with chain members
+    const nodes = chain.map(p => ({
+      ...p,
+      inChain: true,
+      chainIndex: chainQidToIndex.get(p.qid),
+      color: `hsl(${250 + (chainQidToIndex.get(p.qid) / chain.length) * 60}, 70%, 60%)`
+    }));
+    
+    // Add nearby people who overlap with chain members (to show the network)
+    const nearbyPeople = [];
+    if (showAllConnections && people.length > 0) {
+      people.forEach(p => {
+        if (chainQids.has(p.qid)) return; // Skip if already in chain
+        if ((p.sitelinks || 0) < 140) return; // Only show famous people
+        
+        // Check if this person overlaps with ANY chain member
+        const overlapsWithChain = chain.some(chainPerson => {
+          const p1End = chainPerson.died === 9999 ? THIS_YEAR : chainPerson.died;
+          const p2End = p.died === 9999 ? THIS_YEAR : p.died;
+          const overlap = Math.min(p1End, p2End) - Math.max(chainPerson.born, p.born);
+          return overlap > 20; // At least 20 years overlap
+        });
+        
+        if (overlapsWithChain && nearbyPeople.length < 30) { // Limit to 30 extra nodes
+          nearbyPeople.push(p);
+        }
+      });
+      
+      // Add nearby people as nodes
+      nearbyPeople.forEach(p => {
+        nodes.push({
+          ...p,
+          inChain: false,
+          color: '#94a3b8' // Gray color for non-chain people
+        });
+      });
+    }
+    
+    const links = [];
+    
+    // Create links between ALL people who overlap in time (not just chain)
+    for (let i = 0; i < nodes.length; i++) {
+      for (let j = i + 1; j < nodes.length; j++) {
+        const p1 = nodes[i];
+        const p2 = nodes[j];
+        const p1End = p1.died === 9999 ? THIS_YEAR : p1.died;
+        const p2End = p2.died === 9999 ? THIS_YEAR : p2.died;
+        const overlap = Math.min(p1End, p2End) - Math.max(p1.born, p2.born);
+        
+        if (overlap > 20) { // They overlapped for at least 20 years
+          const bothInChain = p1.inChain && p2.inChain;
+          const isConsecutive = bothInChain && Math.abs((p1.chainIndex || 0) - (p2.chainIndex || 0)) === 1;
+          
+          links.push({
+            source: p1.qid,
+            target: p2.qid,
+            overlap,
+            strength: isConsecutive ? 2 : 0.3,
+            type: isConsecutive ? 'chain' : 'connection'
+          });
+        }
+      }
+    }
+    
+    // Update stats
+    setStats({
+      totalNodes: nodes.length,
+      totalLinks: links.length,
+      nearbyPeople: nearbyPeople.length
+    });
+    
+    // Setup D3 force simulation
+    const simulation = d3.forceSimulation(nodes)
+      .force('link', d3.forceLink(links)
+        .id(d => d.qid)
+        .distance(d => d.type === 'chain' ? 150 : 200)
+        .strength(d => d.type === 'chain' ? 0.8 : 0.3))
+      .force('charge', d3.forceManyBody()
+        .strength(-500))
+      .force('center', d3.forceCenter(width / 2, height / 2))
+      .force('collision', d3.forceCollide().radius(50));
+    
+    // Create SVG
+    const svg = d3.select(svgRef.current)
+      .attr('width', width)
+      .attr('height', height)
+      .attr('viewBox', [0, 0, width, height]);
+    
+    // Add zoom behavior
+    const g = svg.append('g');
+    
+    svg.call(d3.zoom()
+      .scaleExtent([0.1, 4])
+      .on('zoom', (event) => {
+        g.attr('transform', event.transform);
+      }));
+    
+    // Draw links
+    const link = g.append('g')
+      .selectAll('line')
+      .data(links)
+      .join('line')
+      .attr('stroke', d => d.type === 'chain' ? '#8b5cf6' : '#e2e8f0')
+      .attr('stroke-width', d => d.type === 'chain' ? 4 : 1)
+      .attr('stroke-opacity', d => d.type === 'chain' ? 0.8 : 0.2);
+    
+    // Draw nodes
+    const node = g.append('g')
+      .selectAll('g')
+      .data(nodes)
+      .join('g')
+      .attr('cursor', 'pointer')
+      .call(drag(simulation));
+    
+    // Load images for all nodes
+    nodes.forEach(async (d) => {
+      if (d.qid && !d.imageUrl) {
+        const url = await fetchPersonImage(d.qid);
+        d.imageUrl = url;
+        // Update the node with image and fade in
+        if (url) {
+          node.filter(n => n.qid === d.qid)
+            .select('image')
+            .attr('href', url)
+            .transition()
+            .duration(300)
+            .attr('opacity', 1);
+        }
+      }
+    });
+    
+    // Node background circles
+    node.append('circle')
+      .attr('r', d => d.inChain ? 30 : 15)
+      .attr('fill', d => d.color)
+      .attr('stroke', '#fff')
+      .attr('stroke-width', d => d.inChain ? 3 : 2)
+      .attr('opacity', d => d.inChain ? 1 : 0.6)
+      .on('mouseover', function(event, d) {
+        setHoveredQid(d.qid);
+        d3.select(this.parentNode)
+          .select('circle')
+          .transition()
+          .duration(200)
+          .attr('r', d => d.inChain ? 40 : 22);
+        d3.select(this.parentNode)
+          .select('image')
+          .transition()
+          .duration(200)
+          .attr('width', d => d.inChain ? 76 : 40)
+          .attr('height', d => d.inChain ? 76 : 40)
+          .attr('x', d => d.inChain ? -38 : -20)
+          .attr('y', d => d.inChain ? -38 : -20);
+      })
+      .on('mouseout', function(event, d) {
+        setHoveredQid(null);
+        d3.select(this.parentNode)
+          .select('circle')
+          .transition()
+          .duration(200)
+          .attr('r', d => d.inChain ? 30 : 15);
+        d3.select(this.parentNode)
+          .select('image')
+          .transition()
+          .duration(200)
+          .attr('width', d => d.inChain ? 56 : 26)
+          .attr('height', d => d.inChain ? 56 : 26)
+          .attr('x', d => d.inChain ? -28 : -13)
+          .attr('y', d => d.inChain ? -28 : -13);
+      })
+      .on('click', (event, d) => {
+        event.stopPropagation();
+        onPersonClick(d);
+      });
+    
+    // Clip path for circular images
+    const defs = svg.append('defs');
+    nodes.forEach((d, i) => {
+      defs.append('clipPath')
+        .attr('id', `clip-${d.qid}`)
+        .append('circle')
+        .attr('r', d.inChain ? 28 : 13)
+        .attr('cx', 0)
+        .attr('cy', 0);
+    });
+    
+    // Avatar images
+    node.append('image')
+      .attr('width', d => d.inChain ? 56 : 26)
+      .attr('height', d => d.inChain ? 56 : 26)
+      .attr('x', d => d.inChain ? -28 : -13)
+      .attr('y', d => d.inChain ? -28 : -13)
+      .attr('href', d => d.imageUrl || '')
+      .attr('clip-path', d => `url(#clip-${d.qid})`)
+      .attr('opacity', d => d.imageUrl ? 1 : 0)
+      .style('pointer-events', 'none');
+    
+    // Node labels
+    node.append('text')
+      .text(d => d.name.split(' ').pop()) // Last name
+      .attr('text-anchor', 'middle')
+      .attr('dy', 50)
+      .attr('font-size', '12px')
+      .attr('font-weight', 'bold')
+      .attr('fill', '#1f2937')
+      .attr('pointer-events', 'none');
+    
+    // Chain number badges
+    node.filter(d => d.inChain)
+      .append('text')
+      .text((d, i) => chain.length - i)
+      .attr('text-anchor', 'middle')
+      .attr('dy', 5)
+      .attr('font-size', '16px')
+      .attr('font-weight', 'bold')
+      .attr('fill', '#fff')
+      .attr('pointer-events', 'none');
+    
+    // Update positions on each tick
+    simulation.on('tick', () => {
+      link
+        .attr('x1', d => d.source.x)
+        .attr('y1', d => d.source.y)
+        .attr('x2', d => d.target.x)
+        .attr('y2', d => d.target.y);
+      
+      node.attr('transform', d => `translate(${d.x},${d.y})`);
+    });
+    
+    // Drag behavior
+    function drag(simulation) {
+      function dragstarted(event) {
+        if (!event.active) simulation.alphaTarget(0.3).restart();
+        event.subject.fx = event.subject.x;
+        event.subject.fy = event.subject.y;
+      }
+      
+      function dragged(event) {
+        event.subject.fx = event.x;
+        event.subject.fy = event.y;
+      }
+      
+      function dragended(event) {
+        if (!event.active) simulation.alphaTarget(0);
+        event.subject.fx = null;
+        event.subject.fy = null;
+      }
+      
+      return d3.drag()
+        .on('start', dragstarted)
+        .on('drag', dragged)
+        .on('end', dragended);
+    }
+    
+    // Cleanup
+    return () => {
+      simulation.stop();
+    };
+  }, [chain, dimensions, onPersonClick, setHoveredQid, showAllConnections, people]);
+  
+  if (chain.length === 0) return null;
+  
+  return (
+    <div className="space-y-6">
+      {/* Info */}
+      <div className="glass-strong rounded-2xl p-4 flex items-center justify-between">
+        <div>
+          <h3 className="text-sm font-bold text-neutral-800 mb-1">🕸️ Netzwerk-Visualisierung</h3>
+          <p className="text-xs text-neutral-600">
+            Ziehe Personen um das Netzwerk zu erkunden • Zoom mit Mausrad • Klick für Details
+          </p>
+        </div>
+        <div className="flex items-center gap-2 text-xs text-neutral-600">
+          <span className="px-2 py-1 bg-purple-100 rounded-full font-medium">{chain.length} in Kette</span>
+          {stats.nearbyPeople > 0 && (
+            <span className="px-2 py-1 bg-neutral-100 rounded-full font-medium">+{stats.nearbyPeople} Zeitgenossen</span>
+          )}
+          <span className="px-2 py-1 bg-blue-100 rounded-full font-medium">{stats.totalLinks} Verbindungen</span>
+        </div>
+      </div>
+      
+      {/* Graph Container */}
+      <div className="glass-strong rounded-2xl p-6 overflow-hidden">
+        <svg ref={svgRef} style={{ width: '100%', height: '800px' }} />
+      </div>
+      
+      {/* Legend */}
+      <div className="glass-strong rounded-2xl p-4">
+        <div className="flex flex-wrap gap-6 text-sm">
+          <div className="flex items-center gap-2">
+            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-violet-400 to-purple-400 border-2 border-white flex items-center justify-center text-white font-bold text-xs">1</div>
+            <span className="text-neutral-700 font-medium">Person in Kette</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="w-6 h-6 rounded-full bg-neutral-400 border-2 border-white opacity-60"></div>
+            <span className="text-neutral-700 font-medium">Zeitgenosse (lebte zur selben Zeit)</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="w-8 h-1 bg-purple-600 rounded"></div>
+            <span className="text-neutral-700 font-medium">Ketten-Verbindung</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="w-8 h-px bg-neutral-300"></div>
+            <span className="text-neutral-700 font-medium">Zeitliche Überlappung</span>
+          </div>
+          <div className="text-neutral-600 ml-auto">
+            💡 Verbindungen = 20+ Jahre Überlappung
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function App() {
   const [people, setPeople] = useState([]);
   const [relations, setRelations] = useState({});
@@ -575,7 +987,8 @@ function App() {
   const [minOverlapYears, setMinOverlapYears] = useState(20); // Minimum overlap for realistic connections
   const [minFame, setMinFame] = useState(100); // Minimum sitelinks (fame level)
   const [expandedGap, setExpandedGap] = useState(null); // Which gap is expanded (index)
-  const [viewMode, setViewMode] = useState('list'); // 'list' or 'timeline'
+  const [pinnedWaypoints, setPinnedWaypoints] = useState([]); // Array of person names to route through
+  const [viewMode, setViewMode] = useState('list'); // 'list', 'timeline', or 'network'
   const [timelineZoom, setTimelineZoom] = useState(1); // Timeline zoom level
   const [searchQuery, setSearchQuery] = useState(''); // Search query
   const [showSearch, setShowSearch] = useState(false); // Show search modal
@@ -591,19 +1004,21 @@ function App() {
     });
   }, []);
 
-  // Build chain based on mode
+  // Build chain based on mode (with optional waypoints)
   const chain = useMemo(() => {
     if (!people.length) return [];
     
     if (chainMode === 'toToday') {
       if (!targetPerson) return [];
-      return chainFrom(targetPerson, people, minOverlapYears, minFame);
+      // Use waypoints if specified
+      return buildChainThroughWaypoints(targetPerson, pinnedWaypoints, null, people, minOverlapYears, minFame);
     } else {
       // 'between' mode
       if (!startPerson || !endPerson) return [];
-      return findPathBetween(startPerson, endPerson, people, minOverlapYears, minFame);
+      // Use waypoints if specified
+      return buildChainThroughWaypoints(startPerson, pinnedWaypoints, endPerson, people, minOverlapYears, minFame);
     }
-  }, [people, chainMode, targetPerson, startPerson, endPerson, minOverlapYears, minFame]);
+  }, [people, chainMode, targetPerson, startPerson, endPerson, pinnedWaypoints, minOverlapYears, minFame]);
 
   // Search filtered people
   const searchResults = useMemo(() => {
@@ -616,7 +1031,6 @@ function App() {
       )
       .slice(0, 20);
   }, [searchQuery, people]);
-
 
   // Keyboard shortcuts
   useEffect(() => {
@@ -632,12 +1046,16 @@ function App() {
         case 'Escape':
           if (showSearch) setShowSearch(false);
           if (selectedPerson) setSelectedPerson(null);
+          if (expandedGap !== null) setExpandedGap(null);
           break;
         case 'l':
           setViewMode('list');
           break;
         case 't':
           setViewMode('timeline');
+          break;
+        case 'n':
+          setViewMode('network');
           break;
         case 'r':
           setShowLanding(true);
@@ -657,6 +1075,110 @@ function App() {
   const avgLifespan = 75;
   const lifetimeCount = Math.floor(totalYears / avgLifespan);
 
+  // Fun Facts Generator
+  const funFacts = useMemo(() => {
+    if (chain.length < 2) return [];
+    
+    const facts = [];
+    
+    // Fact 1: Total timespan
+    if (chainMode === 'toToday') {
+      const span = totalYears;
+      facts.push({
+        icon: '⏳',
+        text: `Nur ${lifetimeCount} Lebenszeiten trennen uns von ${typeof targetPerson === 'string' ? targetPerson : targetPerson?.name}!`,
+        type: 'primary'
+      });
+    } else {
+      const span = totalYears;
+      facts.push({
+        icon: '🔗',
+        text: `${typeof startPerson === 'string' ? startPerson : startPerson?.name} und ${typeof endPerson === 'string' ? endPerson : endPerson?.name} sind nur ${chain.length} Menschen voneinander entfernt!`,
+        type: 'primary'
+      });
+    }
+    
+    // Fact 2: Longest overlap
+    let maxOverlap = 0;
+    let overlapPair = null;
+    for (let i = 0; i < chain.length - 1; i++) {
+      const p1 = chain[i];
+      const p2 = chain[i + 1];
+      const p1End = p1.died === 9999 ? THIS_YEAR : p1.died;
+      const p2End = p2.died === 9999 ? THIS_YEAR : p2.died;
+      const overlap = Math.min(p1End, p2End) - Math.max(p1.born, p2.born);
+      if (overlap > maxOverlap && overlap > 0) {
+        maxOverlap = overlap;
+        overlapPair = [p1, p2];
+      }
+    }
+    if (overlapPair && maxOverlap > 30) {
+      facts.push({
+        icon: '🤝',
+        text: `${overlapPair[0].name} und ${overlapPair[1].name} lebten ${maxOverlap} Jahre zur gleichen Zeit!`,
+        type: 'info'
+      });
+    }
+    
+    // Fact 3: Biggest time gap
+    let maxGap = 0;
+    let gapPair = null;
+    for (let i = 0; i < chain.length - 1; i++) {
+      const p1 = chain[i];
+      const p2 = chain[i + 1];
+      const p1End = p1.died === 9999 ? THIS_YEAR : p1.died;
+      const gap = Math.abs(p2.born - p1End);
+      if (gap > maxGap && gap > 0) {
+        maxGap = gap;
+        gapPair = [p1, p2];
+      }
+    }
+    if (gapPair && maxGap > 50) {
+      facts.push({
+        icon: '⚡',
+        text: `Größte Zeitlücke: ${maxGap} Jahre zwischen ${gapPair[0].name} und ${gapPair[1].name}`,
+        type: 'warning'
+      });
+    }
+    
+    // Fact 4: Oldest person
+    const oldest = chain.reduce((old, p) => {
+      const age = (p.died === 9999 ? THIS_YEAR : p.died) - p.born;
+      const oldAge = (old.died === 9999 ? THIS_YEAR : old.died) - old.born;
+      return age > oldAge ? p : old;
+    });
+    const oldestAge = (oldest.died === 9999 ? THIS_YEAR : oldest.died) - oldest.born;
+    if (oldestAge > 85) {
+      facts.push({
+        icon: '🎂',
+        text: `${oldest.name} wurde ${oldestAge} Jahre alt - ein langes Leben!`,
+        type: 'success'
+      });
+    }
+    
+    // Fact 5: Domain diversity
+    const allDomains = new Set(chain.flatMap(p => p.domains || []));
+    if (allDomains.size >= 4) {
+      facts.push({
+        icon: '🌟',
+        text: `Diese Kette verbindet ${allDomains.size} verschiedene Bereiche: ${Array.from(allDomains).slice(0, 3).join(', ')}...`,
+        type: 'info'
+      });
+    }
+    
+    // Fact 6: Century span
+    const centuries = Math.floor(totalYears / 100);
+    if (centuries >= 5) {
+      facts.push({
+        icon: '📅',
+        text: `Diese Verbindung überspannt ${centuries} Jahrhunderte Geschichte!`,
+        type: 'info'
+      });
+    }
+    
+    return facts;
+  }, [chain, chainMode, targetPerson, startPerson, endPerson, totalYears, lifetimeCount]);
+
   const popularTargets = useMemo(() => {
     if (!people.length) return [];
     return [
@@ -673,7 +1195,7 @@ function App() {
   }, [people]);
 
   if (loading) {
-    return (
+  return (
       <div className="min-h-screen bg-gradient-to-br from-violet-50 via-purple-50 to-fuchsia-50 flex items-center justify-center p-4">
         <div className="text-center max-w-2xl w-full">
           <div className="text-8xl mb-8 animate-bounce drop-shadow-lg">⏳</div>
@@ -773,13 +1295,13 @@ function App() {
             {chainMode === 'toToday' ? (
               // Single person selector for "To Today" mode
               <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4 mb-6">
-                {popularTargets.map((target) => (
-                  <button
-                    key={target.name}
-                    onClick={() => {
-                      setTargetPerson(target.name);
-                      setShowLanding(false);
-                    }}
+              {popularTargets.map((target) => (
+                <button
+                  key={target.name}
+                  onClick={() => {
+                    setTargetPerson(target.name);
+                    setShowLanding(false);
+                  }}
                     className="group p-4 md:p-6 bg-white/90 backdrop-blur-sm rounded-2xl hover:shadow-xl transition-all duration-300 hover:scale-105 border-2 border-white hover:border-purple-400 hover:-translate-y-1"
                   >
                     <div className="mb-3 group-hover:scale-110 transition-transform duration-300 flex justify-center">
@@ -787,8 +1309,8 @@ function App() {
                     </div>
                     <div className="font-bold text-sm mb-1 text-neutral-800">{target.name}</div>
                     <div className="text-xs text-purple-600 font-medium">{target.era}</div>
-                  </button>
-                ))}
+                </button>
+              ))}
               </div>
             ) : (
               // Dual person selector for "Between" mode
@@ -813,8 +1335,8 @@ function App() {
                           </option>
                         ))}
                     </select>
-                  </div>
-                  
+            </div>
+
                   {/* End Person */}
                   <div className="bg-white/70 backdrop-blur-sm rounded-2xl p-4 border-2 border-fuchsia-300">
                     <div className="text-sm font-bold mb-2 text-fuchsia-700 flex items-center gap-2">
@@ -838,7 +1360,7 @@ function App() {
                 </div>
                 
                 {/* Quick suggestions for "Between" mode */}
-                <div className="text-center">
+            <div className="text-center">
                   <p className="text-xs text-neutral-600 mb-2 font-medium">🚀 Oder probiere diese spannenden Verbindungen:</p>
                   <div className="flex flex-wrap justify-center gap-2">
                     <button
@@ -876,21 +1398,21 @@ function App() {
             {chainMode === 'toToday' && (
               <div className="text-center">
                 <p className="text-sm text-neutral-600 mb-3 font-medium">oder wähle aus allen {people.length} Personen:</p>
-                <select
+              <select
                   value={typeof targetPerson === 'string' ? targetPerson : targetPerson?.name}
-                  onChange={(e) => setTargetPerson(e.target.value)}
+                onChange={(e) => setTargetPerson(e.target.value)}
                   className="px-4 py-3 rounded-xl border-2 border-neutral-300 focus:border-purple-500 focus:ring-4 focus:ring-purple-200 outline-none transition-all text-sm bg-white/90 backdrop-blur-sm font-medium"
-                >
-                  {people
-                    .filter(p => p.died !== 9999)
-                    .sort((a, b) => a.name.localeCompare(b.name))
-                    .map(p => (
-                      <option key={p.qid} value={p.name}>
-                        {p.name} ({p.born}–{p.died})
-                      </option>
-                    ))}
-                </select>
-              </div>
+              >
+                {people
+                  .filter(p => p.died !== 9999)
+                  .sort((a, b) => a.name.localeCompare(b.name))
+                  .map(p => (
+                    <option key={p.qid} value={p.name}>
+                      {p.name} ({p.born}–{p.died})
+                    </option>
+                  ))}
+              </select>
+            </div>
             )}
           </div>
 
@@ -969,10 +1491,22 @@ function App() {
                   <BarChart3 className="w-4 h-4" />
                   <span className="hidden md:inline text-sm font-semibold">Timeline</span>
                 </button>
+                <button
+                  onClick={() => setViewMode('network')}
+                  className={`px-3 py-2 rounded-lg transition-all flex items-center gap-2 ${
+                    viewMode === 'network' 
+                      ? 'bg-gradient-to-r from-purple-600 to-fuchsia-600 text-white shadow-md' 
+                      : 'text-neutral-600 hover:bg-neutral-100'
+                  }`}
+                  title="Netzwerk-Ansicht"
+                >
+                  <Network className="w-4 h-4" />
+                  <span className="hidden md:inline text-sm font-semibold">Netzwerk</span>
+                </button>
               </div>
               
-              <button
-                onClick={() => setShowLanding(true)}
+            <button
+              onClick={() => setShowLanding(true)}
                 className="px-5 py-3 bg-white/90 backdrop-blur-sm rounded-xl hover:shadow-lg transition-all duration-300 flex items-center gap-2 border-2 border-white hover:border-purple-300 hover:scale-105 font-semibold text-base"
                 title="Keyboard shortcut: R"
               >
@@ -987,7 +1521,7 @@ function App() {
               >
                 <Search className="w-5 h-5" />
                 <span className="hidden sm:inline">Suchen</span>
-              </button>
+            </button>
             </div>
           </div>
         </div>
@@ -1013,25 +1547,25 @@ function App() {
           
           {/* Controls */}
           <div className="glass-strong rounded-2xl p-4 md:p-6 space-y-4">
-            {/* Overlap Control */}
+          {/* Overlap Control */}
             <div>
               <label className="block text-sm md:text-base font-bold text-neutral-800 mb-2">
-                Min. Überlappung: {minOverlapYears} Jahre
-              </label>
-              <input
-                type="range"
-                min="0"
-                max="60"
-                step="5"
-                value={minOverlapYears}
-                onChange={(e) => setMinOverlapYears(parseInt(e.target.value))}
-                className="w-full h-2 bg-gradient-to-r from-green-300 via-yellow-300 to-red-300 rounded-lg appearance-none cursor-pointer slider"
-              />
+              Min. Überlappung: {minOverlapYears} Jahre
+            </label>
+            <input
+              type="range"
+              min="0"
+              max="60"
+              step="5"
+              value={minOverlapYears}
+              onChange={(e) => setMinOverlapYears(parseInt(e.target.value))}
+              className="w-full h-2 bg-gradient-to-r from-green-300 via-yellow-300 to-red-300 rounded-lg appearance-none cursor-pointer slider"
+            />
               <div className="flex justify-between text-xs text-neutral-600 mt-1 font-medium">
-                <span>Kurz</span>
-                <span>Realistisch</span>
-              </div>
+              <span>Kurz</span>
+              <span>Realistisch</span>
             </div>
+          </div>
 
             {/* Fame Control */}
             <div>
@@ -1053,8 +1587,24 @@ function App() {
               <div className="flex justify-between text-xs text-neutral-600 mt-1 font-medium">
                 <span>Weniger bekannt (100+)</span>
                 <span>Sehr bekannt (220)</span>
+        </div>
+      </div>
+
+            {/* Reset Edits Button */}
+            {pinnedWaypoints.length > 0 && (
+              <div className="pt-4 border-t border-purple-200">
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="text-xs text-purple-600 font-semibold">✏️ Kette wurde bearbeitet</span>
+                  <span className="text-xs text-neutral-500">({pinnedWaypoints.length} Wegpunkte)</span>
+                </div>
+                <button
+                  onClick={() => setPinnedWaypoints([])}
+                  className="w-full px-3 py-2 bg-white border-2 border-purple-300 text-purple-700 rounded-lg text-xs font-semibold hover:bg-purple-50 transition-all flex items-center justify-center gap-2"
+                >
+                  ↺ Zurücksetzen auf Original
+                </button>
               </div>
-            </div>
+            )}
           </div>
         </div>
       </div>
@@ -1089,14 +1639,35 @@ function App() {
               </button>
             </div>
           </div>
-        ) : viewMode === 'list' ? (
+        ) : viewMode === 'network' ? (
+          /* NETWORK VIEW */
+          <NetworkView 
+            chain={chain}
+            people={people}
+            onPersonClick={setSelectedPerson}
+            hoveredQid={hoveredQid}
+            setHoveredQid={setHoveredQid}
+          />
+        ) : viewMode === 'timeline' ? (
+          /* TIMELINE VIEW */
+          <TimelineView 
+            chain={chain}
+            people={people}
+            targetPerson={targetPerson}
+            zoom={timelineZoom}
+            setZoom={setTimelineZoom}
+            onPersonClick={setSelectedPerson}
+            hoveredQid={hoveredQid}
+            setHoveredQid={setHoveredQid}
+          />
+        ) : (
           /* LIST VIEW */
-          <div className="relative grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-6">
-            {/* Timeline Line */}
-            <div className="absolute left-8 top-0 bottom-0 w-1 bg-gradient-to-b from-purple-200 via-indigo-200 to-pink-200"></div>
+        <div className="relative grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-6">
+          {/* Timeline Line */}
+          <div className="absolute left-8 top-0 bottom-0 w-1 bg-gradient-to-b from-purple-200 via-indigo-200 to-pink-200"></div>
 
-            {/* Chain Cards */}
-            <div className="space-y-6">
+          {/* Chain Cards */}
+          <div className="space-y-6">
             {chain.map((person, idx) => {
               const isLast = idx === chain.length - 1;
               const nextPerson = !isLast ? chain[idx + 1] : null;
@@ -1128,8 +1699,66 @@ function App() {
                     onClick={() => setSelectedPerson(person)}
                     onMouseEnter={() => setHoveredQid(person.qid)}
                     onMouseLeave={() => setHoveredQid(null)}
-                    className={`glass-strong rounded-2xl p-4 md:p-6 hover:shadow-xl transition-all duration-300 cursor-pointer hover:scale-[1.01] hover:-translate-y-1 ${hoveredQid === person.qid ? 'ring-2 ring-purple-400 shadow-xl' : ''}`}
+                    className={`relative glass-strong rounded-2xl p-4 md:p-6 hover:shadow-xl transition-all duration-300 cursor-pointer hover:scale-[1.01] hover:-translate-y-1 ${hoveredQid === person.qid ? 'ring-2 ring-purple-400 shadow-xl' : ''}`}
                   >
+                    {/* Replace Icon - Don't show for first person in toToday mode */}
+                    {!(chainMode === 'toToday' && idx === 0) && (
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          
+                          // Find alternatives for this position
+                          const prevPerson = idx > 0 ? chain[idx - 1] : null;
+                          const nextPerson = idx < chain.length - 1 ? chain[idx + 1] : null;
+                          
+                          const allAlternatives = people
+                            .filter(p => {
+                              if (chain.find(c => c.qid === p.qid)) return false;
+                              if (p.sitelinks < minFame) return false;
+                              
+                              const pEnd = p.died === 9999 ? THIS_YEAR : p.died;
+                              
+                              if (prevPerson) {
+                                const prevEnd = prevPerson.died === 9999 ? THIS_YEAR : prevPerson.died;
+                                const overlapWithPrev = Math.min(prevEnd, pEnd) - Math.max(prevPerson.born, p.born);
+                                if (overlapWithPrev < minOverlapYears) return false;
+                              }
+                              
+                              if (nextPerson) {
+                                const nextEnd = nextPerson.died === 9999 ? THIS_YEAR : nextPerson.died;
+                                const overlapWithNext = Math.min(nextEnd, pEnd) - Math.max(nextPerson.born, p.born);
+                                if (overlapWithNext < minOverlapYears) return false;
+                              }
+                              
+                              if (chainMode === 'toToday' && !nextPerson) {
+                                if (p.died !== 9999 && THIS_YEAR - p.died > 0) return false;
+                              }
+                              
+                              return true;
+                            });
+                          
+                          if (allAlternatives.length === 0) {
+                            alert('Keine Alternativen gefunden! 😕 Versuche die Filter zu reduzieren.');
+                            return;
+                          }
+                          
+                          // Pick a random alternative
+                          const randomPerson = allAlternatives[Math.floor(Math.random() * allAlternatives.length)];
+                          
+                          // Replace this person with the random alternative
+                          const newWaypoints = chain
+                            .slice(1, -1)
+                            .map((person, i) => i === idx - 1 ? randomPerson.name : person.name);
+                          
+                          setPinnedWaypoints(newWaypoints);
+                        }}
+                        className="absolute top-3 right-3 w-8 h-8 rounded-full bg-gradient-to-br from-purple-500 to-fuchsia-500 text-white flex items-center justify-center hover:scale-110 transition-all shadow-md hover:shadow-lg z-10"
+                        title="Zufällig ersetzen"
+                      >
+                        🎲
+                      </button>
+                    )}
+                    
                     <div className="flex items-start gap-3 md:gap-4">
                       {/* Avatar with Image */}
                       <PersonAvatar person={person} size="md" />
@@ -1200,17 +1829,17 @@ function App() {
                     <>
                       <div className="mt-3 ml-2 md:ml-4 flex items-center gap-2 md:gap-3">
                         <ArrowRight className="w-4 h-4 md:w-5 md:h-5 text-purple-400" />
-                        {hasGap ? (
+                      {hasGap ? (
                           <div className="text-sm md:text-base flex-1">
                             <span className="text-red-600 font-bold">{gapYears} Jahre Lücke</span>
                             <span className="text-neutral-600 font-medium hidden sm:inline"> → hätten sich nicht treffen können</span>
-                          </div>
-                        ) : (
+                        </div>
+                      ) : (
                           <div className="text-sm md:text-base flex-1">
                             <span className="text-green-600 font-bold">{overlapYears} Jahre Überlappung</span>
                             <span className="text-neutral-600 font-medium hidden sm:inline"> → hätten sich treffen können! ✨</span>
-                          </div>
-                        )}
+                        </div>
+                      )}
                         
                         {/* Explore Button */}
                         <button
@@ -1220,7 +1849,7 @@ function App() {
                         >
                           {expandedGap === idx ? '−' : '+'}
                         </button>
-                      </div>
+                    </div>
                       
                       {/* Expanded alternatives */}
                       {expandedGap === idx && (() => {
@@ -1357,7 +1986,7 @@ function App() {
                     ) : (
                       <>Nur {chain.length} {chain.length === 1 ? 'Person' : 'Personen'}!</>
                     )}
-                  </div>
+                </div>
                 </div>
                 
                 {/* Share Button */}
@@ -1385,12 +2014,12 @@ function App() {
             </div>
           </div>
           
-            {/* Alternatives Panel */}
+          {/* Alternatives Panel */}
             <aside className="hidden lg:block sticky top-24 self-start">
               <div className="glass-strong rounded-3xl p-6">
                 <h3 className="text-base font-bold text-neutral-800 mb-4">
-                  {hoveredQid ? 'Lebten zur gleichen Zeit' : 'Andere Zeitgenossen'}
-                </h3>
+                {hoveredQid ? 'Lebten zur gleichen Zeit' : 'Andere Zeitgenossen'}
+              </h3>
               {(() => {
                 const focusPerson = hoveredQid ? chain.find(p => p.qid === hoveredQid) : chain[0];
                 if (!focusPerson) return <p className="text-xs text-neutral-500">Bewege die Maus über eine Person</p>;
@@ -1433,23 +2062,36 @@ function App() {
                   </div>
                 );
               })()}
-              </div>
-            </aside>
-          </div>
-        ) : (
-          /* TIMELINE VIEW */
-          <TimelineView 
-            chain={chain}
-            people={people}
-            targetPerson={targetPerson}
-            zoom={timelineZoom}
-            setZoom={setTimelineZoom}
-            onPersonClick={setSelectedPerson}
-            hoveredQid={hoveredQid}
-            setHoveredQid={setHoveredQid}
-          />
+            </div>
+          </aside>
+        </div>
         )}
       </main>
+
+      {/* Fun Facts */}
+      {chain.length > 0 && funFacts.length > 0 && (
+        <div className="max-w-7xl mx-auto px-4 pb-12">
+          <div className="space-y-2 animate-fade-in">
+            {funFacts.map((fact, idx) => (
+              <div
+                key={idx}
+                className={`glass-strong rounded-xl p-3 md:p-4 flex items-start gap-3 animate-slide-up ${
+                  fact.type === 'primary' ? 'border-2 border-purple-300' :
+                  fact.type === 'success' ? 'border-l-4 border-green-400' :
+                  fact.type === 'warning' ? 'border-l-4 border-yellow-400' :
+                  'border-l-4 border-blue-400'
+                }`}
+                style={{ animationDelay: `${idx * 100}ms` }}
+              >
+                <span className="text-2xl flex-shrink-0">{fact.icon}</span>
+                <p className="text-sm md:text-base text-neutral-800 font-medium leading-relaxed">
+                  {fact.text}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
 
       {/* Search Modal */}
       {showSearch && (
@@ -1769,6 +2411,10 @@ function App() {
                 <div className="flex justify-between">
                   <kbd className="px-2 py-1 bg-white rounded font-mono text-xs">T</kbd>
                   <span className="text-neutral-700">Timeline-Ansicht</span>
+                </div>
+                <div className="flex justify-between">
+                  <kbd className="px-2 py-1 bg-white rounded font-mono text-xs">N</kbd>
+                  <span className="text-neutral-700">Netzwerk-Ansicht</span>
                 </div>
                 <div className="flex justify-between">
                   <kbd className="px-2 py-1 bg-white rounded font-mono text-xs">R</kbd>
