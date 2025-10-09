@@ -1,17 +1,24 @@
-# Zeitkette 🔗⏳
+# Zeitchain 🔗⏳
 
-Eine interaktive Zeitachse historischer Persönlichkeiten – visualisiert, wie wenige "Lebenszeiten" uns von historischen Größen trennen.
+**Connect historical figures across time - discover how many lifetimes separate you from history's greatest minds.**
 
-**427 kuratierte Personen • 56 dokumentierte Beziehungen • 2654 Jahre Geschichte (630 v. Chr. - heute)**
+*Eine interaktive Zeitkette historischer Persönlichkeiten – visualisiert, wie wenige "Lebenszeiten" uns von historischen Größen trennen.*
+
+**458 historical figures • 100+ Wikipedia articles minimum • 2654 years of history (630 BCE - today)**
+
+🌐 **Available in English & German** (automatic browser detection)
 
 ## 🌟 Features
 
-- ✅ **Timeline-Ansicht**: Zoombare Zeitachse von -600 bis heute (98% Abdeckung)
-- ✅ **Ketten-Ansicht**: Zeigt Personen-Ketten mit Überlappungen & Lücken
-- ✅ **Lebenszeiten-Rechner**: "Newton starb vor nur 3-4 Lebenszeiten"
-- ✅ **Beziehungen**: "Wer kannte wen" mit echten historischen Verbindungen
-- ✅ **Modern UI**: Glassmorphism Design mit smooth animations
-- ✅ **Filter**: Nach Domain, Region, Epoche
+- ✅ **Three Visualization Modes**: List, Timeline, and Network views
+- ✅ **Interactive Chain Building**: "To Today" or "Between Two People" modes
+- ✅ **Smart Pathfinding**: BFS algorithm with overlap detection
+- ✅ **Wikipedia Avatars**: Cached images from Wikidata
+- ✅ **Fun Facts Generator**: Discover insights about your chain
+- ✅ **Keyboard Shortcuts**: Fast navigation (L/T/N/R/ESC//)
+- ✅ **Glassmorphism UI**: Modern design with smooth animations
+- ✅ **Network Visualization**: D3.js force-directed graph with 30+ contemporaries
+- ✅ **i18n Support**: English & German with browser detection
 
 ## 🚀 Quick Start
 
@@ -31,10 +38,10 @@ npm run analyze-coverage   # Prüfe zeitliche Abdeckung
 npm run fetch-data         # (Optional) Wikidata Daten laden
 ```
 
-## 📂 Projekt-Struktur
+## 📂 Project Structure
 
 ```
-zeitkette/
+zeitchain/
 ├── src/
 │   ├── App.jsx              # Haupt-Komponente mit Chain & Timeline
 │   ├── dataLoader.js        # Daten-Loader

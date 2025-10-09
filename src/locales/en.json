@@ -1,0 +1,205 @@
+{
+  "app": {
+    "name": "Zeitchain",
+    "tagline": "To: {{person}}"
+  },
+  "header": {
+    "to": "To:",
+    "between": "{{start}} → {{end}}",
+    "backToSelection": "← Back to Selection",
+    "otherPerson": "Other Person",
+    "search": "Search"
+  },
+  "stats": {
+    "peopleInChain": "People in Chain",
+    "lifetimesBack": "Lifetimes Back",
+    "yearsSpanned": "Years Spanned",
+    "minOverlap": "Min. Overlap: {{years}} years",
+    "overlapShort": "Short",
+    "overlapRealistic": "Realistic",
+    "minFame": "Min. Fame: {{count}} Wikipedia articles",
+    "fameLess": "Less famous (100+)",
+    "fameVery": "Very famous (220)",
+    "chainEdited": "✏️ Chain was edited",
+    "waypoints": "({{count}} waypoints)",
+    "resetToOriginal": "↺ Reset to Original"
+  },
+  "views": {
+    "list": "List",
+    "timeline": "Timeline",
+    "network": "Network",
+    "listView": "List View",
+    "timelineView": "Timeline View",
+    "networkView": "Network View"
+  },
+  "person": {
+    "years": "{{count}} years",
+    "born": "{{year}}",
+    "died": "{{year}}",
+    "today": "today",
+    "knew": "Knew {{count}} {{count_plural}}",
+    "person_one": "person",
+    "person_other": "people",
+    "replace": "🎲 Replace",
+    "occupation": {
+      "artist": "Artist & Scientist",
+      "scientist": "Scientist",
+      "philosopher": "Philosopher & Politician",
+      "politician": "Politician",
+      "writer": "Writer",
+      "musician": "Musician",
+      "religious": "Religious Figure",
+      "military": "Military",
+      "other": "Historical Figure"
+    }
+  },
+  "connection": {
+    "overlap": "{{years}} years overlap",
+    "couldMeet": "→ could have met! ✨",
+    "gap": "{{years}} year gap",
+    "couldNotMeet": "→ could not have met",
+    "explore": "Explore more people from this time",
+    "moreFromTime": "🔍 More people from this time",
+    "found": "{{count}} found",
+    "veryFamous": "⭐⭐⭐ Very famous ({{count}})",
+    "famous": "⭐⭐ Famous ({{count}})",
+    "lessFamous": "⭐ Less famous ({{count}})",
+    "noAlternatives": "No other matching people found"
+  },
+  "replace": {
+    "title": "Who could be here instead of {{person}}?",
+    "alternatives": "{{count}} alternatives",
+    "between": "These people would fit between {{prev}} and {{next}}:",
+    "after": "These people would fit after {{prev}}:",
+    "before": "These people would fit before {{next}}:",
+    "atPosition": "These people would fit at this position:",
+    "noAlternatives": "No alternatives found with current filters.",
+    "tip": "💡 Tip: Reduce overlap or fame requirements to see more options",
+    "button": "🔄 Replace",
+    "info": "ℹ️",
+    "hint": "💡 {{button}} = {{person}} will be replaced with this person • {{info}} = View details"
+  },
+  "landing": {
+    "title": "Choose a historical person",
+    "subtitle": "Find out how many lifetimes separate you from them!",
+    "modeTitle": "Choose a mode:",
+    "modeToToday": "To Today",
+    "modeToTodayDesc": "Find the shortest chain from a person to today",
+    "modeBetween": "Between Two",
+    "modeBetweenDesc": "Connect two historical figures",
+    "selectPerson": "Select a person:",
+    "startPerson": "Start person:",
+    "endPerson": "Target person:",
+    "orChooseFrom": "or choose from all {{count}} people:",
+    "quickConnections": "🚀 Or try these exciting connections:",
+    "daVinciEinstein": "Da Vinci → Einstein",
+    "cleopatraNapoleon": "Cleopatra → Napoleon",
+    "aristotleNewton": "Aristotle → Newton",
+    "goButton": "🎯 Let's Go!",
+    "popularTargets": {
+      "renaissance": "Renaissance",
+      "modern": "Modern",
+      "antiquity": "Antiquity",
+      "enlightenment": "Enlightenment",
+      "industrial": "Industrial Era"
+    }
+  },
+  "noPath": {
+    "title": "No Connection Found",
+    "description": "There is no chain from {{start}} to {{end}} with the current filter settings.",
+    "tips": "💡 Tips:",
+    "reduceOverlap": "Reduce minimum overlap",
+    "reduceFame": "Reduce fame requirement",
+    "tryOther": "Try other people",
+    "tryAgain": "🔄 Try Again"
+  },
+  "endMarker": {
+    "titleToday": "Goal Reached!",
+    "titleBetween": "Connection Found!",
+    "descriptionToday": "From {{person}} to today in just {{count}} steps!",
+    "descriptionBetween": "{{start}} and {{end}} connected in {{count}} steps!",
+    "shareButton": "📤 Share",
+    "newChain": "🔗 Start New Chain"
+  },
+  "timeline": {
+    "zoom": "🔍 Zoom:",
+    "reset": "Reset",
+    "autoZoom": "📊 Auto-Zoom (300%)",
+    "from": "{{start}} to {{end}}",
+    "years": "({{count}} years)",
+    "largeTimespan": "⚠️ Large timespan - zoom recommended!",
+    "scrollHint": "← Scroll horizontal →",
+    "legend": {
+      "lifespan": "Lifespan",
+      "birth": "Birth",
+      "portrait": "Portrait (at end)",
+      "position": "Position in chain",
+      "tip": "💡 Click a person for details • Hover for info"
+    }
+  },
+  "network": {
+    "title": "🕸️ Network Visualization",
+    "description": "Drag people to explore the network • Zoom with mouse wheel • Click for details",
+    "inChain": "{{count}} in chain",
+    "contemporaries": "+{{count}} contemporaries",
+    "connections": "{{count}} connections",
+    "legend": {
+      "personInChain": "Person in chain",
+      "contemporary": "Contemporary (lived at same time)",
+      "chainConnection": "Chain connection",
+      "timeOverlap": "Time overlap",
+      "tip": "💡 Connections = 20+ years overlap"
+    }
+  },
+  "funFacts": {
+    "lifetimes": "⏳ Only {{count}} lifetimes separate us from {{person}}!",
+    "stepsApart": "🔗 {{start}} and {{end}} are only {{count}} people apart!",
+    "overlap": "🤝 {{person1}} and {{person2}} lived {{years}} years at the same time!",
+    "gap": "⚡ Largest time gap: {{years}} years between {{person1}} and {{person2}}",
+    "longevity": "🎂 {{person}} lived {{age}} years - a long life!",
+    "diversity": "🌟 This chain connects {{count}} different domains: {{domains}}...",
+    "centuries": "📅 This connection spans {{count}} centuries of history!"
+  },
+  "search": {
+    "title": "Search",
+    "placeholder": "Enter name or domain...",
+    "noResults": "No results for \"{{query}}\"",
+    "tryOther": "Try another search term"
+  },
+  "modal": {
+    "close": "Close",
+    "startNewChain": "🔗 Start New Chain",
+    "relations": "Relations",
+    "knownPeople": "Known people:"
+  },
+  "keyboard": {
+    "title": "⌨️ Shortcuts",
+    "shortcutsTitle": "Keyboard Shortcuts",
+    "search": "Open search",
+    "close": "Close",
+    "listView": "List view",
+    "timelineView": "Timeline view",
+    "networkView": "Network view",
+    "backToSelection": "Back to selection"
+  },
+  "share": {
+    "toToday": "🎯 I reached {{person}} in just {{steps}} steps and {{lifetimes}} lifetimes! ⏳ #Zeitchain",
+    "between": "🔗 I connected {{start}} with {{end}} in just {{steps}} steps! ⏳ #Zeitchain",
+    "copied": "Text copied to clipboard! 📋"
+  },
+  "sidebar": {
+    "otherPeople": "Other Contemporaries",
+    "description": "These people lived during the time of {{person}}:"
+  },
+  "domains": {
+    "Art": "Art",
+    "Science": "Science",
+    "Philosophy": "Philosophy",
+    "Politics": "Politics",
+    "Literature": "Literature",
+    "Music": "Music",
+    "Religion": "Religion",
+    "Military": "Military"
+  }
+}
+

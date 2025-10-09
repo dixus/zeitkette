@@ -1,0 +1,205 @@
+{
+  "app": {
+    "name": "Zeitchain",
+    "tagline": "Zu: {{person}}"
+  },
+  "header": {
+    "to": "Zu:",
+    "between": "{{start}} → {{end}}",
+    "backToSelection": "← Zurück zur Auswahl",
+    "otherPerson": "Andere Person",
+    "search": "Suchen"
+  },
+  "stats": {
+    "peopleInChain": "Personen in der Kette",
+    "lifetimesBack": "Lebenszeiten zurück",
+    "yearsSpanned": "Jahre überbrückt",
+    "minOverlap": "Min. Überlappung: {{years}} Jahre",
+    "overlapShort": "Kurz",
+    "overlapRealistic": "Realistisch",
+    "minFame": "Min. Bekanntheit: {{count}} Wikipedia-Artikel",
+    "fameLess": "Weniger bekannt (100+)",
+    "fameVery": "Sehr bekannt (220)",
+    "chainEdited": "✏️ Kette wurde bearbeitet",
+    "waypoints": "({{count}} Wegpunkte)",
+    "resetToOriginal": "↺ Zurücksetzen auf Original"
+  },
+  "views": {
+    "list": "Liste",
+    "timeline": "Timeline",
+    "network": "Netzwerk",
+    "listView": "Listenansicht",
+    "timelineView": "Timeline-Ansicht",
+    "networkView": "Netzwerk-Ansicht"
+  },
+  "person": {
+    "years": "{{count}} Jahre",
+    "born": "{{year}}",
+    "died": "{{year}}",
+    "today": "heute",
+    "knew": "Kannte {{count}} {{count_plural}}",
+    "person_one": "Person",
+    "person_other": "Personen",
+    "replace": "🎲 Ersetzen",
+    "occupation": {
+      "artist": "Künstler & Wissenschaftler",
+      "scientist": "Wissenschaftler",
+      "philosopher": "Philosoph & Politiker",
+      "politician": "Politiker",
+      "writer": "Schriftsteller",
+      "musician": "Musiker",
+      "religious": "Religiöse Figur",
+      "military": "Militär",
+      "other": "Historische Figur"
+    }
+  },
+  "connection": {
+    "overlap": "{{years}} Jahre Überlappung",
+    "couldMeet": "→ hätten sich treffen können! ✨",
+    "gap": "{{years}} Jahre Lücke",
+    "couldNotMeet": "→ hätten sich nicht treffen können",
+    "explore": "Weitere Personen aus dieser Zeit entdecken",
+    "moreFromTime": "🔍 Weitere Personen aus dieser Zeit",
+    "found": "{{count}} gefunden",
+    "veryFamous": "⭐⭐⭐ Sehr bekannt ({{count}})",
+    "famous": "⭐⭐ Bekannt ({{count}})",
+    "lessFamous": "⭐ Weniger bekannt ({{count}})",
+    "noAlternatives": "Keine weiteren passenden Personen gefunden"
+  },
+  "replace": {
+    "title": "Wer könnte hier statt {{person}} stehen?",
+    "alternatives": "{{count}} Alternativen",
+    "between": "Diese Personen würden zwischen {{prev}} und {{next}} passen:",
+    "after": "Diese Personen würden nach {{prev}} passen:",
+    "before": "Diese Personen würden vor {{next}} passen:",
+    "atPosition": "Diese Personen würden an dieser Position passen:",
+    "noAlternatives": "Keine Alternativen mit den aktuellen Filtern gefunden.",
+    "tip": "💡 Tipp: Reduziere die Überlappung oder Bekanntheit um mehr Optionen zu sehen",
+    "button": "🔄 Ersetzen",
+    "info": "ℹ️",
+    "hint": "💡 {{button}} = {{person}} wird durch diese Person ersetzt • {{info}} = Details ansehen"
+  },
+  "landing": {
+    "title": "Wähle eine historische Person",
+    "subtitle": "Finde heraus, wie viele Lebenszeiten dich von ihr trennen!",
+    "modeTitle": "Wähle einen Modus:",
+    "modeToToday": "Zu Heute",
+    "modeToTodayDesc": "Finde die kürzeste Kette von einer Person bis heute",
+    "modeBetween": "Zwischen Zwei",
+    "modeBetweenDesc": "Verbinde zwei historische Personen",
+    "selectPerson": "Wähle eine Person:",
+    "startPerson": "Start-Person:",
+    "endPerson": "Ziel-Person:",
+    "orChooseFrom": "oder wähle aus allen {{count}} Personen:",
+    "quickConnections": "🚀 Oder probiere diese spannenden Verbindungen:",
+    "daVinciEinstein": "Da Vinci → Einstein",
+    "cleopatraNapoleon": "Kleopatra → Napoleon",
+    "aristotleNewton": "Aristoteles → Newton",
+    "goButton": "🎯 Los geht's!",
+    "popularTargets": {
+      "renaissance": "Renaissance",
+      "modern": "Modern",
+      "antiquity": "Antike",
+      "enlightenment": "Aufklärung",
+      "industrial": "Industriezeitalter"
+    }
+  },
+  "noPath": {
+    "title": "Keine Verbindung gefunden",
+    "description": "Es gibt keine Kette von {{start}} nach {{end}} mit den aktuellen Filtereinstellungen.",
+    "tips": "💡 Tipps:",
+    "reduceOverlap": "Reduziere die minimale Überlappung",
+    "reduceFame": "Reduziere die Bekanntheit",
+    "tryOther": "Versuche andere Personen",
+    "tryAgain": "🔄 Nochmal versuchen"
+  },
+  "endMarker": {
+    "titleToday": "Ziel erreicht!",
+    "titleBetween": "Verbindung gefunden!",
+    "descriptionToday": "Von {{person}} bis heute in nur {{count}} Schritten!",
+    "descriptionBetween": "{{start}} und {{end}} verbunden in {{count}} Schritten!",
+    "shareButton": "📤 Teilen",
+    "newChain": "🔗 Neue Kette starten"
+  },
+  "timeline": {
+    "zoom": "🔍 Zoom:",
+    "reset": "Reset",
+    "autoZoom": "📊 Auto-Zoom (300%)",
+    "from": "{{start}} bis {{end}}",
+    "years": "({{count}} Jahre)",
+    "largeTimespan": "⚠️ Große Zeitspanne - Zoom empfohlen!",
+    "scrollHint": "← Scroll horizontal →",
+    "legend": {
+      "lifespan": "Lebensspanne",
+      "birth": "Geburt",
+      "portrait": "Portrait (am Ende)",
+      "position": "Position in der Kette",
+      "tip": "💡 Klicke auf eine Person für Details • Hover für Info"
+    }
+  },
+  "network": {
+    "title": "🕸️ Netzwerk-Visualisierung",
+    "description": "Ziehe Personen um das Netzwerk zu erkunden • Zoom mit Mausrad • Klick für Details",
+    "inChain": "{{count}} in Kette",
+    "contemporaries": "+{{count}} Zeitgenossen",
+    "connections": "{{count}} Verbindungen",
+    "legend": {
+      "personInChain": "Person in Kette",
+      "contemporary": "Zeitgenosse (lebte zur selben Zeit)",
+      "chainConnection": "Ketten-Verbindung",
+      "timeOverlap": "Zeitliche Überlappung",
+      "tip": "💡 Verbindungen = 20+ Jahre Überlappung"
+    }
+  },
+  "funFacts": {
+    "lifetimes": "⏳ Nur {{count}} Lebenszeiten trennen uns von {{person}}!",
+    "stepsApart": "🔗 {{start}} und {{end}} sind nur {{count}} Menschen voneinander entfernt!",
+    "overlap": "🤝 {{person1}} und {{person2}} lebten {{years}} Jahre zur gleichen Zeit!",
+    "gap": "⚡ Größte Zeitlücke: {{years}} Jahre zwischen {{person1}} und {{person2}}",
+    "longevity": "🎂 {{person}} wurde {{age}} Jahre alt - ein langes Leben!",
+    "diversity": "🌟 Diese Kette verbindet {{count}} verschiedene Bereiche: {{domains}}...",
+    "centuries": "📅 Diese Verbindung überspannt {{count}} Jahrhunderte Geschichte!"
+  },
+  "search": {
+    "title": "Suchen",
+    "placeholder": "Name oder Bereich eingeben...",
+    "noResults": "Keine Ergebnisse für \"{{query}}\"",
+    "tryOther": "Versuche einen anderen Suchbegriff"
+  },
+  "modal": {
+    "close": "Schließen",
+    "startNewChain": "🔗 Neue Kette starten",
+    "relations": "Beziehungen",
+    "knownPeople": "Bekannte Personen:"
+  },
+  "keyboard": {
+    "title": "⌨️ Shortcuts",
+    "shortcutsTitle": "Tastaturkürzel",
+    "search": "Suche öffnen",
+    "close": "Schließen",
+    "listView": "Listen-Ansicht",
+    "timelineView": "Timeline-Ansicht",
+    "networkView": "Netzwerk-Ansicht",
+    "backToSelection": "Zurück zur Auswahl"
+  },
+  "share": {
+    "toToday": "🎯 Ich habe {{person}} erreicht in nur {{steps}} Schritten und {{lifetimes}} Lebenszeiten! ⏳ #Zeitchain",
+    "between": "🔗 Ich habe {{start}} mit {{end}} verbunden in nur {{steps}} Schritten! ⏳ #Zeitchain",
+    "copied": "Text in Zwischenablage kopiert! 📋"
+  },
+  "sidebar": {
+    "otherPeople": "Andere Zeitgenossen",
+    "description": "Diese Personen lebten zur Zeit von {{person}}:"
+  },
+  "domains": {
+    "Art": "Kunst",
+    "Science": "Wissenschaft",
+    "Philosophy": "Philosophie",
+    "Politics": "Politik",
+    "Literature": "Literatur",
+    "Music": "Musik",
+    "Religion": "Religion",
+    "Military": "Militär"
+  }
+}
+

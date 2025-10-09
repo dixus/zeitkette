@@ -1,5 +1,6 @@
 import { useState, useEffect, useMemo, useCallback, useRef } from 'react';
-import { ArrowRight, Clock, Users, Sparkles, RotateCcw, List, BarChart3, Image as ImageIcon, Search, Network } from 'lucide-react';
+import { ArrowRight, Clock, Users, Sparkles, RotateCcw, List, BarChart3, Image as ImageIcon, Search, Network, Globe } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { loadAllData } from './dataLoader';
 import * as d3 from 'd3';
 
@@ -977,6 +978,8 @@ function NetworkView({ chain, people, onPersonClick, hoveredQid, setHoveredQid }
 }
 
 function App() {
+  const { t, i18n } = useTranslation();
+  
   const [people, setPeople] = useState([]);
   const [relations, setRelations] = useState({});
   const [loading, setLoading] = useState(true);
@@ -1200,7 +1203,7 @@ function App() {
         <div className="text-center max-w-2xl w-full">
           <div className="text-8xl mb-8 animate-bounce drop-shadow-lg">⏳</div>
           <div className="text-4xl font-extrabold bg-gradient-to-r from-violet-600 via-purple-600 to-fuchsia-600 bg-clip-text text-transparent animate-pulse mb-6">
-            Zeitkette
+            Zeitchain
           </div>
           <div className="text-2xl font-semibold text-neutral-700 mb-8">
             Lade Zeitreisedaten...
@@ -1244,7 +1247,7 @@ function App() {
           <div className="text-center mb-8 animate-fade-in">
             <div className="text-5xl mb-4 animate-bounce drop-shadow-lg">⏳</div>
             <h1 className="text-5xl md:text-6xl font-extrabold mb-4 bg-gradient-to-r from-violet-600 via-purple-600 to-fuchsia-600 bg-clip-text text-transparent leading-tight">
-              Zeitkette
+              Zeitchain
             </h1>
             <p className="text-2xl md:text-3xl font-bold text-neutral-800 mb-3 leading-tight">
               Die Vergangenheit ist näher als du denkst!
@@ -1421,7 +1424,7 @@ function App() {
             className="w-full py-5 bg-gradient-to-r from-violet-600 via-purple-600 to-fuchsia-600 text-white text-lg md:text-xl font-bold rounded-2xl hover:shadow-2xl transition-all duration-300 hover:scale-[1.02] hover:-translate-y-1"
           >
             <span className="drop-shadow-lg">
-              {chainMode === 'toToday' ? '🚀 Zeitkette starten' : '🔗 Pfad finden'}
+              {chainMode === 'toToday' ? '🚀 Zeitchain starten' : '🔗 Pfad finden'}
             </span>
         </button>
 
@@ -1454,7 +1457,7 @@ function App() {
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-3xl md:text-4xl font-extrabold bg-gradient-to-r from-violet-600 via-purple-600 to-fuchsia-600 bg-clip-text text-transparent mb-1">
-                Zeitkette
+                Zeitchain
               </h1>
               <p className="text-base md:text-lg text-neutral-700 font-semibold">
                 {chainMode === 'toToday' ? (
@@ -1521,7 +1524,17 @@ function App() {
               >
                 <Search className="w-5 h-5" />
                 <span className="hidden sm:inline">Suchen</span>
-            </button>
+              </button>
+              
+              {/* Language Switcher */}
+              <button
+                onClick={() => i18n.changeLanguage(i18n.language === 'en' ? 'de' : 'en')}
+                className="px-4 py-3 bg-white/90 backdrop-blur-sm rounded-xl hover:shadow-lg transition-all duration-300 flex items-center gap-2 border-2 border-white hover:border-purple-300 hover:scale-105 font-semibold text-base"
+                title={`Switch to ${i18n.language === 'en' ? 'Deutsch' : 'English'}`}
+              >
+                <Globe className="w-5 h-5" />
+                <span className="text-lg">{i18n.language === 'en' ? '🇩🇪' : '🇬🇧'}</span>
+              </button>
             </div>
           </div>
         </div>
@@ -1993,12 +2006,12 @@ function App() {
                 <button
                   onClick={() => {
                     const shareText = chainMode === 'toToday'
-                      ? `🎯 Ich habe ${typeof targetPerson === 'string' ? targetPerson : targetPerson?.name} erreicht in nur ${chain.length} Schritten und ${lifetimeCount} Lebenszeiten! ⏳ #Zeitkette`
-                      : `🔗 Ich habe ${typeof startPerson === 'string' ? startPerson : startPerson?.name} mit ${typeof endPerson === 'string' ? endPerson : endPerson?.name} verbunden in nur ${chain.length} Schritten! ⏳ #Zeitkette`;
+                      ? `🎯 Ich habe ${typeof targetPerson === 'string' ? targetPerson : targetPerson?.name} erreicht in nur ${chain.length} Schritten und ${lifetimeCount} Lebenszeiten! ⏳ #Zeitchain`
+                      : `🔗 Ich habe ${typeof startPerson === 'string' ? startPerson : startPerson?.name} mit ${typeof endPerson === 'string' ? endPerson : endPerson?.name} verbunden in nur ${chain.length} Schritten! ⏳ #Zeitchain`;
                     
                     if (navigator.share) {
                       navigator.share({
-                        title: 'Zeitkette',
+                        title: 'Zeitchain',
                         text: shareText
                       }).catch(() => {});
                     } else {
