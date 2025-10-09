@@ -58,13 +58,14 @@ export function YearExplorerModal({
             onChange={(e) => setExplorerYear(parseInt(e.target.value))}
             className="w-full h-3 bg-gradient-to-r from-violet-300 via-purple-300 to-fuchsia-300 rounded-lg appearance-none cursor-pointer slider"
           />
-          <div className="flex justify-between text-xs text-neutral-600 mt-2 font-medium">
-            <span>600 BC</span>
-            <span>1 AD</span>
-            <span>1000</span>
-            <span>1500</span>
-            <span>2000</span>
-            <span>{THIS_YEAR}</span>
+          <div className="relative mt-2 h-4">
+            <span className="absolute text-xs text-neutral-600 font-medium" style={{ left: '0%', transform: 'translateX(0%)' }}>600 BC</span>
+            <span className="absolute text-xs text-neutral-600 font-medium" style={{ left: '22.86%', transform: 'translateX(-50%)' }}>0</span>
+            <span className="absolute text-xs text-neutral-600 font-medium" style={{ left: '41.90%', transform: 'translateX(-50%)' }}>500</span>
+            <span className="absolute text-xs text-neutral-600 font-medium" style={{ left: '60.95%', transform: 'translateX(-50%)' }}>1000</span>
+            <span className="absolute text-xs text-neutral-600 font-medium" style={{ left: '80.00%', transform: 'translateX(-50%)' }}>1500</span>
+            <span className="absolute text-xs text-neutral-600 font-medium" style={{ left: '99.05%', transform: 'translateX(-50%)' }}>2000</span>
+            <span className="absolute text-xs text-neutral-600 font-medium" style={{ left: '100%', transform: 'translateX(-100%)' }}>{THIS_YEAR}</span>
           </div>
           
           {/* Era Label */}

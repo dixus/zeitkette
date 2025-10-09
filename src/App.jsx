@@ -11,7 +11,7 @@ import { THIS_YEAR, fetchPersonImage, getOccupation, chainFrom, findPathBetween,
 import { usePersonImage, useKeyboardShortcuts } from './hooks';
 
 // Extracted components
-import { PersonAvatar, TimelineView, NetworkView, SearchModal, YearExplorerModal, PersonDetailModal } from './components';
+import { PersonAvatar, TimelineView, NetworkView, SearchModal, YearExplorerModal, PersonDetailModal, Header, StatsBar } from './components';
 
 // All utility functions, hooks, and small components have been extracted to separate files
 // See src/utils, src/hooks, and src/components folders
@@ -543,185 +543,30 @@ function App() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-violet-50 via-purple-50 to-fuchsia-50">
       {/* Header */}
-      <header className="sticky top-0 z-20 glass-strong border-b border-white/30 backdrop-blur-xl shadow-lg">
-        <div className="max-w-7xl mx-auto px-4 md:px-6 py-5">
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-3xl md:text-4xl font-extrabold bg-gradient-to-r from-violet-600 via-purple-600 to-fuchsia-600 bg-clip-text text-transparent mb-1">
-                {t('app.name')}
-              </h1>
-              <p className="text-base md:text-lg text-neutral-700 font-semibold">
-                {chainMode === 'toToday' ? (
-                  <>{t('header.to')} <strong className="text-purple-700">{typeof targetPerson === 'string' ? targetPerson : targetPerson?.name}</strong></>
-                ) : (
-                  <><strong className="text-violet-700">{typeof startPerson === 'string' ? startPerson : startPerson?.name}</strong> → <strong className="text-fuchsia-700">{typeof endPerson === 'string' ? endPerson : endPerson?.name}</strong></>
-                )}
-              </p>
-            </div>
-            <div className="flex items-center gap-3">
-              {/* View Toggle */}
-              <div className="flex items-center gap-1 bg-white/90 backdrop-blur-sm rounded-xl p-1 border-2 border-white">
-                <button
-                  onClick={() => setViewMode('list')}
-                  className={`px-3 py-2 rounded-lg transition-all flex items-center gap-2 ${
-                    viewMode === 'list' 
-                      ? 'bg-gradient-to-r from-purple-600 to-fuchsia-600 text-white shadow-md' 
-                      : 'text-neutral-600 hover:bg-neutral-100'
-                  }`}
-                  title={t('views.listView')}
-                >
-                  <List className="w-4 h-4" />
-                  <span className="hidden md:inline text-sm font-semibold">{t('views.list')}</span>
-                </button>
-                <button
-                  onClick={() => setViewMode('timeline')}
-                  className={`px-3 py-2 rounded-lg transition-all flex items-center gap-2 ${
-                    viewMode === 'timeline' 
-                      ? 'bg-gradient-to-r from-purple-600 to-fuchsia-600 text-white shadow-md' 
-                      : 'text-neutral-600 hover:bg-neutral-100'
-                  }`}
-                  title={t('views.timelineView')}
-                >
-                  <BarChart3 className="w-4 h-4" />
-                  <span className="hidden md:inline text-sm font-semibold">{t('views.timeline')}</span>
-                </button>
-                <button
-                  onClick={() => setViewMode('network')}
-                  className={`px-3 py-2 rounded-lg transition-all flex items-center gap-2 ${
-                    viewMode === 'network' 
-                      ? 'bg-gradient-to-r from-purple-600 to-fuchsia-600 text-white shadow-md' 
-                      : 'text-neutral-600 hover:bg-neutral-100'
-                  }`}
-                  title={t('views.networkView')}
-                >
-                  <Network className="w-4 h-4" />
-                  <span className="hidden md:inline text-sm font-semibold">{t('views.network')}</span>
-                </button>
-              </div>
-              
-            <button
-              onClick={() => setShowLanding(true)}
-                className="px-5 py-3 bg-white/90 backdrop-blur-sm rounded-xl hover:shadow-lg transition-all duration-300 flex items-center gap-2 border-2 border-white hover:border-purple-300 hover:scale-105 font-semibold text-base"
-                title="Keyboard shortcut: R"
-              >
-                <RotateCcw className="w-5 h-5" />
-                <span className="hidden sm:inline">{t('header.otherPerson')}</span>
-              </button>
-              
-              <button
-                onClick={() => setShowSearch(true)}
-                className="px-5 py-3 bg-white/90 backdrop-blur-sm rounded-xl hover:shadow-lg transition-all duration-300 flex items-center gap-2 border-2 border-white hover:border-purple-300 hover:scale-105 font-semibold text-base"
-                title="Keyboard shortcut: /"
-              >
-                <Search className="w-5 h-5" />
-                <span className="hidden sm:inline">{t('header.search')}</span>
-              </button>
-              
-              {/* Year Explorer */}
-              <button
-                onClick={() => setShowYearExplorer(true)}
-                className="px-5 py-3 bg-white/90 backdrop-blur-sm rounded-xl hover:shadow-lg transition-all duration-300 flex items-center gap-2 border-2 border-white hover:border-purple-300 hover:scale-105 font-semibold text-base"
-                title={t('yearExplorer.shortcut')}
-              >
-                <span className="text-xl">🗓️</span>
-                <span className="hidden sm:inline">{t('yearExplorer.title').replace('🗓️ ', '')}</span>
-              </button>
-              
-              {/* Language Switcher */}
-              <button
-                onClick={() => i18n.changeLanguage(i18n.language === 'en' ? 'de' : 'en')}
-                className="px-4 py-3 bg-white/90 backdrop-blur-sm rounded-xl hover:shadow-lg transition-all duration-300 flex items-center gap-2 border-2 border-white hover:border-purple-300 hover:scale-105 font-semibold text-base"
-                title={`Switch to ${i18n.language === 'en' ? 'Deutsch' : 'English'}`}
-              >
-                <Globe className="w-5 h-5" />
-                <span className="text-lg">{i18n.language === 'en' ? '🇩🇪' : '🇬🇧'}</span>
-              </button>
-            </div>
-          </div>
-        </div>
-      </header>
+      <Header
+        chainMode={chainMode}
+        targetPerson={targetPerson}
+        startPerson={startPerson}
+        endPerson={endPerson}
+        viewMode={viewMode}
+        setViewMode={setViewMode}
+        onShowLanding={() => setShowLanding(true)}
+        onShowSearch={() => setShowSearch(true)}
+        onShowYearExplorer={() => setShowYearExplorer(true)}
+      />
 
       {/* Stats Bar + Controls */}
-      <div className="max-w-7xl mx-auto px-4 md:px-6 py-6">
-        <div className="grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-4">
-          <div className="grid grid-cols-3 gap-3 md:gap-4">
-            <div className="glass-strong rounded-2xl p-4 md:p-6 hover:scale-105 transition-transform duration-300 flex flex-col items-center justify-center">
-              <div className="text-4xl md:text-5xl font-extrabold bg-gradient-to-br from-purple-600 to-purple-400 bg-clip-text text-transparent mb-2">{chain.length}</div>
-              <div className="text-xs md:text-sm text-neutral-700 font-semibold text-center">{t('stats.peopleInChain')}</div>
-            </div>
-            <div className="glass-strong rounded-2xl p-4 md:p-6 hover:scale-105 transition-transform duration-300 flex flex-col items-center justify-center">
-              <div className="text-4xl md:text-5xl font-extrabold bg-gradient-to-br from-violet-600 to-violet-400 bg-clip-text text-transparent mb-2">{lifetimeCount}</div>
-              <div className="text-xs md:text-sm text-neutral-700 font-semibold text-center">{t('stats.lifetimesBack')}</div>
-            </div>
-            <div className="glass-strong rounded-2xl p-4 md:p-6 hover:scale-105 transition-transform duration-300 flex flex-col items-center justify-center">
-              <div className="text-4xl md:text-5xl font-extrabold bg-gradient-to-br from-fuchsia-600 to-fuchsia-400 bg-clip-text text-transparent mb-2">{totalYears}</div>
-              <div className="text-xs md:text-sm text-neutral-700 font-semibold text-center">{t('stats.yearsSpanned')}</div>
-            </div>
-          </div>
-          
-          {/* Controls */}
-          <div className="glass-strong rounded-2xl p-4 md:p-6 space-y-4">
-          {/* Overlap Control */}
-            <div>
-              <label className="block text-sm md:text-base font-bold text-neutral-800 mb-2">
-              {t('stats.minOverlap', { years: minOverlapYears })}
-            </label>
-            <input
-              type="range"
-              min="0"
-              max="60"
-              step="5"
-              value={minOverlapYears}
-              onChange={(e) => setMinOverlapYears(parseInt(e.target.value))}
-              className="w-full h-2 bg-gradient-to-r from-green-300 via-yellow-300 to-red-300 rounded-lg appearance-none cursor-pointer slider"
-            />
-              <div className="flex justify-between text-xs text-neutral-600 mt-1 font-medium">
-              <span>{t('stats.overlapShort')}</span>
-              <span>{t('stats.overlapRealistic')}</span>
-            </div>
-          </div>
-
-            {/* Fame Control */}
-            <div>
-              <label className="block text-sm md:text-base font-bold text-neutral-800 mb-2">
-                {t('stats.minFame', { count: minFame })}
-              </label>
-              <input
-                type="range"
-                min="100"
-                max="220"
-                step="10"
-                value={minFame}
-                onChange={(e) => {
-                  const newValue = parseInt(e.target.value);
-                  setMinFame(newValue);
-                }}
-                className="w-full h-2 bg-gradient-to-r from-blue-300 via-purple-300 to-pink-300 rounded-lg appearance-none cursor-pointer slider"
-              />
-              <div className="flex justify-between text-xs text-neutral-600 mt-1 font-medium">
-                <span>{t('stats.fameLess')}</span>
-                <span>{t('stats.fameVery')}</span>
-        </div>
-      </div>
-
-            {/* Reset Edits Button */}
-            {pinnedWaypoints.length > 0 && (
-              <div className="pt-4 border-t border-purple-200">
-                <div className="flex items-center gap-2 mb-2">
-                  <span className="text-xs text-purple-600 font-semibold">{t('stats.chainEdited')}</span>
-                  <span className="text-xs text-neutral-500">{t('stats.waypoints', { count: pinnedWaypoints.length })}</span>
-                </div>
-                <button
-                  onClick={() => setPinnedWaypoints([])}
-                  className="w-full px-3 py-2 bg-white border-2 border-purple-300 text-purple-700 rounded-lg text-xs font-semibold hover:bg-purple-50 transition-all flex items-center justify-center gap-2"
-                >
-                  {t('stats.resetToOriginal')}
-                </button>
-              </div>
-            )}
-          </div>
-        </div>
-      </div>
+      <StatsBar
+        chain={chain}
+        lifetimeCount={lifetimeCount}
+        totalYears={totalYears}
+        minOverlapYears={minOverlapYears}
+        setMinOverlapYears={setMinOverlapYears}
+        minFame={minFame}
+        setMinFame={setMinFame}
+        pinnedWaypoints={pinnedWaypoints}
+        setPinnedWaypoints={setPinnedWaypoints}
+      />
 
           {/* The Chain - Views */}
       <main className="max-w-7xl mx-auto px-4 pb-12">

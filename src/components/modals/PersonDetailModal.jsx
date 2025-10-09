@@ -58,7 +58,7 @@ export function PersonDetailModal({
         <div className="mb-4 p-4 bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl">
           <h4 className="font-bold text-base mb-3 flex items-center gap-2 text-neutral-800">
             <Clock className="w-4 h-4" />
-            Historischer Kontext
+            {t('modal.historicalContext')}
           </h4>
           {(() => {
             const start = Math.min(...people.map(p => p.born));
@@ -73,7 +73,7 @@ export function PersonDetailModal({
               <div>
                 <div className="flex justify-between text-xs text-neutral-600 mb-1">
                   <span>{start}</span>
-                  <span>Heute</span>
+                  <span>{t('person.today')}</span>
                 </div>
                 <div className="h-3 bg-neutral-200 rounded-full overflow-hidden relative">
                   <div
@@ -95,7 +95,7 @@ export function PersonDetailModal({
           return (
             <div className="mb-4 p-4 bg-gradient-to-r from-green-50 to-teal-50 rounded-xl">
               <h4 className="font-bold text-base mb-3 flex items-center gap-2 text-neutral-800">
-                🔗 Position in der Kette
+                🔗 {t('modal.positionInChain')}
               </h4>
               <div className="grid grid-cols-2 gap-2">
                 {prevPerson ? (
@@ -103,13 +103,13 @@ export function PersonDetailModal({
                     onClick={() => onNavigateToPerson(prevPerson)}
                     className="p-3 bg-white rounded-lg hover:shadow-md transition-all text-left"
                   >
-                    <div className="text-xs text-neutral-500 mb-1">← Vorherige</div>
+                    <div className="text-xs text-neutral-500 mb-1">← {t('modal.previous')}</div>
                     <div className="font-semibold text-sm text-neutral-800 line-clamp-1">{prevPerson.name}</div>
                     <div className="text-xs text-neutral-600">{prevPerson.born}–{prevPerson.died === 9999 ? t('person.today') : prevPerson.died}</div>
                   </button>
                 ) : (
                   <div className="p-3 bg-neutral-100 rounded-lg opacity-50">
-                    <div className="text-xs text-neutral-500">← Start</div>
+                    <div className="text-xs text-neutral-500">← {t('modal.start')}</div>
                   </div>
                 )}
                 
@@ -118,13 +118,13 @@ export function PersonDetailModal({
                     onClick={() => onNavigateToPerson(nextPerson)}
                     className="p-3 bg-white rounded-lg hover:shadow-md transition-all text-left"
                   >
-                    <div className="text-xs text-neutral-500 mb-1">Nächste →</div>
+                    <div className="text-xs text-neutral-500 mb-1">{t('modal.next')} →</div>
                     <div className="font-semibold text-sm text-neutral-800 line-clamp-1">{nextPerson.name}</div>
                     <div className="text-xs text-neutral-600">{nextPerson.born}–{nextPerson.died === 9999 ? t('person.today') : nextPerson.died}</div>
                   </button>
                 ) : (
                   <div className="p-3 bg-neutral-100 rounded-lg opacity-50">
-                    <div className="text-xs text-neutral-500">Ende →</div>
+                    <div className="text-xs text-neutral-500">{t('modal.end')} →</div>
                   </div>
                 )}
               </div>
@@ -137,7 +137,7 @@ export function PersonDetailModal({
           <div className="mb-4">
             <h4 className="font-bold text-base mb-3 flex items-center gap-2 text-neutral-800">
               <Users className="w-4 h-4" />
-              Bekannte Personen
+              {t('modal.knownPeople')}
             </h4>
             <div className="grid grid-cols-2 gap-2">
               {relations[selectedPerson.qid].knew.slice(0, 4).map((rel, idx) => {
@@ -187,7 +187,7 @@ export function PersonDetailModal({
             return (
               <div className="mb-4">
                 <h4 className="font-bold text-base mb-3 flex items-center gap-2 text-neutral-800">
-                  ⏳ Lebte zur gleichen Zeit
+                  ⏳ {t('modal.contemporaries')}
                 </h4>
                 <div className="grid grid-cols-2 gap-2">
                   {contemporaries.map(p => (
@@ -216,14 +216,14 @@ export function PersonDetailModal({
             onClick={onClose}
             className="flex-1 py-3 bg-white hover:bg-neutral-50 rounded-xl transition-all font-bold text-neutral-700 text-base border-2 border-neutral-200 hover:border-neutral-300 shadow-sm hover:shadow-md"
           >
-            Schließen
+            {t('modal.close')}
           </button>
           {!chain.find(p => p.qid === selectedPerson.qid) && (
             <button
               onClick={onStartNewChain}
               className="flex-1 py-3 bg-gradient-to-r from-violet-600 via-purple-600 to-fuchsia-600 text-white rounded-xl hover:shadow-xl transition-all duration-300 font-bold text-base hover:scale-105"
             >
-              🔗 Neue Kette starten
+              🔗 {t('modal.startNewChain')}
             </button>
           )}
         </div>

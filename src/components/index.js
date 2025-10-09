@@ -1,5 +1,7 @@
 // UI Components
 export { PersonAvatar } from './ui/PersonAvatar';
+export { Header } from './ui/Header';
+export { StatsBar } from './ui/StatsBar';
 
 // Views
 export { TimelineView } from './views/TimelineView';

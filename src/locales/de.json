@@ -168,9 +168,16 @@
   },
   "modal": {
     "close": "Schließen",
-    "startNewChain": "🔗 Neue Kette starten",
+    "startNewChain": "Neue Kette starten",
     "relations": "Beziehungen",
-    "knownPeople": "Bekannte Personen:"
+    "knownPeople": "Bekannte Personen",
+    "historicalContext": "Historischer Kontext",
+    "positionInChain": "Position in der Kette",
+    "previous": "Vorherige",
+    "next": "Nächste",
+    "start": "Start",
+    "end": "Ende",
+    "contemporaries": "Lebte zur gleichen Zeit"
   },
   "keyboard": {
     "title": "⌨️ Shortcuts",

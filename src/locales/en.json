@@ -168,9 +168,16 @@
   },
   "modal": {
     "close": "Close",
-    "startNewChain": "🔗 Start New Chain",
+    "startNewChain": "Start New Chain",
     "relations": "Relations",
-    "knownPeople": "Known people:"
+    "knownPeople": "Known People",
+    "historicalContext": "Historical Context",
+    "positionInChain": "Position in Chain",
+    "previous": "Previous",
+    "next": "Next",
+    "start": "Start",
+    "end": "End",
+    "contemporaries": "Lived at the Same Time"
   },
   "keyboard": {
     "title": "⌨️ Shortcuts",
