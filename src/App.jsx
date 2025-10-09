@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo } from 'react';
-import { ArrowRight, Clock, Users, Sparkles, RotateCcw } from 'lucide-react';
+import { ArrowRight, Clock, Users, Sparkles, RotateCcw, List, BarChart3 } from 'lucide-react';
 import { loadAllData } from './dataLoader';
 
 const THIS_YEAR = new Date().getFullYear();
@@ -37,6 +37,257 @@ function getOccupation(person) {
     .slice(0, 2)
     .map(d => DOMAIN_TO_OCCUPATION[d] || d);
   return occupations.join(' & ');
+}
+
+// Timeline View Component
+function TimelineView({ chain, people, targetPerson, zoom, setZoom, onPersonClick, hoveredQid, setHoveredQid }) {
+  if (chain.length === 0) return null;
+  
+  const minYear = Math.min(...chain.map(p => p.born));
+  const maxYear = Math.max(...chain.map(p => p.died === 9999 ? THIS_YEAR : p.died));
+  const timeSpan = maxYear - minYear;
+  
+  const SVG_WIDTH = 1200;
+  const SVG_HEIGHT = 400;
+  const PADDING = 60;
+  const TIMELINE_Y = SVG_HEIGHT - 60;
+  const BAR_HEIGHT = 30;
+  
+  // Calculate positions
+  const yearToX = (year) => PADDING + ((year - minYear) / timeSpan) * (SVG_WIDTH - 2 * PADDING) * zoom;
+  
+  return (
+    <div className="space-y-6">
+      {/* Zoom Controls */}
+      <div className="glass-strong rounded-2xl p-4 flex items-center justify-between">
+        <div className="flex items-center gap-4">
+          <span className="text-sm font-bold text-neutral-800">🔍 Zoom:</span>
+          <div className="flex items-center gap-2">
+          <button
+            onClick={() => setZoom(Math.max(0.5, zoom - 0.25))}
+            className="w-8 h-8 rounded-lg bg-white hover:bg-neutral-100 border-2 border-neutral-200 flex items-center justify-center font-bold transition-all hover:scale-110 disabled:opacity-30 disabled:cursor-not-allowed"
+            disabled={zoom <= 0.5}
+          >
+            −
+          </button>
+          <span className="text-sm font-semibold text-neutral-700 w-20 text-center">
+            {Math.round(zoom * 100)}%
+          </span>
+          <button
+            onClick={() => setZoom(Math.min(5, zoom + 0.25))}
+            className="w-8 h-8 rounded-lg bg-white hover:bg-neutral-100 border-2 border-neutral-200 flex items-center justify-center font-bold transition-all hover:scale-110 disabled:opacity-30 disabled:cursor-not-allowed"
+            disabled={zoom >= 5}
+            title="Für große Zeitspannen höher zoomen"
+          >
+            +
+          </button>
+          </div>
+          <button
+            onClick={() => setZoom(1)}
+            className="px-3 py-1 text-xs rounded-lg bg-white hover:bg-neutral-100 border-2 border-neutral-200 font-semibold transition-all"
+          >
+            Reset
+          </button>
+          {timeSpan > 1000 && zoom < 2 && (
+            <button
+              onClick={() => setZoom(3)}
+              className="px-3 py-1 text-xs rounded-lg bg-purple-600 text-white hover:bg-purple-700 font-semibold transition-all"
+            >
+              📊 Auto-Zoom (300%)
+            </button>
+          )}
+        </div>
+        <div className="text-sm text-neutral-600 flex items-center gap-2">
+          <span>
+            <span className="font-semibold">{minYear}</span> bis <span className="font-semibold">{maxYear}</span>
+            <span className="ml-2 text-neutral-500">({timeSpan} Jahre)</span>
+          </span>
+          {timeSpan > 500 && (
+            <span className="text-xs bg-yellow-100 text-yellow-700 px-2 py-1 rounded-full font-medium">
+              ⚠️ Große Zeitspanne - Zoom empfohlen!
+            </span>
+          )}
+        </div>
+      </div>
+      
+      {/* Timeline SVG */}
+      <div className="glass-strong rounded-2xl p-6 overflow-x-auto relative" style={{ maxWidth: '100%' }}>
+        {/* Scroll hint */}
+        {zoom > 1 && (
+          <div className="absolute top-2 right-2 bg-purple-600 text-white px-3 py-1 rounded-full text-xs font-semibold shadow-lg z-10 animate-pulse">
+            ← Scroll horizontal →
+          </div>
+        )}
+        <svg width={SVG_WIDTH * zoom} height={SVG_HEIGHT} style={{ minWidth: '100%' }}>
+          {/* Timeline axis */}
+          <line
+            x1={PADDING}
+            y1={TIMELINE_Y}
+            x2={(SVG_WIDTH - PADDING) * zoom}
+            y2={TIMELINE_Y}
+            stroke="#cbd5e1"
+            strokeWidth="2"
+          />
+          
+          {/* Year markers */}
+          {Array.from({ length: Math.ceil(timeSpan / 50) + 1 }, (_, i) => {
+            const year = minYear + i * 50;
+            if (year > maxYear) return null;
+            const x = yearToX(year);
+            return (
+              <g key={year}>
+                <line
+                  x1={x}
+                  y1={TIMELINE_Y - 5}
+                  x2={x}
+                  y2={TIMELINE_Y + 5}
+                  stroke="#94a3b8"
+                  strokeWidth="2"
+                />
+                <text
+                  x={x}
+                  y={TIMELINE_Y + 20}
+                  textAnchor="middle"
+                  className="text-xs fill-neutral-600 font-semibold"
+                >
+                  {year}
+                </text>
+              </g>
+            );
+          })}
+          
+          {/* Person lifespans */}
+          {chain.map((person, idx) => {
+            const startX = yearToX(person.born);
+            const endX = yearToX(person.died === 9999 ? THIS_YEAR : person.died);
+            const width = endX - startX;
+            const y = 50 + (idx % 3) * 50; // Stagger vertically
+            const isHovered = hoveredQid === person.qid;
+            
+            // Color gradient based on position in chain
+            const hue = 250 + (idx / chain.length) * 60; // Purple to pink
+            const color = `hsl(${hue}, 70%, 60%)`;
+            const darkColor = `hsl(${hue}, 70%, 50%)`;
+            
+            return (
+              <g key={person.qid}>
+                {/* Life span bar */}
+                <rect
+                  x={startX}
+                  y={y}
+                  width={Math.max(width, 4)}
+                  height={BAR_HEIGHT}
+                  fill={color}
+                  stroke={darkColor}
+                  strokeWidth="2"
+                  rx="6"
+                  className={`cursor-pointer transition-all ${isHovered ? 'opacity-100 drop-shadow-lg' : 'opacity-80'}`}
+                  onMouseEnter={() => setHoveredQid(person.qid)}
+                  onMouseLeave={() => setHoveredQid(null)}
+                  onClick={() => onPersonClick(person)}
+                />
+                
+                {/* Person indicator dot */}
+                <circle
+                  cx={startX}
+                  cy={y + BAR_HEIGHT / 2}
+                  r="6"
+                  fill="white"
+                  stroke={darkColor}
+                  strokeWidth="2"
+                  className="cursor-pointer"
+                  onClick={() => onPersonClick(person)}
+                />
+                
+                {/* Name label */}
+                <text
+                  x={startX + width / 2}
+                  y={y - 8}
+                  textAnchor="middle"
+                  className={`text-xs font-bold fill-neutral-800 cursor-pointer ${isHovered ? 'text-base' : ''}`}
+                  onClick={() => onPersonClick(person)}
+                >
+                  {person.name}
+                </text>
+                
+                {/* Chain number */}
+                <text
+                  x={startX - 8}
+                  y={y + BAR_HEIGHT / 2 + 4}
+                  textAnchor="end"
+                  className="text-xs font-bold fill-purple-600"
+                >
+                  {chain.length - idx}
+                </text>
+                
+                {/* Hover tooltip */}
+                {isHovered && (
+                  <g>
+                    <rect
+                      x={startX + width / 2 - 80}
+                      y={y + BAR_HEIGHT + 10}
+                      width="160"
+                      height="60"
+                      fill="white"
+                      stroke={darkColor}
+                      strokeWidth="2"
+                      rx="8"
+                      className="drop-shadow-xl"
+                    />
+                    <text
+                      x={startX + width / 2}
+                      y={y + BAR_HEIGHT + 28}
+                      textAnchor="middle"
+                      className="text-xs font-bold fill-neutral-800"
+                    >
+                      {person.name}
+                    </text>
+                    <text
+                      x={startX + width / 2}
+                      y={y + BAR_HEIGHT + 44}
+                      textAnchor="middle"
+                      className="text-xs fill-purple-600 font-semibold"
+                    >
+                      {getOccupation(person)}
+                    </text>
+                    <text
+                      x={startX + width / 2}
+                      y={y + BAR_HEIGHT + 60}
+                      textAnchor="middle"
+                      className="text-xs fill-neutral-600"
+                    >
+                      {person.born}–{person.died === 9999 ? 'heute' : person.died}
+                    </text>
+                  </g>
+                )}
+              </g>
+            );
+          })}
+        </svg>
+      </div>
+      
+      {/* Legend */}
+      <div className="glass-strong rounded-2xl p-4">
+        <div className="flex flex-wrap gap-4 text-sm">
+          <div className="flex items-center gap-2">
+            <div className="w-6 h-6 rounded bg-gradient-to-r from-purple-400 to-fuchsia-400"></div>
+            <span className="text-neutral-700 font-medium">Lebensspanne</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="w-6 h-6 rounded-full bg-white border-2 border-purple-600"></div>
+            <span className="text-neutral-700 font-medium">Geburt</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="text-purple-600 font-bold text-lg">1</span>
+            <span className="text-neutral-700 font-medium">Position in der Kette</span>
+          </div>
+          <div className="text-neutral-600 ml-auto">
+            💡 Klicke auf eine Person für Details • Hover für Info
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 }
 
 // Chain algorithm - shortest path from start to today
@@ -126,6 +377,8 @@ function App() {
   const [minOverlapYears, setMinOverlapYears] = useState(20); // Minimum overlap for realistic connections
   const [minFame, setMinFame] = useState(100); // Minimum sitelinks (fame level)
   const [expandedGap, setExpandedGap] = useState(null); // Which gap is expanded (index)
+  const [viewMode, setViewMode] = useState('list'); // 'list' or 'timeline'
+  const [timelineZoom, setTimelineZoom] = useState(1); // Timeline zoom level
 
   useEffect(() => {
     loadAllData().then(({ people, relations }) => {
@@ -278,13 +531,43 @@ function App() {
                 Zu: <strong className="text-purple-700">{targetPerson}</strong>
               </p>
             </div>
-            <button
-              onClick={() => setShowLanding(true)}
-              className="px-5 py-3 bg-white/90 backdrop-blur-sm rounded-xl hover:shadow-lg transition-all duration-300 flex items-center gap-2 border-2 border-white hover:border-purple-300 hover:scale-105 font-semibold text-base"
-            >
-              <RotateCcw className="w-5 h-5" />
-              <span className="hidden sm:inline">Andere Person</span>
-            </button>
+            <div className="flex items-center gap-3">
+              {/* View Toggle */}
+              <div className="flex items-center gap-1 bg-white/90 backdrop-blur-sm rounded-xl p-1 border-2 border-white">
+                <button
+                  onClick={() => setViewMode('list')}
+                  className={`px-3 py-2 rounded-lg transition-all flex items-center gap-2 ${
+                    viewMode === 'list' 
+                      ? 'bg-gradient-to-r from-purple-600 to-fuchsia-600 text-white shadow-md' 
+                      : 'text-neutral-600 hover:bg-neutral-100'
+                  }`}
+                  title="Listenansicht"
+                >
+                  <List className="w-4 h-4" />
+                  <span className="hidden md:inline text-sm font-semibold">Liste</span>
+                </button>
+                <button
+                  onClick={() => setViewMode('timeline')}
+                  className={`px-3 py-2 rounded-lg transition-all flex items-center gap-2 ${
+                    viewMode === 'timeline' 
+                      ? 'bg-gradient-to-r from-purple-600 to-fuchsia-600 text-white shadow-md' 
+                      : 'text-neutral-600 hover:bg-neutral-100'
+                  }`}
+                  title="Timeline-Ansicht"
+                >
+                  <BarChart3 className="w-4 h-4" />
+                  <span className="hidden md:inline text-sm font-semibold">Timeline</span>
+                </button>
+              </div>
+              
+              <button
+                onClick={() => setShowLanding(true)}
+                className="px-5 py-3 bg-white/90 backdrop-blur-sm rounded-xl hover:shadow-lg transition-all duration-300 flex items-center gap-2 border-2 border-white hover:border-purple-300 hover:scale-105 font-semibold text-base"
+              >
+                <RotateCcw className="w-5 h-5" />
+                <span className="hidden sm:inline">Andere Person</span>
+              </button>
+            </div>
           </div>
         </div>
       </header>
@@ -355,14 +638,16 @@ function App() {
         </div>
       </div>
 
-          {/* The Chain - Vertical Timeline + Alternatives Panel */}
+          {/* The Chain - Views */}
       <main className="max-w-7xl mx-auto px-4 pb-12">
-        <div className="relative grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-6">
-          {/* Timeline Line */}
-          <div className="absolute left-8 top-0 bottom-0 w-1 bg-gradient-to-b from-purple-200 via-indigo-200 to-pink-200"></div>
+        {viewMode === 'list' ? (
+          /* LIST VIEW */
+          <div className="relative grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-6">
+            {/* Timeline Line */}
+            <div className="absolute left-8 top-0 bottom-0 w-1 bg-gradient-to-b from-purple-200 via-indigo-200 to-pink-200"></div>
 
-          {/* Chain Cards */}
-          <div className="space-y-6">
+            {/* Chain Cards */}
+            <div className="space-y-6">
             {chain.map((person, idx) => {
               const isLast = idx === chain.length - 1;
               const nextPerson = !isLast ? chain[idx + 1] : null;
@@ -617,12 +902,12 @@ function App() {
             </div>
           </div>
           
-          {/* Alternatives Panel */}
-          <aside className="hidden lg:block sticky top-24 self-start">
-            <div className="glass-strong rounded-3xl p-6">
-              <h3 className="text-base font-bold text-neutral-800 mb-4">
-                {hoveredQid ? 'Lebten zur gleichen Zeit' : 'Andere Zeitgenossen'}
-              </h3>
+            {/* Alternatives Panel */}
+            <aside className="hidden lg:block sticky top-24 self-start">
+              <div className="glass-strong rounded-3xl p-6">
+                <h3 className="text-base font-bold text-neutral-800 mb-4">
+                  {hoveredQid ? 'Lebten zur gleichen Zeit' : 'Andere Zeitgenossen'}
+                </h3>
               {(() => {
                 const focusPerson = hoveredQid ? chain.find(p => p.qid === hoveredQid) : chain[0];
                 if (!focusPerson) return <p className="text-xs text-neutral-500">Bewege die Maus über eine Person</p>;
@@ -665,9 +950,22 @@ function App() {
                   </div>
                 );
               })()}
-            </div>
-          </aside>
-        </div>
+              </div>
+            </aside>
+          </div>
+        ) : (
+          /* TIMELINE VIEW */
+          <TimelineView 
+            chain={chain}
+            people={people}
+            targetPerson={targetPerson}
+            zoom={timelineZoom}
+            setZoom={setTimelineZoom}
+            onPersonClick={setSelectedPerson}
+            hoveredQid={hoveredQid}
+            setHoveredQid={setHoveredQid}
+          />
+        )}
       </main>
 
       {/* Person Detail Modal - Enhanced */}
