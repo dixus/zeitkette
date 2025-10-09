@@ -149,7 +149,7 @@ function TimelineView({ chain, people, targetPerson, zoom, setZoom, onPersonClic
       {/* Zoom Controls */}
       <div className="glass-strong rounded-2xl p-4 flex items-center justify-between">
         <div className="flex items-center gap-4">
-          <span className="text-sm font-bold text-neutral-800">🔍 Zoom:</span>
+          <span className="text-sm font-bold text-neutral-800">{t('timeline.zoom')}</span>
           <div className="flex items-center gap-2">
           <button
             onClick={() => setZoom(Math.max(0.5, zoom - 0.25))}
@@ -165,7 +165,6 @@ function TimelineView({ chain, people, targetPerson, zoom, setZoom, onPersonClic
             onClick={() => setZoom(Math.min(5, zoom + 0.25))}
             className="w-8 h-8 rounded-lg bg-white hover:bg-neutral-100 border-2 border-neutral-200 flex items-center justify-center font-bold transition-all hover:scale-110 disabled:opacity-30 disabled:cursor-not-allowed"
             disabled={zoom >= 5}
-            title="Für große Zeitspannen höher zoomen"
           >
             +
           </button>
@@ -174,25 +173,25 @@ function TimelineView({ chain, people, targetPerson, zoom, setZoom, onPersonClic
             onClick={() => setZoom(1)}
             className="px-3 py-1 text-xs rounded-lg bg-white hover:bg-neutral-100 border-2 border-neutral-200 font-semibold transition-all"
           >
-            Reset
+            {t('timeline.reset')}
           </button>
           {timeSpan > 1000 && zoom < 2 && (
             <button
               onClick={() => setZoom(3)}
               className="px-3 py-1 text-xs rounded-lg bg-purple-600 text-white hover:bg-purple-700 font-semibold transition-all"
             >
-              📊 Auto-Zoom (300%)
+              {t('timeline.autoZoom')}
             </button>
           )}
         </div>
         <div className="text-sm text-neutral-600 flex items-center gap-2">
           <span>
-            <span className="font-semibold">{minYear}</span> bis <span className="font-semibold">{maxYear}</span>
-            <span className="ml-2 text-neutral-500">({timeSpan} Jahre)</span>
+            <span className="font-semibold">{minYear}</span> {t('timeline.from').includes('to') ? 'to' : 'bis'} <span className="font-semibold">{maxYear}</span>
+            <span className="ml-2 text-neutral-500">{t('timeline.years', { count: timeSpan })}</span>
           </span>
           {timeSpan > 500 && (
             <span className="text-xs bg-yellow-100 text-yellow-700 px-2 py-1 rounded-full font-medium">
-              ⚠️ Große Zeitspanne - Zoom empfohlen!
+              {t('timeline.largeTimespan')}
             </span>
           )}
         </div>
@@ -203,7 +202,7 @@ function TimelineView({ chain, people, targetPerson, zoom, setZoom, onPersonClic
         {/* Scroll hint */}
         {zoom > 1 && (
           <div className="absolute top-2 right-2 bg-purple-600 text-white px-3 py-1 rounded-full text-xs font-semibold shadow-lg z-10 animate-pulse">
-            ← Scroll horizontal →
+            {t('timeline.scrollHint')}
           </div>
         )}
         <svg width={SVG_WIDTH * zoom} height={SVG_HEIGHT} style={{ minWidth: '100%' }}>
@@ -360,7 +359,7 @@ function TimelineView({ chain, people, targetPerson, zoom, setZoom, onPersonClic
                       textAnchor="middle"
                       className="text-xs fill-neutral-600"
                     >
-                      {person.born}–{person.died === 9999 ? 'heute' : person.died}
+                      {person.born}–{person.died === 9999 ? t('person.today') : person.died}
                     </text>
                   </g>
                 )}
@@ -375,22 +374,22 @@ function TimelineView({ chain, people, targetPerson, zoom, setZoom, onPersonClic
         <div className="flex flex-wrap gap-4 text-sm">
           <div className="flex items-center gap-2">
             <div className="w-6 h-6 rounded bg-gradient-to-r from-purple-400 to-fuchsia-400"></div>
-            <span className="text-neutral-700 font-medium">Lebensspanne</span>
+            <span className="text-neutral-700 font-medium">{t('timeline.legend.lifespan')}</span>
           </div>
           <div className="flex items-center gap-2">
             <div className="w-6 h-6 rounded-full bg-white border-2 border-purple-600"></div>
-            <span className="text-neutral-700 font-medium">Geburt</span>
+            <span className="text-neutral-700 font-medium">{t('timeline.legend.birth')}</span>
           </div>
           <div className="flex items-center gap-2">
             <div className="w-6 h-6 rounded-full bg-gradient-to-br from-violet-400 to-purple-400 border-2 border-white"></div>
-            <span className="text-neutral-700 font-medium">Portrait (am Ende)</span>
+            <span className="text-neutral-700 font-medium">{t('timeline.legend.portrait')}</span>
           </div>
           <div className="flex items-center gap-2">
             <span className="text-purple-600 font-bold text-lg">1</span>
-            <span className="text-neutral-700 font-medium">Position in der Kette</span>
+            <span className="text-neutral-700 font-medium">{t('timeline.legend.position')}</span>
           </div>
           <div className="text-neutral-600 ml-auto">
-            💡 Klicke auf eine Person für Details • Hover für Info
+            {t('timeline.legend.tip')}
           </div>
         </div>
       </div>
@@ -930,17 +929,17 @@ function NetworkView({ chain, people, onPersonClick, hoveredQid, setHoveredQid }
       {/* Info */}
       <div className="glass-strong rounded-2xl p-4 flex items-center justify-between">
         <div>
-          <h3 className="text-sm font-bold text-neutral-800 mb-1">🕸️ Netzwerk-Visualisierung</h3>
+          <h3 className="text-sm font-bold text-neutral-800 mb-1">{t('network.title')}</h3>
           <p className="text-xs text-neutral-600">
-            Ziehe Personen um das Netzwerk zu erkunden • Zoom mit Mausrad • Klick für Details
+            {t('network.description')}
           </p>
         </div>
         <div className="flex items-center gap-2 text-xs text-neutral-600">
-          <span className="px-2 py-1 bg-purple-100 rounded-full font-medium">{chain.length} in Kette</span>
+          <span className="px-2 py-1 bg-purple-100 rounded-full font-medium">{t('network.inChain', { count: chain.length })}</span>
           {stats.nearbyPeople > 0 && (
-            <span className="px-2 py-1 bg-neutral-100 rounded-full font-medium">+{stats.nearbyPeople} Zeitgenossen</span>
+            <span className="px-2 py-1 bg-neutral-100 rounded-full font-medium">{t('network.contemporaries', { count: stats.nearbyPeople })}</span>
           )}
-          <span className="px-2 py-1 bg-blue-100 rounded-full font-medium">{stats.totalLinks} Verbindungen</span>
+          <span className="px-2 py-1 bg-blue-100 rounded-full font-medium">{t('network.connections', { count: stats.totalLinks })}</span>
         </div>
       </div>
       
@@ -954,22 +953,22 @@ function NetworkView({ chain, people, onPersonClick, hoveredQid, setHoveredQid }
         <div className="flex flex-wrap gap-6 text-sm">
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 rounded-full bg-gradient-to-br from-violet-400 to-purple-400 border-2 border-white flex items-center justify-center text-white font-bold text-xs">1</div>
-            <span className="text-neutral-700 font-medium">Person in Kette</span>
+            <span className="text-neutral-700 font-medium">{t('network.legend.personInChain')}</span>
           </div>
           <div className="flex items-center gap-2">
             <div className="w-6 h-6 rounded-full bg-neutral-400 border-2 border-white opacity-60"></div>
-            <span className="text-neutral-700 font-medium">Zeitgenosse (lebte zur selben Zeit)</span>
+            <span className="text-neutral-700 font-medium">{t('network.legend.contemporary')}</span>
           </div>
           <div className="flex items-center gap-2">
             <div className="w-8 h-1 bg-purple-600 rounded"></div>
-            <span className="text-neutral-700 font-medium">Ketten-Verbindung</span>
+            <span className="text-neutral-700 font-medium">{t('network.legend.chainConnection')}</span>
           </div>
           <div className="flex items-center gap-2">
             <div className="w-8 h-px bg-neutral-300"></div>
-            <span className="text-neutral-700 font-medium">Zeitliche Überlappung</span>
+            <span className="text-neutral-700 font-medium">{t('network.legend.timeOverlap')}</span>
           </div>
           <div className="text-neutral-600 ml-auto">
-            💡 Verbindungen = 20+ Jahre Überlappung
+            {t('network.legend.tip')}
           </div>
         </div>
       </div>
@@ -1086,17 +1085,18 @@ function App() {
     
     // Fact 1: Total timespan
     if (chainMode === 'toToday') {
-      const span = totalYears;
+      const personName = typeof targetPerson === 'string' ? targetPerson : targetPerson?.name;
       facts.push({
         icon: '⏳',
-        text: `Nur ${lifetimeCount} Lebenszeiten trennen uns von ${typeof targetPerson === 'string' ? targetPerson : targetPerson?.name}!`,
+        text: t('funFacts.lifetimes', { count: lifetimeCount, person: personName }),
         type: 'primary'
       });
     } else {
-      const span = totalYears;
+      const startName = typeof startPerson === 'string' ? startPerson : startPerson?.name;
+      const endName = typeof endPerson === 'string' ? endPerson : endPerson?.name;
       facts.push({
         icon: '🔗',
-        text: `${typeof startPerson === 'string' ? startPerson : startPerson?.name} und ${typeof endPerson === 'string' ? endPerson : endPerson?.name} sind nur ${chain.length} Menschen voneinander entfernt!`,
+        text: t('funFacts.stepsApart', { start: startName, end: endName, count: chain.length }),
         type: 'primary'
       });
     }
@@ -1118,7 +1118,7 @@ function App() {
     if (overlapPair && maxOverlap > 30) {
       facts.push({
         icon: '🤝',
-        text: `${overlapPair[0].name} und ${overlapPair[1].name} lebten ${maxOverlap} Jahre zur gleichen Zeit!`,
+        text: t('funFacts.overlap', { person1: overlapPair[0].name, person2: overlapPair[1].name, years: maxOverlap }),
         type: 'info'
       });
     }
@@ -1139,7 +1139,7 @@ function App() {
     if (gapPair && maxGap > 50) {
       facts.push({
         icon: '⚡',
-        text: `Größte Zeitlücke: ${maxGap} Jahre zwischen ${gapPair[0].name} und ${gapPair[1].name}`,
+        text: t('funFacts.gap', { years: maxGap, person1: gapPair[0].name, person2: gapPair[1].name }),
         type: 'warning'
       });
     }
@@ -1154,7 +1154,7 @@ function App() {
     if (oldestAge > 85) {
       facts.push({
         icon: '🎂',
-        text: `${oldest.name} wurde ${oldestAge} Jahre alt - ein langes Leben!`,
+        text: t('funFacts.longevity', { person: oldest.name, age: oldestAge }),
         type: 'success'
       });
     }
@@ -1164,7 +1164,7 @@ function App() {
     if (allDomains.size >= 4) {
       facts.push({
         icon: '🌟',
-        text: `Diese Kette verbindet ${allDomains.size} verschiedene Bereiche: ${Array.from(allDomains).slice(0, 3).join(', ')}...`,
+        text: t('funFacts.diversity', { count: allDomains.size, domains: Array.from(allDomains).slice(0, 3).join(', ') }),
         type: 'info'
       });
     }
@@ -1174,7 +1174,7 @@ function App() {
     if (centuries >= 5) {
       facts.push({
         icon: '📅',
-        text: `Diese Verbindung überspannt ${centuries} Jahrhunderte Geschichte!`,
+        text: t('funFacts.centuries', { count: centuries }),
         type: 'info'
       });
     }
@@ -1203,10 +1203,10 @@ function App() {
         <div className="text-center max-w-2xl w-full">
           <div className="text-8xl mb-8 animate-bounce drop-shadow-lg">⏳</div>
           <div className="text-4xl font-extrabold bg-gradient-to-r from-violet-600 via-purple-600 to-fuchsia-600 bg-clip-text text-transparent animate-pulse mb-6">
-            Zeitchain
+            {t('app.name')}
           </div>
           <div className="text-2xl font-semibold text-neutral-700 mb-8">
-            Lade Zeitreisedaten...
+            Loading time travel data...
           </div>
           
           {/* Loading Skeleton */}
@@ -1241,25 +1241,35 @@ function App() {
   // Landing Screen
   if (showLanding) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-violet-50 via-purple-50 to-fuchsia-50 flex items-center justify-center p-4 md:p-6">
+      <div className="min-h-screen bg-gradient-to-br from-violet-50 via-purple-50 to-fuchsia-50 flex items-center justify-center p-4 md:p-6 relative">
+        {/* Language Switcher - Top Right */}
+        <button
+          onClick={() => i18n.changeLanguage(i18n.language === 'en' ? 'de' : 'en')}
+          className="fixed top-4 right-4 z-50 px-4 py-3 bg-white/90 backdrop-blur-sm rounded-xl hover:shadow-lg transition-all duration-300 flex items-center gap-2 border-2 border-white hover:border-purple-300 hover:scale-105 font-semibold text-base"
+          title={`Switch to ${i18n.language === 'en' ? 'Deutsch' : 'English'}`}
+        >
+          <Globe className="w-5 h-5" />
+          <span className="text-lg">{i18n.language === 'en' ? '🇩🇪' : '🇬🇧'}</span>
+        </button>
+        
         <div className="max-w-4xl w-full">
           {/* Hero */}
           <div className="text-center mb-8 animate-fade-in">
             <div className="text-5xl mb-4 animate-bounce drop-shadow-lg">⏳</div>
             <h1 className="text-5xl md:text-6xl font-extrabold mb-4 bg-gradient-to-r from-violet-600 via-purple-600 to-fuchsia-600 bg-clip-text text-transparent leading-tight">
-              Zeitchain
+              {t('app.name')}
             </h1>
             <p className="text-2xl md:text-3xl font-bold text-neutral-800 mb-3 leading-tight">
-              Die Vergangenheit ist näher als du denkst!
+              {t('landing.title')}
             </p>
             <p className="text-base md:text-lg text-neutral-600 max-w-2xl mx-auto">
-              Entdecke, wie wenige <strong className="text-purple-700">Lebenszeiten</strong> uns von historischen Größen trennen
+              {t('landing.subtitle')}
             </p>
           </div>
 
           {/* Mode Selection */}
           <div className="glass-strong rounded-3xl p-6 mb-6 shadow-2xl animate-scale-in">
-            <h2 className="text-lg font-bold text-center mb-4 text-neutral-800">Wähle deinen Modus</h2>
+            <h2 className="text-lg font-bold text-center mb-4 text-neutral-800">{t('landing.modeTitle')}</h2>
             <div className="grid grid-cols-2 gap-3">
               <button
                 onClick={() => setChainMode('toToday')}
@@ -1270,8 +1280,8 @@ function App() {
                 }`}
               >
                 <div className="text-2xl mb-2">📅</div>
-                <div className="font-bold text-sm">Bis Heute</div>
-                <div className="text-xs mt-1 opacity-90">Von Person X bis jetzt</div>
+                <div className="font-bold text-sm">{t('landing.modeToToday')}</div>
+                <div className="text-xs mt-1 opacity-90">{t('landing.modeToTodayDesc')}</div>
               </button>
               <button
                 onClick={() => setChainMode('between')}
@@ -1282,8 +1292,8 @@ function App() {
                 }`}
               >
                 <div className="text-2xl mb-2">🔗</div>
-                <div className="font-bold text-sm">Zwei Personen</div>
-                <div className="text-xs mt-1 opacity-90">Kürzester Pfad A → B</div>
+                <div className="font-bold text-sm">{t('landing.modeBetween')}</div>
+                <div className="text-xs mt-1 opacity-90">{t('landing.modeBetweenDesc')}</div>
               </button>
             </div>
           </div>
@@ -1292,7 +1302,7 @@ function App() {
           <div className="glass-strong rounded-3xl p-6 md:p-8 shadow-2xl animate-scale-in mb-6">
             <h2 className="text-xl md:text-2xl font-bold text-center mb-6 flex items-center justify-center gap-2 text-neutral-800">
               <Sparkles className="w-6 h-6 text-yellow-500 drop-shadow" />
-              {chainMode === 'toToday' ? 'Wähle dein Ziel' : 'Wähle Start & Ziel'}
+              {chainMode === 'toToday' ? t('landing.selectPerson') : t('landing.startPerson') + ' & ' + t('landing.endPerson')}
             </h2>
             
             {chainMode === 'toToday' ? (
@@ -1322,7 +1332,7 @@ function App() {
                   {/* Start Person */}
                   <div className="bg-white/70 backdrop-blur-sm rounded-2xl p-4 border-2 border-violet-300">
                     <div className="text-sm font-bold mb-2 text-violet-700 flex items-center gap-2">
-                      <span>🎯</span> Start Person
+                      <span>🎯</span> {t('landing.startPerson')}
                     </div>
                     <select
                       value={typeof startPerson === 'string' ? startPerson : startPerson?.name}
@@ -1343,7 +1353,7 @@ function App() {
                   {/* End Person */}
                   <div className="bg-white/70 backdrop-blur-sm rounded-2xl p-4 border-2 border-fuchsia-300">
                     <div className="text-sm font-bold mb-2 text-fuchsia-700 flex items-center gap-2">
-                      <span>🏁</span> Ziel Person
+                      <span>🏁</span> {t('landing.endPerson')}
                     </div>
                     <select
                       value={typeof endPerson === 'string' ? endPerson : endPerson?.name}
@@ -1364,7 +1374,7 @@ function App() {
                 
                 {/* Quick suggestions for "Between" mode */}
             <div className="text-center">
-                  <p className="text-xs text-neutral-600 mb-2 font-medium">🚀 Oder probiere diese spannenden Verbindungen:</p>
+                  <p className="text-xs text-neutral-600 mb-2 font-medium">{t('landing.quickConnections')}</p>
                   <div className="flex flex-wrap justify-center gap-2">
                     <button
                       onClick={() => {
@@ -1373,7 +1383,7 @@ function App() {
                       }}
                       className="px-3 py-1 bg-white/90 rounded-full text-xs font-semibold text-purple-700 hover:bg-purple-100 transition-all border border-purple-300"
                     >
-                      Da Vinci → Einstein
+                      {t('landing.daVinciEinstein')}
                     </button>
                     <button
                       onClick={() => {
@@ -1382,7 +1392,7 @@ function App() {
                       }}
                       className="px-3 py-1 bg-white/90 rounded-full text-xs font-semibold text-purple-700 hover:bg-purple-100 transition-all border border-purple-300"
                     >
-                      Kleopatra → Napoleon
+                      {t('landing.cleopatraNapoleon')}
                     </button>
                     <button
                       onClick={() => {
@@ -1391,7 +1401,7 @@ function App() {
                       }}
                       className="px-3 py-1 bg-white/90 rounded-full text-xs font-semibold text-purple-700 hover:bg-purple-100 transition-all border border-purple-300"
                     >
-                      Aristoteles → Newton
+                      {t('landing.aristotleNewton')}
                     </button>
                   </div>
                 </div>
@@ -1400,7 +1410,7 @@ function App() {
 
             {chainMode === 'toToday' && (
               <div className="text-center">
-                <p className="text-sm text-neutral-600 mb-3 font-medium">oder wähle aus allen {people.length} Personen:</p>
+                <p className="text-sm text-neutral-600 mb-3 font-medium">{t('landing.orChooseFrom', { count: people.length })}</p>
               <select
                   value={typeof targetPerson === 'string' ? targetPerson : targetPerson?.name}
                 onChange={(e) => setTargetPerson(e.target.value)}
@@ -1424,7 +1434,7 @@ function App() {
             className="w-full py-5 bg-gradient-to-r from-violet-600 via-purple-600 to-fuchsia-600 text-white text-lg md:text-xl font-bold rounded-2xl hover:shadow-2xl transition-all duration-300 hover:scale-[1.02] hover:-translate-y-1"
           >
             <span className="drop-shadow-lg">
-              {chainMode === 'toToday' ? '🚀 Zeitchain starten' : '🔗 Pfad finden'}
+              {t('landing.goButton')}
             </span>
         </button>
 
@@ -1432,15 +1442,15 @@ function App() {
           <div className="mt-6 grid grid-cols-3 gap-3 md:gap-4 text-center">
             <div className="glass rounded-xl p-4 hover:scale-105 transition-transform duration-300">
               <div className="text-2xl md:text-3xl font-bold text-purple-600 mb-1">{people.length}</div>
-              <div className="text-xs text-neutral-600 font-medium">Personen</div>
+              <div className="text-xs text-neutral-600 font-medium">{t('stats.peopleInChain').replace(' in der Kette', '').replace(' in Chain', '')}</div>
             </div>
             <div className="glass rounded-xl p-4 hover:scale-105 transition-transform duration-300">
               <div className="text-2xl md:text-3xl font-bold text-violet-600 mb-1">2654</div>
-              <div className="text-xs text-neutral-600 font-medium">Jahre</div>
+              <div className="text-xs text-neutral-600 font-medium">{t('stats.yearsSpanned').replace(' überbrückt', '').replace(' Spanned', '')}</div>
             </div>
             <div className="glass rounded-xl p-4 hover:scale-105 transition-transform duration-300">
               <div className="text-2xl md:text-3xl font-bold text-fuchsia-600 mb-1">{Object.keys(relations).length}</div>
-              <div className="text-xs text-neutral-600 font-medium">Beziehungen</div>
+              <div className="text-xs text-neutral-600 font-medium">{t('modal.relations')}</div>
             </div>
           </div>
         </div>
@@ -1457,11 +1467,11 @@ function App() {
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-3xl md:text-4xl font-extrabold bg-gradient-to-r from-violet-600 via-purple-600 to-fuchsia-600 bg-clip-text text-transparent mb-1">
-                Zeitchain
+                {t('app.name')}
               </h1>
               <p className="text-base md:text-lg text-neutral-700 font-semibold">
                 {chainMode === 'toToday' ? (
-                  <>Zu: <strong className="text-purple-700">{typeof targetPerson === 'string' ? targetPerson : targetPerson?.name}</strong></>
+                  <>{t('header.to')} <strong className="text-purple-700">{typeof targetPerson === 'string' ? targetPerson : targetPerson?.name}</strong></>
                 ) : (
                   <><strong className="text-violet-700">{typeof startPerson === 'string' ? startPerson : startPerson?.name}</strong> → <strong className="text-fuchsia-700">{typeof endPerson === 'string' ? endPerson : endPerson?.name}</strong></>
                 )}
@@ -1477,10 +1487,10 @@ function App() {
                       ? 'bg-gradient-to-r from-purple-600 to-fuchsia-600 text-white shadow-md' 
                       : 'text-neutral-600 hover:bg-neutral-100'
                   }`}
-                  title="Listenansicht"
+                  title={t('views.listView')}
                 >
                   <List className="w-4 h-4" />
-                  <span className="hidden md:inline text-sm font-semibold">Liste</span>
+                  <span className="hidden md:inline text-sm font-semibold">{t('views.list')}</span>
                 </button>
                 <button
                   onClick={() => setViewMode('timeline')}
@@ -1489,10 +1499,10 @@ function App() {
                       ? 'bg-gradient-to-r from-purple-600 to-fuchsia-600 text-white shadow-md' 
                       : 'text-neutral-600 hover:bg-neutral-100'
                   }`}
-                  title="Timeline-Ansicht"
+                  title={t('views.timelineView')}
                 >
                   <BarChart3 className="w-4 h-4" />
-                  <span className="hidden md:inline text-sm font-semibold">Timeline</span>
+                  <span className="hidden md:inline text-sm font-semibold">{t('views.timeline')}</span>
                 </button>
                 <button
                   onClick={() => setViewMode('network')}
@@ -1501,10 +1511,10 @@ function App() {
                       ? 'bg-gradient-to-r from-purple-600 to-fuchsia-600 text-white shadow-md' 
                       : 'text-neutral-600 hover:bg-neutral-100'
                   }`}
-                  title="Netzwerk-Ansicht"
+                  title={t('views.networkView')}
                 >
                   <Network className="w-4 h-4" />
-                  <span className="hidden md:inline text-sm font-semibold">Netzwerk</span>
+                  <span className="hidden md:inline text-sm font-semibold">{t('views.network')}</span>
                 </button>
               </div>
               
@@ -1514,7 +1524,7 @@ function App() {
                 title="Keyboard shortcut: R"
               >
                 <RotateCcw className="w-5 h-5" />
-                <span className="hidden sm:inline">Andere Person</span>
+                <span className="hidden sm:inline">{t('header.otherPerson')}</span>
               </button>
               
               <button
@@ -1523,7 +1533,7 @@ function App() {
                 title="Keyboard shortcut: /"
               >
                 <Search className="w-5 h-5" />
-                <span className="hidden sm:inline">Suchen</span>
+                <span className="hidden sm:inline">{t('header.search')}</span>
               </button>
               
               {/* Language Switcher */}
@@ -1546,15 +1556,15 @@ function App() {
           <div className="grid grid-cols-3 gap-3 md:gap-4">
             <div className="glass-strong rounded-2xl p-4 md:p-6 hover:scale-105 transition-transform duration-300 flex flex-col items-center justify-center">
               <div className="text-4xl md:text-5xl font-extrabold bg-gradient-to-br from-purple-600 to-purple-400 bg-clip-text text-transparent mb-2">{chain.length}</div>
-              <div className="text-xs md:text-sm text-neutral-700 font-semibold text-center">Personen in der Kette</div>
+              <div className="text-xs md:text-sm text-neutral-700 font-semibold text-center">{t('stats.peopleInChain')}</div>
             </div>
             <div className="glass-strong rounded-2xl p-4 md:p-6 hover:scale-105 transition-transform duration-300 flex flex-col items-center justify-center">
               <div className="text-4xl md:text-5xl font-extrabold bg-gradient-to-br from-violet-600 to-violet-400 bg-clip-text text-transparent mb-2">{lifetimeCount}</div>
-              <div className="text-xs md:text-sm text-neutral-700 font-semibold text-center">Lebenszeiten zurück</div>
+              <div className="text-xs md:text-sm text-neutral-700 font-semibold text-center">{t('stats.lifetimesBack')}</div>
             </div>
             <div className="glass-strong rounded-2xl p-4 md:p-6 hover:scale-105 transition-transform duration-300 flex flex-col items-center justify-center">
               <div className="text-4xl md:text-5xl font-extrabold bg-gradient-to-br from-fuchsia-600 to-fuchsia-400 bg-clip-text text-transparent mb-2">{totalYears}</div>
-              <div className="text-xs md:text-sm text-neutral-700 font-semibold text-center">Jahre überbrückt</div>
+              <div className="text-xs md:text-sm text-neutral-700 font-semibold text-center">{t('stats.yearsSpanned')}</div>
             </div>
           </div>
           
@@ -1563,7 +1573,7 @@ function App() {
           {/* Overlap Control */}
             <div>
               <label className="block text-sm md:text-base font-bold text-neutral-800 mb-2">
-              Min. Überlappung: {minOverlapYears} Jahre
+              {t('stats.minOverlap', { years: minOverlapYears })}
             </label>
             <input
               type="range"
@@ -1575,15 +1585,15 @@ function App() {
               className="w-full h-2 bg-gradient-to-r from-green-300 via-yellow-300 to-red-300 rounded-lg appearance-none cursor-pointer slider"
             />
               <div className="flex justify-between text-xs text-neutral-600 mt-1 font-medium">
-              <span>Kurz</span>
-              <span>Realistisch</span>
+              <span>{t('stats.overlapShort')}</span>
+              <span>{t('stats.overlapRealistic')}</span>
             </div>
           </div>
 
             {/* Fame Control */}
             <div>
               <label className="block text-sm md:text-base font-bold text-neutral-800 mb-2">
-                Min. Bekanntheit: {minFame} Wikipedia-Artikel
+                {t('stats.minFame', { count: minFame })}
               </label>
               <input
                 type="range"
@@ -1598,8 +1608,8 @@ function App() {
                 className="w-full h-2 bg-gradient-to-r from-blue-300 via-purple-300 to-pink-300 rounded-lg appearance-none cursor-pointer slider"
               />
               <div className="flex justify-between text-xs text-neutral-600 mt-1 font-medium">
-                <span>Weniger bekannt (100+)</span>
-                <span>Sehr bekannt (220)</span>
+                <span>{t('stats.fameLess')}</span>
+                <span>{t('stats.fameVery')}</span>
         </div>
       </div>
 
@@ -1607,14 +1617,14 @@ function App() {
             {pinnedWaypoints.length > 0 && (
               <div className="pt-4 border-t border-purple-200">
                 <div className="flex items-center gap-2 mb-2">
-                  <span className="text-xs text-purple-600 font-semibold">✏️ Kette wurde bearbeitet</span>
-                  <span className="text-xs text-neutral-500">({pinnedWaypoints.length} Wegpunkte)</span>
+                  <span className="text-xs text-purple-600 font-semibold">{t('stats.chainEdited')}</span>
+                  <span className="text-xs text-neutral-500">{t('stats.waypoints', { count: pinnedWaypoints.length })}</span>
                 </div>
                 <button
                   onClick={() => setPinnedWaypoints([])}
                   className="w-full px-3 py-2 bg-white border-2 border-purple-300 text-purple-700 rounded-lg text-xs font-semibold hover:bg-purple-50 transition-all flex items-center justify-center gap-2"
                 >
-                  ↺ Zurücksetzen auf Original
+                  {t('stats.resetToOriginal')}
                 </button>
               </div>
             )}
@@ -1783,10 +1793,10 @@ function App() {
                         <div className="flex flex-wrap items-center gap-2 md:gap-3 text-neutral-700 mb-2">
                           <span className="flex items-center gap-1 font-semibold text-sm md:text-base">
                             <Clock className="w-4 h-4 text-purple-600" />
-                            {person.born}–{person.died === 9999 ? 'heute' : person.died}
+                            {person.born}–{person.died === 9999 ? t('person.today') : person.died}
                           </span>
                           <span className="text-xs md:text-sm text-neutral-600">
-                            ({person.died === 9999 ? THIS_YEAR - person.born : person.died - person.born} Jahre)
+                            ({t('person.years', { count: person.died === 9999 ? THIS_YEAR - person.born : person.died - person.born })})
                           </span>
                         </div>
                         
@@ -1804,7 +1814,7 @@ function App() {
                               <div className="flex items-center gap-2 text-xs text-neutral-500 mb-1">
                                 <span>{start}</span>
                                 <div className="flex-1"></div>
-                                <span>{end === THIS_YEAR ? 'heute' : end}</span>
+                                <span>{end === THIS_YEAR ? t('person.today') : end}</span>
                               </div>
                               <div className="h-3 w-full bg-neutral-200/70 rounded-full overflow-hidden relative">
                                 <div
@@ -1832,7 +1842,7 @@ function App() {
                     {relations[person.qid]?.knew?.length > 0 && (
                       <div className="mt-3 pt-3 border-t border-neutral-200/60 flex items-center gap-2 text-sm text-neutral-700 font-medium">
                         <Users className="w-4 h-4 text-purple-600" />
-                        Kannte {relations[person.qid].knew.length} {relations[person.qid].knew.length === 1 ? 'Person' : 'Personen'}
+                        {t('person.knew', { count: relations[person.qid].knew.length, count_plural: relations[person.qid].knew.length === 1 ? t('person.person_one') : t('person.person_other') })}
                       </div>
                     )}
                   </div>
@@ -1844,13 +1854,13 @@ function App() {
                         <ArrowRight className="w-4 h-4 md:w-5 md:h-5 text-purple-400" />
                       {hasGap ? (
                           <div className="text-sm md:text-base flex-1">
-                            <span className="text-red-600 font-bold">{gapYears} Jahre Lücke</span>
-                            <span className="text-neutral-600 font-medium hidden sm:inline"> → hätten sich nicht treffen können</span>
+                            <span className="text-red-600 font-bold">{t('connection.gap', { years: gapYears })}</span>
+                            <span className="text-neutral-600 font-medium hidden sm:inline"> {t('connection.couldNotMeet')}</span>
                         </div>
                       ) : (
                           <div className="text-sm md:text-base flex-1">
-                            <span className="text-green-600 font-bold">{overlapYears} Jahre Überlappung</span>
-                            <span className="text-neutral-600 font-medium hidden sm:inline"> → hätten sich treffen können! ✨</span>
+                            <span className="text-green-600 font-bold">{t('connection.overlap', { years: overlapYears })}</span>
+                            <span className="text-neutral-600 font-medium hidden sm:inline"> {t('connection.couldMeet')}</span>
                         </div>
                       )}
                         
@@ -1858,7 +1868,7 @@ function App() {
                         <button
                           onClick={() => setExpandedGap(expandedGap === idx ? null : idx)}
                           className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-gradient-to-br from-purple-500 to-fuchsia-500 text-white flex items-center justify-center hover:scale-110 transition-all shadow-md hover:shadow-lg"
-                          title="Weitere Personen aus dieser Zeit entdecken"
+                          title={t('connection.explore')}
                         >
                           {expandedGap === idx ? '−' : '+'}
                         </button>
@@ -1896,10 +1906,10 @@ function App() {
                               <div className="flex items-center justify-between mb-3">
                                 <h4 className="text-sm font-bold text-neutral-800 flex items-center gap-2">
                                   <span className="text-purple-600">🔍</span>
-                                  Weitere Personen aus dieser Zeit
+                                  {t('connection.moreFromTime')}
                                 </h4>
                                 <span className="text-xs text-neutral-500 font-medium">
-                                  {allAlternatives.length} gefunden
+                                  {t('connection.found', { count: allAlternatives.length })}
                                 </span>
                               </div>
                               
@@ -1908,17 +1918,17 @@ function App() {
                                 <div className="mb-3 flex flex-wrap gap-2 text-xs">
                                   {veryFamous.length > 0 && (
                                     <span className="px-2 py-1 bg-yellow-100 text-yellow-700 rounded-full font-medium">
-                                      ⭐⭐⭐ Sehr bekannt ({veryFamous.length})
+                                      {t('connection.veryFamous', { count: veryFamous.length })}
                                     </span>
                                   )}
                                   {famous.length > 0 && (
                                     <span className="px-2 py-1 bg-blue-100 text-blue-700 rounded-full font-medium">
-                                      ⭐⭐ Bekannt ({famous.length})
+                                      {t('connection.famous', { count: famous.length })}
                                     </span>
                                   )}
                                   {lessFamous.length > 0 && (
                                     <span className="px-2 py-1 bg-purple-100 text-purple-700 rounded-full font-medium">
-                                      ⭐ Weniger bekannt ({lessFamous.length})
+                                      {t('connection.lessFamous', { count: lessFamous.length })}
                                     </span>
                                   )}
                                 </div>
@@ -1926,7 +1936,7 @@ function App() {
                               
                               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
                                 {alternatives.length === 0 ? (
-                                  <p className="col-span-full text-sm text-neutral-500">Keine weiteren passenden Personen gefunden</p>
+                                  <p className="col-span-full text-sm text-neutral-500">{t('connection.noAlternatives')}</p>
                                 ) : (
                                   alternatives.map(p => {
                                     // Determine fame tier color
@@ -1953,7 +1963,7 @@ function App() {
                                           {getOccupation(p)}
                                         </div>
                                         <div className="text-xs text-neutral-500 text-center mt-1">
-                                          {p.born}–{p.died === 9999 ? 'heute' : p.died}
+                                          {p.born}–{p.died === 9999 ? t('person.today') : p.died}
                                         </div>
                                         <div className="text-xs text-neutral-400 text-center mt-1 flex items-center justify-center gap-1">
                                           {fameLevel === 'gold' && '⭐⭐⭐'}
@@ -1986,7 +1996,7 @@ function App() {
               </h2>
               <p className="text-base md:text-lg text-neutral-700 mb-6 font-medium">
                 {chainMode === 'toToday' ? (
-                  <>Von <strong className="text-purple-700">heute</strong> bis <strong className="text-purple-700">{typeof targetPerson === 'string' ? targetPerson : targetPerson?.name}</strong></>
+                  <>Von <strong className="text-purple-700">{t('person.today')}</strong> bis <strong className="text-purple-700">{typeof targetPerson === 'string' ? targetPerson : targetPerson?.name}</strong></>
                 ) : (
                   <>Von <strong className="text-violet-700">{typeof startPerson === 'string' ? startPerson : startPerson?.name}</strong> bis <strong className="text-fuchsia-700">{typeof endPerson === 'string' ? endPerson : endPerson?.name}</strong></>
                 )}
@@ -2005,23 +2015,27 @@ function App() {
                 {/* Share Button */}
                 <button
                   onClick={() => {
+                    const personName = typeof targetPerson === 'string' ? targetPerson : targetPerson?.name;
+                    const startName = typeof startPerson === 'string' ? startPerson : startPerson?.name;
+                    const endName = typeof endPerson === 'string' ? endPerson : endPerson?.name;
+                    
                     const shareText = chainMode === 'toToday'
-                      ? `🎯 Ich habe ${typeof targetPerson === 'string' ? targetPerson : targetPerson?.name} erreicht in nur ${chain.length} Schritten und ${lifetimeCount} Lebenszeiten! ⏳ #Zeitchain`
-                      : `🔗 Ich habe ${typeof startPerson === 'string' ? startPerson : startPerson?.name} mit ${typeof endPerson === 'string' ? endPerson : endPerson?.name} verbunden in nur ${chain.length} Schritten! ⏳ #Zeitchain`;
+                      ? t('share.toToday', { person: personName, steps: chain.length, lifetimes: lifetimeCount })
+                      : t('share.between', { start: startName, end: endName, steps: chain.length });
                     
                     if (navigator.share) {
                       navigator.share({
-                        title: 'Zeitchain',
+                        title: t('app.name'),
                         text: shareText
                       }).catch(() => {});
                     } else {
                       navigator.clipboard.writeText(shareText);
-                      alert('Text in Zwischenablage kopiert! 📋');
+                      alert(t('share.copied'));
                     }
                   }}
                   className="px-6 py-3 bg-gradient-to-r from-violet-600 to-fuchsia-600 text-white rounded-xl font-semibold hover:shadow-lg transition-all hover:scale-105"
                 >
-                  📤 Teilen
+                  {t('endMarker.shareButton')}
                 </button>
               </div>
             </div>
@@ -2067,7 +2081,7 @@ function App() {
                             {getOccupation(p)}
                           </div>
                           <div className="text-sm text-neutral-600">
-                            {p.born}–{p.died === 9999 ? 'heute' : p.died}
+                            {p.born}–{p.died === 9999 ? t('person.today') : p.died}
                           </div>
                         </div>
                       ))
@@ -2119,16 +2133,16 @@ function App() {
             <div className="mb-4">
               <h3 className="text-2xl font-bold mb-2 text-neutral-900 flex items-center gap-2">
                 <Search className="w-6 h-6 text-purple-600" />
-                Person suchen
+                {t('search.title')}
               </h3>
-              <p className="text-sm text-neutral-600">Suche nach Namen oder Beruf</p>
+              <p className="text-sm text-neutral-600">{t('search.placeholder')}</p>
             </div>
             
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="z.B. Einstein, Künstler, Philosopher..."
+              placeholder={t('search.placeholder')}
               className="w-full px-4 py-3 rounded-xl border-2 border-purple-200 focus:border-purple-400 focus:ring-2 focus:ring-purple-200 outline-none transition-all mb-4 text-lg"
               autoFocus
             />
@@ -2136,11 +2150,11 @@ function App() {
             <div className="max-h-96 overflow-y-auto space-y-2">
               {searchQuery === '' ? (
                 <div className="text-center text-neutral-500 py-8">
-                  Beginne zu tippen um zu suchen...
+                  {t('search.placeholder')}...
                 </div>
               ) : searchResults.length === 0 ? (
                 <div className="text-center text-neutral-500 py-8">
-                  Keine Ergebnisse gefunden
+                  {t('search.noResults', { query: searchQuery })}
                 </div>
               ) : (
                 searchResults.map(person => (
@@ -2160,7 +2174,7 @@ function App() {
                         {person.name}
                       </div>
                       <div className="text-sm text-neutral-600">
-                        {getOccupation(person)} • {person.born}–{person.died === 9999 ? 'heute' : person.died}
+                        {getOccupation(person)} • {person.born}–{person.died === 9999 ? t('person.today') : person.died}
                       </div>
                     </div>
                   </button>
@@ -2169,15 +2183,15 @@ function App() {
             </div>
             
             <div className="mt-4 pt-4 border-t border-neutral-200 text-xs text-neutral-500 flex items-center justify-between">
-              <span>💡 Tipp: Drücke <kbd className="px-2 py-1 bg-neutral-100 rounded font-mono">/</kbd> um zu suchen</span>
-              <span>Insgesamt {people.length} Personen</span>
+              <span>💡 {t('keyboard.search')}: <kbd className="px-2 py-1 bg-neutral-100 rounded font-mono">/</kbd></span>
+              <span>{people.length} {t('stats.peopleInChain').replace(' in der Kette', '').replace(' in Chain', '')}</span>
             </div>
             
             <button
               onClick={() => setShowSearch(false)}
               className="mt-4 w-full px-4 py-2 bg-neutral-100 hover:bg-neutral-200 rounded-xl font-semibold transition-all"
             >
-              Schließen
+              {t('modal.close')}
             </button>
           </div>
         </div>
@@ -2199,9 +2213,9 @@ function App() {
               <h3 className="text-3xl font-extrabold mb-2 text-neutral-900">{selectedPerson.name}</h3>
               <p className="text-lg text-purple-700 font-bold mb-3">{getOccupation(selectedPerson)}</p>
               <p className="text-base text-neutral-700 mb-2 font-semibold">
-                {selectedPerson.born}–{selectedPerson.died === 9999 ? 'heute' : selectedPerson.died}
+                {selectedPerson.born}–{selectedPerson.died === 9999 ? t('person.today') : selectedPerson.died}
                 {' '}
-                <span className="text-sm text-neutral-600">({selectedPerson.died === 9999 ? THIS_YEAR - selectedPerson.born : selectedPerson.died - selectedPerson.born} Jahre)</span>
+                <span className="text-sm text-neutral-600">({t('person.years', { count: selectedPerson.died === 9999 ? THIS_YEAR - selectedPerson.born : selectedPerson.died - selectedPerson.born })})</span>
               </p>
               {selectedPerson.region && (
                 <p className="text-sm text-neutral-600 font-medium">📍 {selectedPerson.region}</p>
@@ -2268,7 +2282,7 @@ function App() {
                       >
                         <div className="text-xs text-neutral-500 mb-1">← Vorherige</div>
                         <div className="font-semibold text-sm text-neutral-800 line-clamp-1">{prevPerson.name}</div>
-                        <div className="text-xs text-neutral-600">{prevPerson.born}–{prevPerson.died === 9999 ? 'heute' : prevPerson.died}</div>
+                        <div className="text-xs text-neutral-600">{prevPerson.born}–{prevPerson.died === 9999 ? t('person.today') : prevPerson.died}</div>
                       </button>
                     ) : (
                       <div className="p-3 bg-neutral-100 rounded-lg opacity-50">
@@ -2283,7 +2297,7 @@ function App() {
                       >
                         <div className="text-xs text-neutral-500 mb-1">Nächste →</div>
                         <div className="font-semibold text-sm text-neutral-800 line-clamp-1">{nextPerson.name}</div>
-                        <div className="text-xs text-neutral-600">{nextPerson.born}–{nextPerson.died === 9999 ? 'heute' : nextPerson.died}</div>
+                        <div className="text-xs text-neutral-600">{nextPerson.born}–{nextPerson.died === 9999 ? t('person.today') : nextPerson.died}</div>
                       </button>
                     ) : (
                       <div className="p-3 bg-neutral-100 rounded-lg opacity-50">
@@ -2360,7 +2374,7 @@ function App() {
                           className="p-2 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg hover:shadow-md transition-all text-left"
                         >
                           <div className="font-semibold text-neutral-800 text-sm truncate">{p.name}</div>
-                          <div className="text-xs text-neutral-600">{p.born}–{p.died === 9999 ? 'heute' : p.died}</div>
+                          <div className="text-xs text-neutral-600">{p.born}–{p.died === 9999 ? t('person.today') : p.died}</div>
                           {p.domains && p.domains[0] && (
                             <div className="text-xs text-purple-600 mt-1 truncate">{getOccupation(p)}</div>
                           )}
@@ -2404,34 +2418,34 @@ function App() {
           <details className="group">
             <summary className="glass-strong rounded-xl px-4 py-2 cursor-pointer hover:shadow-lg transition-all flex items-center gap-2 font-semibold text-sm list-none">
               <span>⌨️</span>
-              <span className="hidden md:inline">Shortcuts</span>
+              <span className="hidden md:inline">{t('keyboard.title')}</span>
             </summary>
             <div className="absolute bottom-full right-0 mb-2 glass-strong rounded-xl p-4 w-64 shadow-xl animate-fade-in">
-              <h4 className="font-bold mb-2 text-neutral-800">Tastaturkürzel</h4>
+              <h4 className="font-bold mb-2 text-neutral-800">{t('keyboard.shortcutsTitle')}</h4>
               <div className="space-y-1 text-sm">
                 <div className="flex justify-between">
                   <kbd className="px-2 py-1 bg-white rounded font-mono text-xs">/</kbd>
-                  <span className="text-neutral-700">Suche öffnen</span>
+                  <span className="text-neutral-700">{t('keyboard.search')}</span>
                 </div>
                 <div className="flex justify-between">
                   <kbd className="px-2 py-1 bg-white rounded font-mono text-xs">ESC</kbd>
-                  <span className="text-neutral-700">Schließen</span>
+                  <span className="text-neutral-700">{t('keyboard.close')}</span>
                 </div>
                 <div className="flex justify-between">
                   <kbd className="px-2 py-1 bg-white rounded font-mono text-xs">L</kbd>
-                  <span className="text-neutral-700">Listen-Ansicht</span>
+                  <span className="text-neutral-700">{t('keyboard.listView')}</span>
                 </div>
                 <div className="flex justify-between">
                   <kbd className="px-2 py-1 bg-white rounded font-mono text-xs">T</kbd>
-                  <span className="text-neutral-700">Timeline-Ansicht</span>
+                  <span className="text-neutral-700">{t('keyboard.timelineView')}</span>
                 </div>
                 <div className="flex justify-between">
                   <kbd className="px-2 py-1 bg-white rounded font-mono text-xs">N</kbd>
-                  <span className="text-neutral-700">Netzwerk-Ansicht</span>
+                  <span className="text-neutral-700">{t('keyboard.networkView')}</span>
                 </div>
                 <div className="flex justify-between">
                   <kbd className="px-2 py-1 bg-white rounded font-mono text-xs">R</kbd>
-                  <span className="text-neutral-700">Zurück zur Auswahl</span>
+                  <span className="text-neutral-700">{t('keyboard.backToSelection')}</span>
                 </div>
               </div>
             </div>
