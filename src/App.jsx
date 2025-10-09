@@ -4,6 +4,41 @@ import { loadAllData } from './dataLoader';
 
 const THIS_YEAR = new Date().getFullYear();
 
+// Domain to occupation mapping
+const DOMAIN_TO_OCCUPATION = {
+  'Art': 'Künstler',
+  'Science': 'Wissenschaftler',
+  'Literature': 'Schriftsteller',
+  'Philosophy': 'Philosoph',
+  'Politics': 'Politiker',
+  'Music': 'Musiker',
+  'Math': 'Mathematiker',
+  'Medicine': 'Mediziner',
+  'Business': 'Unternehmer',
+  'Military': 'Militär',
+  'Religion': 'Theologe',
+  'Sports': 'Sportler',
+  'Other': 'Historische Persönlichkeit'
+};
+
+// Get occupation from domains
+function getOccupation(person) {
+  if (!person.domains || person.domains.length === 0) {
+    return 'Historische Persönlichkeit';
+  }
+  
+  // Return the first domain's occupation, or combine if multiple
+  if (person.domains.length === 1) {
+    return DOMAIN_TO_OCCUPATION[person.domains[0]] || person.domains[0];
+  }
+  
+  // For multiple domains, create a combined label
+  const occupations = person.domains
+    .slice(0, 2)
+    .map(d => DOMAIN_TO_OCCUPATION[d] || d);
+  return occupations.join(' & ');
+}
+
 // Chain algorithm - shortest path from start to today
 // Each person's BIRTH should be close to the previous person's DEATH
 // minOverlap controls how much people's lives should overlap for realistic connections
@@ -122,10 +157,13 @@ function App() {
 
   if (loading) {
   return (
-      <div className="min-h-screen bg-gradient-to-br from-indigo-100 via-purple-50 to-pink-100 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-violet-50 via-purple-50 to-fuchsia-50 flex items-center justify-center">
         <div className="text-center">
-          <div className="text-6xl mb-4 animate-bounce">⏳</div>
-          <div className="text-2xl font-bold text-neutral-700 animate-pulse">
+          <div className="text-8xl mb-8 animate-bounce drop-shadow-lg">⏳</div>
+          <div className="text-4xl font-extrabold bg-gradient-to-r from-violet-600 via-purple-600 to-fuchsia-600 bg-clip-text text-transparent animate-pulse mb-4">
+            Zeitkette
+          </div>
+          <div className="text-2xl font-semibold text-neutral-700">
             Lade Zeitreisedaten...
           </div>
         </div>
@@ -136,30 +174,30 @@ function App() {
   // Landing Screen
   if (showLanding) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-indigo-100 via-purple-50 to-pink-100 flex items-center justify-center p-4">
+      <div className="min-h-screen bg-gradient-to-br from-violet-50 via-purple-50 to-fuchsia-50 flex items-center justify-center p-4 md:p-6">
         <div className="max-w-4xl w-full">
           {/* Hero */}
-          <div className="text-center mb-12 animate-fade-in">
-            <div className="text-7xl mb-6 animate-bounce">⏳</div>
-            <h1 className="text-6xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
+          <div className="text-center mb-8 animate-fade-in">
+            <div className="text-5xl mb-4 animate-bounce drop-shadow-lg">⏳</div>
+            <h1 className="text-5xl md:text-6xl font-extrabold mb-4 bg-gradient-to-r from-violet-600 via-purple-600 to-fuchsia-600 bg-clip-text text-transparent leading-tight">
               Zeitkette
             </h1>
-            <p className="text-3xl md:text-4xl font-semibold text-neutral-800 mb-4">
+            <p className="text-2xl md:text-3xl font-bold text-neutral-800 mb-3 leading-tight">
               Die Vergangenheit ist näher als du denkst!
             </p>
-            <p className="text-xl text-neutral-600 max-w-2xl mx-auto">
-              Entdecke, wie wenige <strong>Lebenszeiten</strong> uns von historischen Größen trennen
+            <p className="text-base md:text-lg text-neutral-600 max-w-2xl mx-auto">
+              Entdecke, wie wenige <strong className="text-purple-700">Lebenszeiten</strong> uns von historischen Größen trennen
             </p>
           </div>
 
           {/* Target Selection */}
-          <div className="glass rounded-3xl p-8 shadow-2xl animate-scale-in mb-8">
-            <h2 className="text-2xl font-bold text-center mb-6 flex items-center justify-center gap-3">
-              <Sparkles className="w-6 h-6 text-yellow-500" />
+          <div className="glass-strong rounded-3xl p-6 md:p-8 shadow-2xl animate-scale-in mb-6">
+            <h2 className="text-xl md:text-2xl font-bold text-center mb-6 flex items-center justify-center gap-2 text-neutral-800">
+              <Sparkles className="w-6 h-6 text-yellow-500 drop-shadow" />
               Wähle dein Ziel
             </h2>
             
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-6">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4 mb-6">
               {popularTargets.map((target) => (
                 <button
                   key={target.name}
@@ -167,21 +205,21 @@ function App() {
                     setTargetPerson(target.name);
                     setShowLanding(false);
                   }}
-                  className="p-6 bg-white rounded-2xl hover:shadow-xl transition-all hover:scale-105 border-2 border-transparent hover:border-purple-300"
+                  className="group p-4 md:p-6 bg-white/90 backdrop-blur-sm rounded-2xl hover:shadow-xl transition-all duration-300 hover:scale-105 border-2 border-white hover:border-purple-400 hover:-translate-y-1"
                 >
-                  <div className="text-5xl mb-3">{target.icon}</div>
-                  <div className="font-semibold text-sm mb-1">{target.name}</div>
-                  <div className="text-xs text-neutral-500">{target.era}</div>
+                  <div className="text-4xl md:text-5xl mb-2 group-hover:scale-110 transition-transform duration-300">{target.icon}</div>
+                  <div className="font-bold text-sm mb-1 text-neutral-800">{target.name}</div>
+                  <div className="text-xs text-purple-600 font-medium">{target.era}</div>
                 </button>
               ))}
             </div>
 
             <div className="text-center">
-              <p className="text-sm text-neutral-500 mb-3">oder wähle aus allen {people.length} Personen:</p>
+              <p className="text-sm text-neutral-600 mb-3 font-medium">oder wähle aus allen {people.length} Personen:</p>
               <select
                 value={targetPerson}
                 onChange={(e) => setTargetPerson(e.target.value)}
-                className="px-6 py-3 rounded-xl border-2 border-neutral-200 focus:border-purple-500 focus:ring-2 focus:ring-purple-200 outline-none transition-all"
+                className="px-4 py-3 rounded-xl border-2 border-neutral-300 focus:border-purple-500 focus:ring-4 focus:ring-purple-200 outline-none transition-all text-sm bg-white/90 backdrop-blur-sm font-medium"
               >
                 {people
                   .filter(p => p.died !== 9999)
@@ -197,24 +235,24 @@ function App() {
 
           <button
             onClick={() => setShowLanding(false)}
-            className="w-full py-6 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 text-white text-xl font-bold rounded-2xl hover:shadow-2xl transition-all hover:scale-105"
+            className="w-full py-5 bg-gradient-to-r from-violet-600 via-purple-600 to-fuchsia-600 text-white text-lg md:text-xl font-bold rounded-2xl hover:shadow-2xl transition-all duration-300 hover:scale-[1.02] hover:-translate-y-1"
           >
-            🚀 Zeitkette starten
+            <span className="drop-shadow-lg">🚀 Zeitkette starten</span>
         </button>
 
           {/* Stats Preview */}
-          <div className="mt-8 grid grid-cols-3 gap-4 text-center">
-            <div className="glass rounded-xl p-4">
-              <div className="text-3xl font-bold text-purple-600">{people.length}</div>
-              <div className="text-xs text-neutral-600">Personen</div>
+          <div className="mt-6 grid grid-cols-3 gap-3 md:gap-4 text-center">
+            <div className="glass rounded-xl p-4 hover:scale-105 transition-transform duration-300">
+              <div className="text-2xl md:text-3xl font-bold text-purple-600 mb-1">{people.length}</div>
+              <div className="text-xs text-neutral-600 font-medium">Personen</div>
             </div>
-            <div className="glass rounded-xl p-4">
-              <div className="text-3xl font-bold text-indigo-600">2654</div>
-              <div className="text-xs text-neutral-600">Jahre</div>
+            <div className="glass rounded-xl p-4 hover:scale-105 transition-transform duration-300">
+              <div className="text-2xl md:text-3xl font-bold text-violet-600 mb-1">2654</div>
+              <div className="text-xs text-neutral-600 font-medium">Jahre</div>
             </div>
-            <div className="glass rounded-xl p-4">
-              <div className="text-3xl font-bold text-pink-600">{Object.keys(relations).length}</div>
-              <div className="text-xs text-neutral-600">Beziehungen</div>
+            <div className="glass rounded-xl p-4 hover:scale-105 transition-transform duration-300">
+              <div className="text-2xl md:text-3xl font-bold text-fuchsia-600 mb-1">{Object.keys(relations).length}</div>
+              <div className="text-xs text-neutral-600 font-medium">Beziehungen</div>
             </div>
           </div>
         </div>
@@ -224,51 +262,51 @@ function App() {
 
   // Chain View - THE MAIN EXPERIENCE
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-100 via-purple-50 to-pink-100">
+    <div className="min-h-screen bg-gradient-to-br from-violet-50 via-purple-50 to-fuchsia-50">
       {/* Header */}
-      <header className="sticky top-0 z-20 glass border-b border-white/20 backdrop-blur-lg">
-        <div className="max-w-4xl mx-auto px-4 py-4">
+      <header className="sticky top-0 z-20 glass-strong border-b border-white/30 backdrop-blur-xl shadow-lg">
+        <div className="max-w-6xl mx-auto px-4 md:px-6 py-4">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-2xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
+              <h1 className="text-2xl md:text-3xl font-extrabold bg-gradient-to-r from-violet-600 via-purple-600 to-fuchsia-600 bg-clip-text text-transparent">
                 Zeitkette
               </h1>
-              <p className="text-sm text-neutral-600">
-                Zu: <strong>{targetPerson}</strong>
+              <p className="text-sm md:text-base text-neutral-700 font-medium">
+                Zu: <strong className="text-purple-700">{targetPerson}</strong>
               </p>
             </div>
             <button
               onClick={() => setShowLanding(true)}
-              className="px-4 py-2 bg-white rounded-xl hover:shadow-lg transition-all flex items-center gap-2"
+              className="px-4 py-2 bg-white/90 backdrop-blur-sm rounded-xl hover:shadow-lg transition-all duration-300 flex items-center gap-2 border-2 border-white hover:border-purple-300 hover:scale-105 font-semibold text-sm"
             >
               <RotateCcw className="w-4 h-4" />
-              Andere Person
+              <span className="hidden sm:inline">Andere Person</span>
             </button>
           </div>
         </div>
       </header>
 
       {/* Stats Bar + Controls */}
-      <div className="max-w-7xl mx-auto px-4 py-6">
+      <div className="max-w-7xl mx-auto px-4 md:px-6 py-6">
         <div className="grid grid-cols-1 lg:grid-cols-[3fr_1fr] gap-4">
-          <div className="grid grid-cols-3 gap-4">
-            <div className="glass rounded-2xl p-6 text-center">
-              <div className="text-5xl font-bold text-purple-600">{chain.length}</div>
-              <div className="text-sm text-neutral-600 mt-1">Personen in der Kette</div>
+          <div className="grid grid-cols-3 gap-3 md:gap-4">
+            <div className="glass-strong rounded-2xl p-4 md:p-6 text-center hover:scale-105 transition-transform duration-300">
+              <div className="text-3xl md:text-4xl font-extrabold bg-gradient-to-br from-purple-600 to-purple-400 bg-clip-text text-transparent mb-1">{chain.length}</div>
+              <div className="text-xs md:text-sm text-neutral-700 font-semibold">Personen in der Kette</div>
             </div>
-            <div className="glass rounded-2xl p-6 text-center">
-              <div className="text-5xl font-bold text-indigo-600">{lifetimeCount}</div>
-              <div className="text-sm text-neutral-600 mt-1">Lebenszeiten zurück</div>
+            <div className="glass-strong rounded-2xl p-4 md:p-6 text-center hover:scale-105 transition-transform duration-300">
+              <div className="text-3xl md:text-4xl font-extrabold bg-gradient-to-br from-violet-600 to-violet-400 bg-clip-text text-transparent mb-1">{lifetimeCount}</div>
+              <div className="text-xs md:text-sm text-neutral-700 font-semibold">Lebenszeiten zurück</div>
             </div>
-            <div className="glass rounded-2xl p-6 text-center">
-              <div className="text-5xl font-bold text-pink-600">{totalYears}</div>
-              <div className="text-sm text-neutral-600 mt-1">Jahre überbrückt</div>
+            <div className="glass-strong rounded-2xl p-4 md:p-6 text-center hover:scale-105 transition-transform duration-300">
+              <div className="text-3xl md:text-4xl font-extrabold bg-gradient-to-br from-fuchsia-600 to-fuchsia-400 bg-clip-text text-transparent mb-1">{totalYears}</div>
+              <div className="text-xs md:text-sm text-neutral-700 font-semibold">Jahre überbrückt</div>
             </div>
           </div>
           
           {/* Overlap Control */}
-          <div className="glass rounded-2xl p-6">
-            <label className="block text-sm font-semibold text-neutral-700 mb-2">
+          <div className="glass-strong rounded-2xl p-4 md:p-6">
+            <label className="block text-sm md:text-base font-bold text-neutral-800 mb-2">
               Min. Überlappung: {minOverlapYears} Jahre
             </label>
             <input
@@ -280,7 +318,7 @@ function App() {
               onChange={(e) => setMinOverlapYears(parseInt(e.target.value))}
               className="w-full h-2 bg-gradient-to-r from-green-300 via-yellow-300 to-red-300 rounded-lg appearance-none cursor-pointer slider"
             />
-            <div className="flex justify-between text-xs text-neutral-500 mt-1">
+            <div className="flex justify-between text-xs text-neutral-600 mt-1 font-medium">
               <span>Kurz</span>
               <span>Realistisch</span>
             </div>
@@ -316,9 +354,9 @@ function App() {
               }
 
               return (
-                <div key={person.qid} id={`card-${person.qid}`} className="relative pl-20 animate-fade-in" style={{ animationDelay: `${idx * 0.1}s` }}>
+                <div key={person.qid} id={`card-${person.qid}`} className="relative pl-16 md:pl-20 animate-fade-in" style={{ animationDelay: `${idx * 0.1}s` }}>
                   {/* Timeline Dot */}
-                  <div className="absolute left-4 top-8 w-9 h-9 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 border-4 border-white shadow-lg flex items-center justify-center text-white font-bold">
+                  <div className="absolute left-2 md:left-4 top-6 w-10 h-10 rounded-full bg-gradient-to-br from-violet-500 via-purple-500 to-fuchsia-500 border-4 border-white shadow-lg flex items-center justify-center text-white text-sm font-bold">
                     {chain.length - idx}
                   </div>
 
@@ -327,23 +365,24 @@ function App() {
                     onClick={() => setSelectedPerson(person)}
                     onMouseEnter={() => setHoveredQid(person.qid)}
                     onMouseLeave={() => setHoveredQid(null)}
-                    className={`glass rounded-2xl p-6 hover:shadow-2xl transition-all cursor-pointer hover:scale-102 ${hoveredQid === person.qid ? 'ring-4 ring-purple-400' : ''}`}
+                    className={`glass-strong rounded-2xl p-4 md:p-6 hover:shadow-xl transition-all duration-300 cursor-pointer hover:scale-[1.01] hover:-translate-y-1 ${hoveredQid === person.qid ? 'ring-2 ring-purple-400 shadow-xl' : ''}`}
                   >
-                    <div className="flex items-start gap-4">
+                    <div className="flex items-start gap-3 md:gap-4">
                       {/* Avatar */}
-                      <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-indigo-400 to-purple-400 flex items-center justify-center text-white text-3xl font-bold flex-shrink-0">
+                      <div className="w-16 h-16 md:w-20 md:h-20 rounded-2xl bg-gradient-to-br from-violet-400 via-purple-400 to-fuchsia-400 flex items-center justify-center text-white text-2xl md:text-3xl font-bold flex-shrink-0 shadow-md">
                         {person.name.charAt(0)}
                       </div>
 
                       {/* Info */}
-                      <div className="flex-1">
-                        <h3 className="text-2xl font-bold mb-1">{person.name}</h3>
-                        <div className="flex items-center gap-3 text-neutral-600 mb-2">
-                          <span className="flex items-center gap-1">
-                            <Clock className="w-4 h-4" />
+                      <div className="flex-1 min-w-0">
+                        <h3 className="text-xl md:text-2xl font-bold mb-1 text-neutral-800">{person.name}</h3>
+                        <div className="text-sm text-purple-700 font-semibold mb-2">{getOccupation(person)}</div>
+                        <div className="flex flex-wrap items-center gap-2 md:gap-3 text-neutral-700 mb-2">
+                          <span className="flex items-center gap-1 font-semibold text-sm md:text-base">
+                            <Clock className="w-4 h-4 text-purple-600" />
                             {person.born}–{person.died === 9999 ? 'heute' : person.died}
                           </span>
-                          <span className="text-sm">
+                          <span className="text-xs md:text-sm text-neutral-600">
                             ({person.died === 9999 ? THIS_YEAR - person.born : person.died - person.born} Jahre)
                           </span>
                         </div>
@@ -375,9 +414,9 @@ function App() {
                         })()}
                         
                         {person.domains && (
-                          <div className="flex flex-wrap gap-2">
+                          <div className="flex flex-wrap gap-1.5 md:gap-2">
                             {person.domains.slice(0, 3).map(d => (
-                              <span key={d} className="px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-xs font-medium">
+                              <span key={d} className="px-2 md:px-3 py-1 bg-gradient-to-r from-purple-100 to-fuchsia-100 text-purple-700 rounded-full text-xs font-semibold shadow-sm">
                                 {d}
                               </span>
                             ))}
@@ -388,8 +427,8 @@ function App() {
 
                     {/* Relations Indicator */}
                     {relations[person.qid]?.knew?.length > 0 && (
-                      <div className="mt-4 pt-4 border-t border-neutral-200 flex items-center gap-2 text-sm text-neutral-600">
-                        <Users className="w-4 h-4" />
+                      <div className="mt-3 pt-3 border-t border-neutral-200/60 flex items-center gap-2 text-sm text-neutral-700 font-medium">
+                        <Users className="w-4 h-4 text-purple-600" />
                         Kannte {relations[person.qid].knew.length} {relations[person.qid].knew.length === 1 ? 'Person' : 'Personen'}
                       </div>
                     )}
@@ -397,17 +436,17 @@ function App() {
 
                   {/* Connection Info */}
                   {nextPerson && (
-                    <div className="mt-4 ml-4 flex items-center gap-3">
-                      <ArrowRight className="w-5 h-5 text-neutral-400" />
+                    <div className="mt-3 ml-2 md:ml-4 flex items-center gap-2 md:gap-3">
+                      <ArrowRight className="w-4 h-4 md:w-5 md:h-5 text-purple-400" />
                       {hasGap ? (
-                        <div className="text-sm">
-                          <span className="text-red-600 font-semibold">{gapYears} Jahre Lücke</span>
-                          <span className="text-neutral-500"> → hätten sich nicht treffen können</span>
+                        <div className="text-sm md:text-base">
+                          <span className="text-red-600 font-bold">{gapYears} Jahre Lücke</span>
+                          <span className="text-neutral-600 font-medium hidden sm:inline"> → hätten sich nicht treffen können</span>
                         </div>
                       ) : (
-                        <div className="text-sm">
-                          <span className="text-green-600 font-semibold">{overlapYears} Jahre Überlappung</span>
-                          <span className="text-neutral-500"> → hätten sich treffen können! ✨</span>
+                        <div className="text-sm md:text-base">
+                          <span className="text-green-600 font-bold">{overlapYears} Jahre Überlappung</span>
+                          <span className="text-neutral-600 font-medium hidden sm:inline"> → hätten sich treffen können! ✨</span>
                         </div>
                       )}
                     </div>
@@ -417,14 +456,14 @@ function App() {
             })}
 
             {/* End Marker */}
-            <div className="mt-12 glass rounded-2xl p-8 text-center">
-              <div className="text-6xl mb-4">🎯</div>
-              <h2 className="text-3xl font-bold mb-2">Ziel erreicht!</h2>
-              <p className="text-lg text-neutral-600 mb-4">
-                Von <strong>heute</strong> bis <strong>{targetPerson}</strong>
+            <div className="mt-8 glass-strong rounded-2xl p-6 md:p-8 text-center shadow-xl">
+              <div className="text-5xl md:text-6xl mb-4 drop-shadow-lg">🎯</div>
+              <h2 className="text-2xl md:text-3xl font-bold mb-3 text-neutral-800">Ziel erreicht!</h2>
+              <p className="text-base md:text-lg text-neutral-700 mb-6 font-medium">
+                Von <strong className="text-purple-700">heute</strong> bis <strong className="text-purple-700">{targetPerson}</strong>
               </p>
-              <div className="inline-block px-8 py-4 bg-gradient-to-r from-purple-100 to-pink-100 rounded-2xl">
-                <div className="text-5xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+              <div className="inline-block px-6 md:px-8 py-4 bg-gradient-to-r from-purple-100 via-fuchsia-100 to-pink-100 rounded-2xl shadow-md">
+                <div className="text-3xl md:text-4xl font-extrabold bg-gradient-to-r from-violet-600 via-purple-600 to-fuchsia-600 bg-clip-text text-transparent">
                   Nur {lifetimeCount} Lebenszeiten!
                 </div>
               </div>
@@ -432,9 +471,9 @@ function App() {
           </div>
           
           {/* Alternatives Panel */}
-          <aside className="hidden lg:block sticky top-20 self-start">
-            <div className="glass rounded-2xl p-4">
-              <h3 className="text-sm font-semibold text-neutral-700 mb-3">
+          <aside className="hidden lg:block sticky top-24 self-start">
+            <div className="glass-strong rounded-3xl p-6">
+              <h3 className="text-base font-bold text-neutral-800 mb-4">
                 {hoveredQid ? 'Lebten zur gleichen Zeit' : 'Andere Zeitgenossen'}
               </h3>
               {(() => {
@@ -456,25 +495,23 @@ function App() {
                   .slice(0, 10);
                 
                 return (
-                  <div className="space-y-2">
+                  <div className="space-y-3">
                     {alternatives.length === 0 ? (
-                      <p className="text-xs text-neutral-500">Keine weiteren bekannten Personen gefunden</p>
+                      <p className="text-sm text-neutral-500">Keine weiteren bekannten Personen gefunden</p>
                     ) : (
                       alternatives.map(p => (
                         <div
                           key={p.qid}
-                          className="p-3 bg-white/50 rounded-xl hover:bg-white/80 transition-colors cursor-pointer text-sm"
+                          className="p-4 bg-white/70 backdrop-blur-sm rounded-2xl hover:bg-white hover:shadow-lg transition-all duration-300 cursor-pointer hover:scale-105 border border-white"
                           onClick={() => setSelectedPerson(p)}
                         >
-                          <div className="font-semibold text-neutral-800 line-clamp-1">{p.name}</div>
-                          <div className="text-xs text-neutral-600">
+                          <div className="font-bold text-neutral-800 line-clamp-1 mb-1">{p.name}</div>
+                          <div className="text-xs text-purple-600 font-semibold mb-1 line-clamp-1">
+                            {getOccupation(p)}
+                          </div>
+                          <div className="text-sm text-neutral-600">
                             {p.born}–{p.died === 9999 ? 'heute' : p.died}
                           </div>
-                          {p.domains && p.domains.length > 0 && (
-                            <div className="text-xs text-purple-600 mt-1 line-clamp-1">
-                              {p.domains[0]}
-                            </div>
-                          )}
                         </div>
                       ))
                     )}
@@ -489,31 +526,32 @@ function App() {
       {/* Person Detail Modal - Enhanced */}
       {selectedPerson && (
         <div
-          className="fixed inset-0 bg-black/70 backdrop-blur-md flex items-center justify-center p-4 z-50 animate-fade-in"
+          className="fixed inset-0 bg-black/70 backdrop-blur-lg flex items-center justify-center p-4 z-50 animate-fade-in"
           onClick={() => setSelectedPerson(null)}
         >
           <div
-            className="bg-white rounded-3xl p-8 max-w-3xl w-full max-h-[90vh] overflow-y-auto animate-scale-in shadow-2xl"
+            className="bg-gradient-to-br from-white via-purple-50/30 to-white rounded-2xl p-6 max-w-2xl w-full max-h-[85vh] overflow-y-auto animate-scale-in shadow-2xl border-2 border-white"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Header */}
-            <div className="text-center mb-8">
-              <div className="w-32 h-32 mx-auto mb-4 rounded-full bg-gradient-to-br from-indigo-400 to-purple-400 flex items-center justify-center text-white text-6xl font-bold shadow-lg">
+            <div className="text-center mb-6">
+              <div className="w-24 h-24 mx-auto mb-4 rounded-full bg-gradient-to-br from-violet-400 via-purple-400 to-fuchsia-400 flex items-center justify-center text-white text-4xl font-bold shadow-lg">
                 {selectedPerson.name.charAt(0)}
               </div>
-              <h3 className="text-4xl font-bold mb-3 text-neutral-900">{selectedPerson.name}</h3>
-              <p className="text-xl text-neutral-600 mb-2">
+              <h3 className="text-3xl font-extrabold mb-2 text-neutral-900">{selectedPerson.name}</h3>
+              <p className="text-lg text-purple-700 font-bold mb-3">{getOccupation(selectedPerson)}</p>
+              <p className="text-base text-neutral-700 mb-2 font-semibold">
                 {selectedPerson.born}–{selectedPerson.died === 9999 ? 'heute' : selectedPerson.died}
                 {' '}
-                <span className="text-base">({selectedPerson.died === 9999 ? THIS_YEAR - selectedPerson.born : selectedPerson.died - selectedPerson.born} Jahre)</span>
+                <span className="text-sm text-neutral-600">({selectedPerson.died === 9999 ? THIS_YEAR - selectedPerson.born : selectedPerson.died - selectedPerson.born} Jahre)</span>
               </p>
               {selectedPerson.region && (
-                <p className="text-neutral-500">📍 {selectedPerson.region}</p>
+                <p className="text-sm text-neutral-600 font-medium">📍 {selectedPerson.region}</p>
               )}
-              {selectedPerson.domains && (
-                <div className="flex flex-wrap justify-center gap-2 mt-4">
+              {selectedPerson.domains && selectedPerson.domains.length > 1 && (
+                <div className="flex flex-wrap justify-center gap-2 mt-3">
                   {selectedPerson.domains.map(d => (
-                    <span key={d} className="px-4 py-2 bg-gradient-to-r from-purple-100 to-pink-100 text-purple-700 rounded-full text-sm font-semibold">
+                    <span key={d} className="px-3 py-1 bg-gradient-to-r from-purple-100 via-fuchsia-100 to-pink-100 text-purple-700 rounded-full text-sm font-bold shadow-sm">
                       {d}
                     </span>
                   ))}
@@ -522,9 +560,9 @@ function App() {
             </div>
 
             {/* Timeline Context */}
-            <div className="mb-8 p-6 bg-gradient-to-r from-blue-50 to-purple-50 rounded-2xl">
-              <h4 className="font-bold text-lg mb-4 flex items-center gap-2 text-neutral-800">
-                <Clock className="w-5 h-5" />
+            <div className="mb-4 p-4 bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl">
+              <h4 className="font-bold text-base mb-3 flex items-center gap-2 text-neutral-800">
+                <Clock className="w-4 h-4" />
                 Historischer Kontext
               </h4>
               {(() => {
@@ -538,11 +576,11 @@ function App() {
                 
                 return (
                   <div>
-                    <div className="flex justify-between text-xs text-neutral-600 mb-2">
+                    <div className="flex justify-between text-xs text-neutral-600 mb-1">
                       <span>{start}</span>
                       <span>Heute</span>
                     </div>
-                    <div className="h-4 bg-neutral-200 rounded-full overflow-hidden relative">
+                    <div className="h-3 bg-neutral-200 rounded-full overflow-hidden relative">
                       <div
                         className="h-full bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full"
                         style={{ width: `${widthPct}%`, marginLeft: `${leftPct}%` }}
@@ -560,38 +598,38 @@ function App() {
               const nextPerson = idx < chain.length - 1 ? chain[idx + 1] : null;
               
               return (
-                <div className="mb-8 p-6 bg-gradient-to-r from-green-50 to-teal-50 rounded-2xl">
-                  <h4 className="font-bold text-lg mb-4 flex items-center gap-2 text-neutral-800">
+                <div className="mb-4 p-4 bg-gradient-to-r from-green-50 to-teal-50 rounded-xl">
+                  <h4 className="font-bold text-base mb-3 flex items-center gap-2 text-neutral-800">
                     🔗 Position in der Kette
                   </h4>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="grid grid-cols-2 gap-2">
                     {prevPerson ? (
                       <button
                         onClick={() => setSelectedPerson(prevPerson)}
-                        className="p-4 bg-white rounded-xl hover:shadow-lg transition-all text-left"
+                        className="p-3 bg-white rounded-lg hover:shadow-md transition-all text-left"
                       >
-                        <div className="text-xs text-neutral-500 mb-1">← Vorherige Person</div>
-                        <div className="font-semibold text-neutral-800">{prevPerson.name}</div>
+                        <div className="text-xs text-neutral-500 mb-1">← Vorherige</div>
+                        <div className="font-semibold text-sm text-neutral-800 line-clamp-1">{prevPerson.name}</div>
                         <div className="text-xs text-neutral-600">{prevPerson.born}–{prevPerson.died === 9999 ? 'heute' : prevPerson.died}</div>
                       </button>
                     ) : (
-                      <div className="p-4 bg-neutral-100 rounded-xl opacity-50">
-                        <div className="text-xs text-neutral-500">← Startperson</div>
+                      <div className="p-3 bg-neutral-100 rounded-lg opacity-50">
+                        <div className="text-xs text-neutral-500">← Start</div>
                       </div>
                     )}
                     
                     {nextPerson ? (
                       <button
                         onClick={() => setSelectedPerson(nextPerson)}
-                        className="p-4 bg-white rounded-xl hover:shadow-lg transition-all text-left"
+                        className="p-3 bg-white rounded-lg hover:shadow-md transition-all text-left"
                       >
-                        <div className="text-xs text-neutral-500 mb-1">Nächste Person →</div>
-                        <div className="font-semibold text-neutral-800">{nextPerson.name}</div>
+                        <div className="text-xs text-neutral-500 mb-1">Nächste →</div>
+                        <div className="font-semibold text-sm text-neutral-800 line-clamp-1">{nextPerson.name}</div>
                         <div className="text-xs text-neutral-600">{nextPerson.born}–{nextPerson.died === 9999 ? 'heute' : nextPerson.died}</div>
                       </button>
                     ) : (
-                      <div className="p-4 bg-neutral-100 rounded-xl opacity-50">
-                        <div className="text-xs text-neutral-500">Ende der Kette →</div>
+                      <div className="p-3 bg-neutral-100 rounded-lg opacity-50">
+                        <div className="text-xs text-neutral-500">Ende →</div>
                       </div>
                     )}
                   </div>
@@ -601,13 +639,13 @@ function App() {
 
             {/* Known Relations */}
             {relations[selectedPerson.qid]?.knew && relations[selectedPerson.qid].knew.length > 0 && (
-              <div className="mb-8">
-                <h4 className="font-bold text-lg mb-4 flex items-center gap-2 text-neutral-800">
-                  <Users className="w-5 h-5" />
+              <div className="mb-4">
+                <h4 className="font-bold text-base mb-3 flex items-center gap-2 text-neutral-800">
+                  <Users className="w-4 h-4" />
                   Bekannte Personen
                 </h4>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                  {relations[selectedPerson.qid].knew.map((rel, idx) => {
+                <div className="grid grid-cols-2 gap-2">
+                  {relations[selectedPerson.qid].knew.slice(0, 4).map((rel, idx) => {
                     const relPerson = people.find(p => p.name === rel.name);
                     return (
                       <button
@@ -617,16 +655,16 @@ function App() {
                             setSelectedPerson(relPerson);
                           }
                         }}
-                        className="flex items-center gap-3 p-4 bg-gradient-to-r from-purple-50 to-pink-50 rounded-xl hover:shadow-lg transition-all text-left"
+                        className="flex items-center gap-2 p-2 bg-gradient-to-r from-purple-50 to-pink-50 rounded-lg hover:shadow-md transition-all text-left"
                       >
-                        <div className="text-2xl">
+                        <div className="text-lg">
                           {rel.type.includes('Lehrer') ? '👨‍🏫' : 
                            rel.type.includes('Freund') ? '🤝' : 
                            rel.type.includes('Schüler') ? '📚' : '👥'}
                         </div>
                         <div className="flex-1 min-w-0">
-                          <div className="font-semibold text-neutral-800 truncate">{rel.name}</div>
-                          <div className="text-xs text-neutral-600">{rel.type}</div>
+                          <div className="font-semibold text-sm text-neutral-800 truncate">{rel.name}</div>
+                          <div className="text-xs text-neutral-600 truncate">{rel.type}</div>
                         </div>
                       </button>
                     );
@@ -648,25 +686,25 @@ function App() {
                   return overlap > 10 && (p.sitelinks || 0) >= 30;
                 })
                 .sort((a, b) => (b.sitelinks || 0) - (a.sitelinks || 0))
-                .slice(0, 6);
+                .slice(0, 4);
               
               if (contemporaries.length > 0) {
                 return (
-                  <div className="mb-8">
-                    <h4 className="font-bold text-lg mb-4 flex items-center gap-2 text-neutral-800">
+                  <div className="mb-4">
+                    <h4 className="font-bold text-base mb-3 flex items-center gap-2 text-neutral-800">
                       ⏳ Lebte zur gleichen Zeit
                     </h4>
-                    <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                    <div className="grid grid-cols-2 gap-2">
                       {contemporaries.map(p => (
                         <button
                           key={p.qid}
                           onClick={() => setSelectedPerson(p)}
-                          className="p-3 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl hover:shadow-lg transition-all text-left"
+                          className="p-2 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg hover:shadow-md transition-all text-left"
                         >
                           <div className="font-semibold text-neutral-800 text-sm truncate">{p.name}</div>
                           <div className="text-xs text-neutral-600">{p.born}–{p.died === 9999 ? 'heute' : p.died}</div>
                           {p.domains && p.domains[0] && (
-                            <div className="text-xs text-purple-600 mt-1 truncate">{p.domains[0]}</div>
+                            <div className="text-xs text-purple-600 mt-1 truncate">{getOccupation(p)}</div>
                           )}
                         </button>
                       ))}
@@ -678,10 +716,10 @@ function App() {
             })()}
 
             {/* Actions */}
-            <div className="flex gap-3">
+            <div className="flex gap-3 mt-4">
               <button
                 onClick={() => setSelectedPerson(null)}
-                className="flex-1 py-3 bg-neutral-100 hover:bg-neutral-200 rounded-xl transition-colors font-semibold text-neutral-700"
+                className="flex-1 py-3 bg-white hover:bg-neutral-50 rounded-xl transition-all font-bold text-neutral-700 text-base border-2 border-neutral-200 hover:border-neutral-300 shadow-sm hover:shadow-md"
               >
                 Schließen
               </button>
@@ -692,7 +730,7 @@ function App() {
                     setShowLanding(false);
                     setSelectedPerson(null);
                   }}
-                  className="flex-1 py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-xl hover:shadow-lg transition-all font-semibold"
+                  className="flex-1 py-3 bg-gradient-to-r from-violet-600 via-purple-600 to-fuchsia-600 text-white rounded-xl hover:shadow-xl transition-all duration-300 font-bold text-base hover:scale-105"
                 >
                   🔗 Neue Kette starten
                 </button>
