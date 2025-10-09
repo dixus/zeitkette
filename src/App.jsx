@@ -1,8 +1,60 @@
-import { useState, useEffect, useMemo } from 'react';
-import { ArrowRight, Clock, Users, Sparkles, RotateCcw, List, BarChart3 } from 'lucide-react';
+import { useState, useEffect, useMemo, useCallback } from 'react';
+import { ArrowRight, Clock, Users, Sparkles, RotateCcw, List, BarChart3, Image as ImageIcon, Search } from 'lucide-react';
 import { loadAllData } from './dataLoader';
+import confetti from 'canvas-confetti';
 
 const THIS_YEAR = new Date().getFullYear();
+
+// Wikipedia/Wikidata image cache
+const imageCache = new Map();
+
+// Fetch person image from Wikidata
+async function fetchPersonImage(qid) {
+  if (!qid) return null;
+  if (imageCache.has(qid)) return imageCache.get(qid);
+  
+  try {
+    // Use Wikidata API to get image
+    const response = await fetch(
+      `https://www.wikidata.org/w/api.php?action=wbgetclaims&entity=${qid}&property=P18&format=json&origin=*`
+    );
+    const data = await response.json();
+    
+    if (data.claims && data.claims.P18 && data.claims.P18[0]) {
+      const filename = data.claims.P18[0].mainsnak.datavalue.value;
+      // Convert filename to Commons URL
+      const encodedFilename = encodeURIComponent(filename.replace(/ /g, '_'));
+      const imageUrl = `https://commons.wikimedia.org/wiki/Special:FilePath/${encodedFilename}?width=300`;
+      imageCache.set(qid, imageUrl);
+      return imageUrl;
+    }
+  } catch (error) {
+    console.warn(`Failed to fetch image for ${qid}:`, error);
+  }
+  
+  imageCache.set(qid, null);
+  return null;
+}
+
+// Hook to load images for a person
+function usePersonImage(person) {
+  const [imageUrl, setImageUrl] = useState(null);
+  const [loading, setLoading] = useState(true);
+  
+  useEffect(() => {
+    if (!person?.qid) {
+      setLoading(false);
+      return;
+    }
+    
+    fetchPersonImage(person.qid).then(url => {
+      setImageUrl(url);
+      setLoading(false);
+    });
+  }, [person?.qid]);
+  
+  return { imageUrl, loading };
+}
 
 // Domain to occupation mapping
 const DOMAIN_TO_OCCUPATION = {
@@ -37,6 +89,41 @@ function getOccupation(person) {
     .slice(0, 2)
     .map(d => DOMAIN_TO_OCCUPATION[d] || d);
   return occupations.join(' & ');
+}
+
+// Person Avatar Component with Image Support
+function PersonAvatar({ person, size = 'md', className = '' }) {
+  const { imageUrl, loading } = usePersonImage(person);
+  
+  const sizeClasses = {
+    sm: 'w-12 h-12 text-lg',
+    md: 'w-16 h-16 md:w-20 md:h-20 text-2xl md:text-3xl',
+    lg: 'w-20 h-20 md:w-24 md:h-24 text-4xl md:text-5xl',
+    xl: 'w-36 h-36 text-7xl'
+  };
+  
+  return (
+    <div className={`${sizeClasses[size]} rounded-2xl bg-gradient-to-br from-violet-400 via-purple-400 to-fuchsia-400 flex items-center justify-center text-white font-bold flex-shrink-0 shadow-md overflow-hidden relative ${className}`}>
+      {loading ? (
+        <div className="absolute inset-0 bg-gradient-to-br from-violet-400 via-purple-400 to-fuchsia-400 animate-pulse flex items-center justify-center">
+          <ImageIcon className="w-6 h-6 text-white/50 animate-pulse" />
+        </div>
+      ) : imageUrl ? (
+        <img 
+          src={imageUrl} 
+          alt={person.name}
+          className="w-full h-full object-cover"
+          onError={(e) => {
+            e.target.style.display = 'none';
+            e.target.nextSibling.style.display = 'flex';
+          }}
+        />
+      ) : null}
+      <div className={imageUrl ? 'hidden' : 'flex items-center justify-center w-full h-full'}>
+        {person.name.charAt(0)}
+      </div>
+    </div>
+  );
 }
 
 // Timeline View Component
@@ -379,6 +466,8 @@ function App() {
   const [expandedGap, setExpandedGap] = useState(null); // Which gap is expanded (index)
   const [viewMode, setViewMode] = useState('list'); // 'list' or 'timeline'
   const [timelineZoom, setTimelineZoom] = useState(1); // Timeline zoom level
+  const [searchQuery, setSearchQuery] = useState(''); // Search query
+  const [showSearch, setShowSearch] = useState(false); // Show search modal
 
   useEffect(() => {
     loadAllData().then(({ people, relations }) => {
@@ -394,6 +483,65 @@ function App() {
     return chainFrom(targetPerson, people, minOverlapYears, minFame);
   }, [people, targetPerson, minOverlapYears, minFame]);
 
+  // Search filtered people
+  const searchResults = useMemo(() => {
+    if (!searchQuery) return [];
+    const query = searchQuery.toLowerCase();
+    return people
+      .filter(p => 
+        p.name.toLowerCase().includes(query) ||
+        p.domains?.some(d => d.toLowerCase().includes(query))
+      )
+      .slice(0, 20);
+  }, [searchQuery, people]);
+
+  // Confetti celebration when chain loads
+  useEffect(() => {
+    if (chain.length > 0 && !loading) {
+      // Small delay to let page render
+      const timer = setTimeout(() => {
+        confetti({
+          particleCount: 100,
+          spread: 70,
+          origin: { y: 0.6 },
+          colors: ['#8b5cf6', '#a78bfa', '#c084fc', '#ec4899', '#f472b6']
+        });
+      }, 300);
+      return () => clearTimeout(timer);
+    }
+  }, [chain.length, loading]);
+
+  // Keyboard shortcuts
+  useEffect(() => {
+    const handleKeyPress = (e) => {
+      // Don't trigger if user is typing in an input
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+      
+      switch(e.key) {
+        case '/':
+          e.preventDefault();
+          setShowSearch(true);
+          break;
+        case 'Escape':
+          if (showSearch) setShowSearch(false);
+          if (selectedPerson) setSelectedPerson(null);
+          break;
+        case 'l':
+          setViewMode('list');
+          break;
+        case 't':
+          setViewMode('timeline');
+          break;
+        case 'r':
+          setShowLanding(true);
+          break;
+      }
+    };
+    
+    window.addEventListener('keydown', handleKeyPress);
+    return () => window.removeEventListener('keydown', handleKeyPress);
+  }, [showSearch, selectedPerson]);
+
   // Calculate metrics
   const totalYears = chain.length > 0 
     ? (chain[chain.length - 1].died === 9999 ? THIS_YEAR : chain[chain.length - 1].died) - chain[0].born
@@ -402,25 +550,56 @@ function App() {
   const avgLifespan = 75;
   const lifetimeCount = Math.floor(totalYears / avgLifespan);
 
-  const popularTargets = [
-    { name: 'Leonardo da Vinci', icon: '🎨', era: 'Renaissance' },
-    { name: 'Albert Einstein', icon: '🧠', era: 'Modern' },
-    { name: 'Kleopatra', icon: '👑', era: 'Antike' },
-    { name: 'William Shakespeare', icon: '📚', era: 'Renaissance' },
-    { name: 'Isaac Newton', icon: '🍎', era: 'Aufklärung' },
-    { name: 'Napoleon Bonaparte', icon: '⚔️', era: 'Modern' },
-  ];
+  const popularTargets = useMemo(() => {
+    if (!people.length) return [];
+    return [
+      { name: 'Leonardo da Vinci', era: 'Renaissance' },
+      { name: 'Albert Einstein', era: 'Modern' },
+      { name: 'Kleopatra', era: 'Antike' },
+      { name: 'William Shakespeare', era: 'Renaissance' },
+      { name: 'Isaac Newton', era: 'Aufklärung' },
+      { name: 'Napoleon Bonaparte', era: 'Modern' },
+    ].map(target => ({
+      ...target,
+      person: people.find(p => p.name === target.name)
+    })).filter(t => t.person);
+  }, [people]);
 
   if (loading) {
-  return (
-      <div className="min-h-screen bg-gradient-to-br from-violet-50 via-purple-50 to-fuchsia-50 flex items-center justify-center">
-        <div className="text-center">
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-violet-50 via-purple-50 to-fuchsia-50 flex items-center justify-center p-4">
+        <div className="text-center max-w-2xl w-full">
           <div className="text-8xl mb-8 animate-bounce drop-shadow-lg">⏳</div>
-          <div className="text-4xl font-extrabold bg-gradient-to-r from-violet-600 via-purple-600 to-fuchsia-600 bg-clip-text text-transparent animate-pulse mb-4">
+          <div className="text-4xl font-extrabold bg-gradient-to-r from-violet-600 via-purple-600 to-fuchsia-600 bg-clip-text text-transparent animate-pulse mb-6">
             Zeitkette
           </div>
-          <div className="text-2xl font-semibold text-neutral-700">
+          <div className="text-2xl font-semibold text-neutral-700 mb-8">
             Lade Zeitreisedaten...
+          </div>
+          
+          {/* Loading Skeleton */}
+          <div className="glass-strong rounded-2xl p-6 space-y-4 animate-fade-in">
+            <div className="flex items-center gap-4">
+              <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-purple-300 to-fuchsia-300 animate-pulse"></div>
+              <div className="flex-1 space-y-2">
+                <div className="h-6 bg-gradient-to-r from-purple-200 to-fuchsia-200 rounded animate-pulse"></div>
+                <div className="h-4 bg-gradient-to-r from-purple-200 to-fuchsia-200 rounded w-3/4 animate-pulse"></div>
+              </div>
+            </div>
+            <div className="flex items-center gap-4">
+              <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-violet-300 to-purple-300 animate-pulse"></div>
+              <div className="flex-1 space-y-2">
+                <div className="h-6 bg-gradient-to-r from-violet-200 to-purple-200 rounded animate-pulse"></div>
+                <div className="h-4 bg-gradient-to-r from-violet-200 to-purple-200 rounded w-2/3 animate-pulse"></div>
+              </div>
+            </div>
+            <div className="flex items-center gap-4">
+              <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-fuchsia-300 to-pink-300 animate-pulse"></div>
+              <div className="flex-1 space-y-2">
+                <div className="h-6 bg-gradient-to-r from-fuchsia-200 to-pink-200 rounded animate-pulse"></div>
+                <div className="h-4 bg-gradient-to-r from-fuchsia-200 to-pink-200 rounded w-1/2 animate-pulse"></div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -463,7 +642,9 @@ function App() {
                   }}
                   className="group p-4 md:p-6 bg-white/90 backdrop-blur-sm rounded-2xl hover:shadow-xl transition-all duration-300 hover:scale-105 border-2 border-white hover:border-purple-400 hover:-translate-y-1"
                 >
-                  <div className="text-4xl md:text-5xl mb-2 group-hover:scale-110 transition-transform duration-300">{target.icon}</div>
+                  <div className="mb-3 group-hover:scale-110 transition-transform duration-300 flex justify-center">
+                    <PersonAvatar person={target.person} size="lg" className="rounded-2xl" />
+                  </div>
                   <div className="font-bold text-sm mb-1 text-neutral-800">{target.name}</div>
                   <div className="text-xs text-purple-600 font-medium">{target.era}</div>
                 </button>
@@ -473,7 +654,7 @@ function App() {
             <div className="text-center">
               <p className="text-sm text-neutral-600 mb-3 font-medium">oder wähle aus allen {people.length} Personen:</p>
               <select
-                value={targetPerson}
+                value={typeof targetPerson === 'string' ? targetPerson : targetPerson?.name}
                 onChange={(e) => setTargetPerson(e.target.value)}
                 className="px-4 py-3 rounded-xl border-2 border-neutral-300 focus:border-purple-500 focus:ring-4 focus:ring-purple-200 outline-none transition-all text-sm bg-white/90 backdrop-blur-sm font-medium"
               >
@@ -528,7 +709,7 @@ function App() {
                 Zeitkette
               </h1>
               <p className="text-base md:text-lg text-neutral-700 font-semibold">
-                Zu: <strong className="text-purple-700">{targetPerson}</strong>
+                Zu: <strong className="text-purple-700">{typeof targetPerson === 'string' ? targetPerson : targetPerson?.name}</strong>
               </p>
             </div>
             <div className="flex items-center gap-3">
@@ -563,9 +744,19 @@ function App() {
               <button
                 onClick={() => setShowLanding(true)}
                 className="px-5 py-3 bg-white/90 backdrop-blur-sm rounded-xl hover:shadow-lg transition-all duration-300 flex items-center gap-2 border-2 border-white hover:border-purple-300 hover:scale-105 font-semibold text-base"
+                title="Keyboard shortcut: R"
               >
                 <RotateCcw className="w-5 h-5" />
                 <span className="hidden sm:inline">Andere Person</span>
+              </button>
+              
+              <button
+                onClick={() => setShowSearch(true)}
+                className="px-5 py-3 bg-white/90 backdrop-blur-sm rounded-xl hover:shadow-lg transition-all duration-300 flex items-center gap-2 border-2 border-white hover:border-purple-300 hover:scale-105 font-semibold text-base"
+                title="Keyboard shortcut: /"
+              >
+                <Search className="w-5 h-5" />
+                <span className="hidden sm:inline">Suchen</span>
               </button>
             </div>
           </div>
@@ -682,10 +873,8 @@ function App() {
                     className={`glass-strong rounded-2xl p-4 md:p-6 hover:shadow-xl transition-all duration-300 cursor-pointer hover:scale-[1.01] hover:-translate-y-1 ${hoveredQid === person.qid ? 'ring-2 ring-purple-400 shadow-xl' : ''}`}
                   >
                     <div className="flex items-start gap-3 md:gap-4">
-                      {/* Avatar */}
-                      <div className="w-16 h-16 md:w-20 md:h-20 rounded-2xl bg-gradient-to-br from-violet-400 via-purple-400 to-fuchsia-400 flex items-center justify-center text-white text-2xl md:text-3xl font-bold flex-shrink-0 shadow-md">
-                        {person.name.charAt(0)}
-                      </div>
+                      {/* Avatar with Image */}
+                      <PersonAvatar person={person} size="md" />
 
                       {/* Info */}
                       <div className="flex-1 min-w-0">
@@ -849,14 +1038,14 @@ function App() {
                                       : 'from-purple-300 to-fuchsia-300';
                                     
                                     return (
-                                      <button
-                                        key={p.qid}
-                                        onClick={() => setSelectedPerson(p)}
-                                        className="p-3 bg-white/70 backdrop-blur-sm rounded-xl hover:bg-white hover:shadow-md transition-all text-left group"
-                                      >
-                                        <div className={`w-12 h-12 mx-auto mb-2 rounded-full bg-gradient-to-br ${bgGradient} flex items-center justify-center text-white text-lg font-bold group-hover:scale-110 transition-transform`}>
-                                          {p.name.charAt(0)}
-                                        </div>
+                                    <button
+                                      key={p.qid}
+                                      onClick={() => setSelectedPerson(p)}
+                                      className="p-3 bg-white/70 backdrop-blur-sm rounded-xl hover:bg-white hover:shadow-md transition-all text-left group"
+                                    >
+                                      <div className="mx-auto mb-2 group-hover:scale-110 transition-transform">
+                                        <PersonAvatar person={p} size="sm" className="rounded-full" />
+                                      </div>
                                         <div className="font-semibold text-xs text-neutral-800 text-center line-clamp-2 mb-1">
                                           {p.name}
                                         </div>
@@ -892,7 +1081,7 @@ function App() {
               <div className="text-5xl md:text-6xl mb-4 drop-shadow-lg">🎯</div>
               <h2 className="text-2xl md:text-3xl font-bold mb-3 text-neutral-800">Ziel erreicht!</h2>
               <p className="text-base md:text-lg text-neutral-700 mb-6 font-medium">
-                Von <strong className="text-purple-700">heute</strong> bis <strong className="text-purple-700">{targetPerson}</strong>
+                Von <strong className="text-purple-700">heute</strong> bis <strong className="text-purple-700">{typeof targetPerson === 'string' ? targetPerson : targetPerson?.name}</strong>
               </p>
               <div className="inline-block px-6 md:px-8 py-4 bg-gradient-to-r from-purple-100 via-fuchsia-100 to-pink-100 rounded-2xl shadow-md">
                 <div className="text-3xl md:text-4xl font-extrabold bg-gradient-to-r from-violet-600 via-purple-600 to-fuchsia-600 bg-clip-text text-transparent">
@@ -968,6 +1157,83 @@ function App() {
         )}
       </main>
 
+      {/* Search Modal */}
+      {showSearch && (
+        <div
+          className="fixed inset-0 bg-neutral-900/50 backdrop-blur-sm z-50 flex items-start justify-center p-4 animate-fade-in overflow-y-auto pt-20"
+          onClick={() => setShowSearch(false)}
+        >
+          <div
+            className="bg-gradient-to-br from-white via-purple-50/30 to-white rounded-2xl p-6 max-w-2xl w-full shadow-2xl border-2 border-white animate-scale-in"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="mb-4">
+              <h3 className="text-2xl font-bold mb-2 text-neutral-900 flex items-center gap-2">
+                <Search className="w-6 h-6 text-purple-600" />
+                Person suchen
+              </h3>
+              <p className="text-sm text-neutral-600">Suche nach Namen oder Beruf</p>
+            </div>
+            
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="z.B. Einstein, Künstler, Philosopher..."
+              className="w-full px-4 py-3 rounded-xl border-2 border-purple-200 focus:border-purple-400 focus:ring-2 focus:ring-purple-200 outline-none transition-all mb-4 text-lg"
+              autoFocus
+            />
+            
+            <div className="max-h-96 overflow-y-auto space-y-2">
+              {searchQuery === '' ? (
+                <div className="text-center text-neutral-500 py-8">
+                  Beginne zu tippen um zu suchen...
+                </div>
+              ) : searchResults.length === 0 ? (
+                <div className="text-center text-neutral-500 py-8">
+                  Keine Ergebnisse gefunden
+                </div>
+              ) : (
+                searchResults.map(person => (
+                  <button
+                    key={person.qid}
+                    onClick={() => {
+                      setTargetPerson(person);
+                      setShowLanding(false);
+                      setShowSearch(false);
+                      setSearchQuery('');
+                    }}
+                    className="w-full p-3 bg-white/70 backdrop-blur-sm rounded-xl hover:bg-white hover:shadow-md transition-all text-left flex items-center gap-3 group"
+                  >
+                    <PersonAvatar person={person} size="sm" className="rounded-full" />
+                    <div className="flex-1 min-w-0">
+                      <div className="font-semibold text-neutral-800 group-hover:text-purple-600 transition-colors">
+                        {person.name}
+                      </div>
+                      <div className="text-sm text-neutral-600">
+                        {getOccupation(person)} • {person.born}–{person.died === 9999 ? 'heute' : person.died}
+                      </div>
+                    </div>
+                  </button>
+                ))
+              )}
+            </div>
+            
+            <div className="mt-4 pt-4 border-t border-neutral-200 text-xs text-neutral-500 flex items-center justify-between">
+              <span>💡 Tipp: Drücke <kbd className="px-2 py-1 bg-neutral-100 rounded font-mono">/</kbd> um zu suchen</span>
+              <span>Insgesamt {people.length} Personen</span>
+            </div>
+            
+            <button
+              onClick={() => setShowSearch(false)}
+              className="mt-4 w-full px-4 py-2 bg-neutral-100 hover:bg-neutral-200 rounded-xl font-semibold transition-all"
+            >
+              Schließen
+            </button>
+          </div>
+        </div>
+      )}
+
       {/* Person Detail Modal - Enhanced */}
       {selectedPerson && (
         <div
@@ -980,9 +1246,7 @@ function App() {
           >
             {/* Header */}
             <div className="text-center mb-6">
-              <div className="w-24 h-24 mx-auto mb-4 rounded-full bg-gradient-to-br from-violet-400 via-purple-400 to-fuchsia-400 flex items-center justify-center text-white text-4xl font-bold shadow-lg">
-                {selectedPerson.name.charAt(0)}
-              </div>
+              <PersonAvatar person={selectedPerson} size="xl" className="rounded-full mx-auto mb-4" />
               <h3 className="text-3xl font-extrabold mb-2 text-neutral-900">{selectedPerson.name}</h3>
               <p className="text-lg text-purple-700 font-bold mb-3">{getOccupation(selectedPerson)}</p>
               <p className="text-base text-neutral-700 mb-2 font-semibold">
@@ -1182,6 +1446,43 @@ function App() {
               )}
             </div>
           </div>
+        </div>
+      )}
+
+      {/* Keyboard Shortcuts Helper */}
+      {!showLanding && (
+        <div className="fixed bottom-4 right-4 z-40">
+          <details className="group">
+            <summary className="glass-strong rounded-xl px-4 py-2 cursor-pointer hover:shadow-lg transition-all flex items-center gap-2 font-semibold text-sm list-none">
+              <span>⌨️</span>
+              <span className="hidden md:inline">Shortcuts</span>
+            </summary>
+            <div className="absolute bottom-full right-0 mb-2 glass-strong rounded-xl p-4 w-64 shadow-xl animate-fade-in">
+              <h4 className="font-bold mb-2 text-neutral-800">Tastaturkürzel</h4>
+              <div className="space-y-1 text-sm">
+                <div className="flex justify-between">
+                  <kbd className="px-2 py-1 bg-white rounded font-mono text-xs">/</kbd>
+                  <span className="text-neutral-700">Suche öffnen</span>
+                </div>
+                <div className="flex justify-between">
+                  <kbd className="px-2 py-1 bg-white rounded font-mono text-xs">ESC</kbd>
+                  <span className="text-neutral-700">Schließen</span>
+                </div>
+                <div className="flex justify-between">
+                  <kbd className="px-2 py-1 bg-white rounded font-mono text-xs">L</kbd>
+                  <span className="text-neutral-700">Listen-Ansicht</span>
+                </div>
+                <div className="flex justify-between">
+                  <kbd className="px-2 py-1 bg-white rounded font-mono text-xs">T</kbd>
+                  <span className="text-neutral-700">Timeline-Ansicht</span>
+                </div>
+                <div className="flex justify-between">
+                  <kbd className="px-2 py-1 bg-white rounded font-mono text-xs">R</kbd>
+                  <span className="text-neutral-700">Zurück zur Auswahl</span>
+                </div>
+              </div>
+            </div>
+          </details>
         </div>
       )}
     </div>
