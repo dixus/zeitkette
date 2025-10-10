@@ -1,0 +1,1298 @@
+{
+  "minTargetPerCentury": 30,
+  "summary": [
+    {
+      "century": -32,
+      "total": 1,
+      "byDomain": {
+        "Politics": 1
+      },
+      "sample": [
+        "Narmer"
+      ]
+    },
+    {
+      "century": -31,
+      "total": 1,
+      "byDomain": {
+        "Politics": 1
+      },
+      "sample": [
+        "Djer"
+      ]
+    },
+    {
+      "century": -30,
+      "total": 1,
+      "byDomain": {
+        "Politics": 1
+      },
+      "sample": [
+        "Den"
+      ]
+    },
+    {
+      "century": -28,
+      "total": 2,
+      "byDomain": {
+        "Politics": 2
+      },
+      "sample": [
+        "Peribsen",
+        "Khasekhemwy"
+      ]
+    },
+    {
+      "century": -27,
+      "total": 4,
+      "byDomain": {
+        "Politics": 3,
+        "Literature": 1,
+        "Science": 1,
+        "Medicine": 1
+      },
+      "sample": [
+        "Gilgamesh",
+        "Sneferu",
+        "Imhotep",
+        "Djoser"
+      ]
+    },
+    {
+      "century": -26,
+      "total": 3,
+      "byDomain": {
+        "Politics": 3
+      },
+      "sample": [
+        "Khufu",
+        "Khafre",
+        "Menkaure"
+      ]
+    },
+    {
+      "century": -25,
+      "total": 2,
+      "byDomain": {
+        "Politics": 2
+      },
+      "sample": [
+        "Userkaf",
+        "Sahure"
+      ]
+    },
+    {
+      "century": -24,
+      "total": 3,
+      "byDomain": {
+        "Politics": 3
+      },
+      "sample": [
+        "Unas",
+        "Pepi I",
+        "Sargon of Akkad"
+      ]
+    },
+    {
+      "century": -23,
+      "total": 2,
+      "byDomain": {
+        "Politics": 2
+      },
+      "sample": [
+        "Naram-Sin of Akkad",
+        "Pepi II"
+      ]
+    },
+    {
+      "century": -21,
+      "total": 1,
+      "byDomain": {
+        "Politics": 1
+      },
+      "sample": [
+        "Mentuhotep II"
+      ]
+    },
+    {
+      "century": -20,
+      "total": 4,
+      "byDomain": {
+        "Politics": 3,
+        "Religion": 1,
+        "Philosophy": 1
+      },
+      "sample": [
+        "Amenemhat I",
+        "Senusret I",
+        "Abraham",
+        "Amenemhat II"
+      ]
+    },
+    {
+      "century": -19,
+      "total": 3,
+      "byDomain": {
+        "Politics": 3
+      },
+      "sample": [
+        "Hammurabi",
+        "Senusret III",
+        "Sobekneferu"
+      ]
+    },
+    {
+      "century": -16,
+      "total": 3,
+      "byDomain": {
+        "Politics": 3
+      },
+      "sample": [
+        "Hatshepsut",
+        "Ahmose I",
+        "Amenhotep I"
+      ]
+    },
+    {
+      "century": -15,
+      "total": 4,
+      "byDomain": {
+        "Politics": 4
+      },
+      "sample": [
+        "Thutmose III",
+        "Amenhotep III",
+        "Amenhotep II",
+        "Thutmose IV"
+      ]
+    },
+    {
+      "century": -14,
+      "total": 8,
+      "byDomain": {
+        "Politics": 7,
+        "Philosophy": 1,
+        "Religion": 1
+      },
+      "sample": [
+        "Ramses II",
+        "Moses",
+        "Tutankhamun",
+        "Nefertiti",
+        "Akhenaten"
+      ]
+    },
+    {
+      "century": -13,
+      "total": 2,
+      "byDomain": {
+        "Politics": 2
+      },
+      "sample": [
+        "Merneptah",
+        "Ramesses III"
+      ]
+    },
+    {
+      "century": -12,
+      "total": 5,
+      "byDomain": {
+        "Politics": 5
+      },
+      "sample": [
+        "Tiglath-Pileser I",
+        "Ramesses XI",
+        "Ramesses IV",
+        "Ramesses V",
+        "Ramesses VI"
+      ]
+    },
+    {
+      "century": -11,
+      "total": 2,
+      "byDomain": {
+        "Politics": 2,
+        "Religion": 2
+      },
+      "sample": [
+        "King David",
+        "Saul"
+      ]
+    },
+    {
+      "century": -10,
+      "total": 6,
+      "byDomain": {
+        "Politics": 6,
+        "Philosophy": 1
+      },
+      "sample": [
+        "King Solomon",
+        "Rehoboam",
+        "Jeroboam I",
+        "Shoshenq I",
+        "Ashur-Dan II"
+      ]
+    },
+    {
+      "century": -9,
+      "total": 9,
+      "byDomain": {
+        "Politics": 9,
+        "Philosophy": 1
+      },
+      "sample": [
+        "Ashurnasirpal II",
+        "Shalmaneser III",
+        "Ahab",
+        "Jezebel",
+        "Lycurgus of Sparta"
+      ]
+    },
+    {
+      "century": -8,
+      "total": 12,
+      "byDomain": {
+        "Literature": 2,
+        "Religion": 3,
+        "Philosophy": 2,
+        "Politics": 8
+      },
+      "sample": [
+        "Homer",
+        "Hesiod",
+        "Isaiah",
+        "Tiglath-Pileser III",
+        "Sargon II"
+      ]
+    },
+    {
+      "century": -7,
+      "total": 22,
+      "byDomain": {
+        "Philosophy": 4,
+        "Literature": 4,
+        "Science": 1,
+        "Politics": 15,
+        "Religion": 2
+      },
+      "sample": [
+        "Laozi",
+        "Sappho",
+        "Thales",
+        "Nebuchadnezzar II",
+        "Zoroaster"
+      ]
+    },
+    {
+      "century": -6,
+      "total": 27,
+      "byDomain": {
+        "Philosophy": 12,
+        "Math": 1,
+        "Literature": 8,
+        "Politics": 9,
+        "Religion": 1,
+        "Science": 1
+      },
+      "sample": [
+        "Buddha",
+        "Konfuzius",
+        "Pythagoras",
+        "Heraklit",
+        "Aischylos"
+      ]
+    },
+    {
+      "century": -5,
+      "total": 43,
+      "byDomain": {
+        "Philosophy": 17,
+        "Literature": 8,
+        "Medicine": 2,
+        "Science": 2,
+        "Religion": 1,
+        "Politics": 9,
+        "Art": 6,
+        "Math": 2,
+        "Music": 1
+      },
+      "sample": [
+        "Platon",
+        "Sokrates",
+        "Herodotus",
+        "Hippokrates",
+        "Sophokles"
+      ]
+    },
+    {
+      "century": -4,
+      "total": 41,
+      "byDomain": {
+        "Philosophy": 16,
+        "Science": 3,
+        "Politics": 16,
+        "Math": 3,
+        "Literature": 4,
+        "Art": 4,
+        "Music": 1
+      },
+      "sample": [
+        "Aristoteles",
+        "Alexander der Große",
+        "Euklid",
+        "Epikur",
+        "Zhuangzi"
+      ]
+    },
+    {
+      "century": -3,
+      "total": 35,
+      "byDomain": {
+        "Politics": 21,
+        "Math": 4,
+        "Science": 5,
+        "Literature": 7,
+        "Philosophy": 2
+      },
+      "sample": [
+        "Hannibal",
+        "Archimedes",
+        "Cato der Ältere",
+        "Qin Shi Huang",
+        "Apollonius of Rhodes"
+      ]
+    },
+    {
+      "century": -2,
+      "total": 25,
+      "byDomain": {
+        "Philosophy": 4,
+        "Politics": 14,
+        "Literature": 6,
+        "Math": 1,
+        "Science": 1,
+        "Religion": 2,
+        "Medicine": 1
+      },
+      "sample": [
+        "Cicero",
+        "Polybios",
+        "Spartacus",
+        "Polybius",
+        "Hipparchus"
+      ]
+    },
+    {
+      "century": -1,
+      "total": 29,
+      "byDomain": {
+        "Philosophy": 4,
+        "Politics": 19,
+        "Literature": 7,
+        "Science": 2,
+        "Art": 1
+      },
+      "sample": [
+        "Jesus Christus",
+        "Julius Caesar",
+        "Kleopatra",
+        "Augustus",
+        "Ovid"
+      ]
+    },
+    {
+      "century": 1,
+      "total": 40,
+      "byDomain": {
+        "Politics": 15,
+        "Science": 5,
+        "Literature": 15,
+        "Philosophy": 5,
+        "Religion": 6,
+        "Math": 1
+      },
+      "sample": [
+        "Nero",
+        "Hadrian",
+        "Ptolemäus",
+        "Trajan",
+        "Tacitus"
+      ]
+    },
+    {
+      "century": 2,
+      "total": 18,
+      "byDomain": {
+        "Philosophy": 4,
+        "Politics": 9,
+        "Medicine": 1,
+        "Literature": 6,
+        "Religion": 1
+      },
+      "sample": [
+        "Marcus Aurelius",
+        "Galenus",
+        "Origenes",
+        "Commodus",
+        "Septimius Severus"
+      ]
+    },
+    {
+      "century": 3,
+      "total": 18,
+      "byDomain": {
+        "Politics": 9,
+        "Philosophy": 6,
+        "Religion": 6,
+        "Literature": 1
+      },
+      "sample": [
+        "Konstantin der Große",
+        "Diokletian",
+        "Plotin",
+        "Zenobia",
+        "Mani"
+      ]
+    },
+    {
+      "century": 4,
+      "total": 32,
+      "byDomain": {
+        "Philosophy": 9,
+        "Math": 1,
+        "Religion": 11,
+        "Literature": 2,
+        "Politics": 16
+      },
+      "sample": [
+        "Augustinus von Hippo",
+        "Hieronymus",
+        "Hypatia",
+        "Saint Patrick",
+        "Saint Ambrose"
+      ]
+    },
+    {
+      "century": 5,
+      "total": 23,
+      "byDomain": {
+        "Politics": 15,
+        "Philosophy": 4,
+        "Religion": 3,
+        "Math": 1,
+        "Literature": 2,
+        "Science": 1
+      },
+      "sample": [
+        "Attila",
+        "Justinian I.",
+        "Boethius",
+        "Saint Benedict",
+        "Theodora (Byzantine)"
+      ]
+    },
+    {
+      "century": 6,
+      "total": 18,
+      "byDomain": {
+        "Philosophy": 6,
+        "Religion": 9,
+        "Politics": 7,
+        "Literature": 3
+      },
+      "sample": [
+        "Mohammed",
+        "Gregor der Große",
+        "Isidor von Sevilla",
+        "Pope Gregory I",
+        "Gregory the Great"
+      ]
+    },
+    {
+      "century": 7,
+      "total": 28,
+      "byDomain": {
+        "Religion": 8,
+        "Politics": 20,
+        "Philosophy": 3,
+        "Literature": 2,
+        "Art": 1
+      },
+      "sample": [
+        "Ali ibn Abi Talib",
+        "Beda Venerabilis",
+        "Bede",
+        "Emperor Xuanzong of Tang",
+        "Ali"
+      ]
+    },
+    {
+      "century": 8,
+      "total": 28,
+      "byDomain": {
+        "Politics": 19,
+        "Math": 3,
+        "Science": 5,
+        "Literature": 4,
+        "Philosophy": 2,
+        "Religion": 1
+      },
+      "sample": [
+        "Karl der Große",
+        "Al-Khwarizmi",
+        "Li Bai",
+        "Harun ar-Raschid",
+        "Harun al-Rashid"
+      ]
+    },
+    {
+      "century": 9,
+      "total": 33,
+      "byDomain": {
+        "Politics": 20,
+        "Medicine": 2,
+        "Science": 6,
+        "Philosophy": 6,
+        "Religion": 6,
+        "Literature": 2,
+        "Math": 2
+      },
+      "sample": [
+        "Alfred der Große",
+        "Abd ar-Rahman III.",
+        "Al-Razi",
+        "Al-Farabi",
+        "Methodius"
+      ]
+    },
+    {
+      "century": 10,
+      "total": 25,
+      "byDomain": {
+        "Philosophy": 5,
+        "Medicine": 1,
+        "Politics": 16,
+        "Literature": 3,
+        "Religion": 3,
+        "Science": 2,
+        "Math": 1,
+        "Music": 1
+      },
+      "sample": [
+        "Avicenna",
+        "Otto I. (HRR)",
+        "Ferdowsi",
+        "Murasaki Shikibu",
+        "Otto I"
+      ]
+    },
+    {
+      "century": 11,
+      "total": 36,
+      "byDomain": {
+        "Politics": 26,
+        "Philosophy": 8,
+        "Music": 1,
+        "Math": 1,
+        "Literature": 1,
+        "Religion": 8,
+        "Medicine": 1,
+        "Science": 2
+      },
+      "sample": [
+        "Wilhelm der Eroberer",
+        "Hildegard von Bingen",
+        "Peter Abaelard",
+        "Omar Khayyam",
+        "Al-Ghazali"
+      ]
+    },
+    {
+      "century": 12,
+      "total": 38,
+      "byDomain": {
+        "Politics": 21,
+        "Philosophy": 6,
+        "Science": 4,
+        "Religion": 3,
+        "Medicine": 1,
+        "Math": 2,
+        "Literature": 5,
+        "Music": 2
+      },
+      "sample": [
+        "Dschingis Khan",
+        "Friedrich Barbarossa",
+        "Franz von Assisi",
+        "Averroes",
+        "Maimonides"
+      ]
+    },
+    {
+      "century": 13,
+      "total": 41,
+      "byDomain": {
+        "Literature": 5,
+        "Science": 5,
+        "Philosophy": 10,
+        "Art": 5,
+        "Politics": 20,
+        "Religion": 4,
+        "Math": 2,
+        "Medicine": 1,
+        "Music": 1
+      },
+      "sample": [
+        "Dante Alighieri",
+        "Marco Polo",
+        "Thomas von Aquin",
+        "Giotto",
+        "Kublai Khan"
+      ]
+    },
+    {
+      "century": 14,
+      "total": 33,
+      "byDomain": {
+        "Science": 4,
+        "Literature": 5,
+        "Philosophy": 5,
+        "Art": 4,
+        "Politics": 15,
+        "Religion": 1,
+        "Math": 1,
+        "Music": 1
+      },
+      "sample": [
+        "Johannes Gutenberg",
+        "Petrarca",
+        "Boccaccio",
+        "Geoffrey Chaucer",
+        "Jan Hus"
+      ]
+    },
+    {
+      "century": 15,
+      "total": 32,
+      "byDomain": {
+        "Art": 12,
+        "Science": 6,
+        "Politics": 8,
+        "Philosophy": 7,
+        "Literature": 1,
+        "Medicine": 1
+      },
+      "sample": [
+        "Leonardo da Vinci",
+        "Christoph Kolumbus",
+        "Michelangelo",
+        "Jeanne d'Arc",
+        "Martin Luther"
+      ]
+    },
+    {
+      "century": 16,
+      "total": 39,
+      "byDomain": {
+        "Literature": 7,
+        "Politics": 10,
+        "Science": 4,
+        "Philosophy": 6,
+        "Math": 1,
+        "Art": 10,
+        "Medicine": 2,
+        "Music": 1
+      },
+      "sample": [
+        "William Shakespeare",
+        "Elisabeth I.",
+        "Galileo Galilei",
+        "Cervantes",
+        "René Descartes"
+      ]
+    },
+    {
+      "century": 17,
+      "total": 31,
+      "byDomain": {
+        "Science": 4,
+        "Math": 5,
+        "Philosophy": 5,
+        "Literature": 9,
+        "Art": 6,
+        "Music": 5,
+        "Politics": 2
+      },
+      "sample": [
+        "Isaac Newton",
+        "Voltaire",
+        "Rembrandt",
+        "Johann Sebastian Bach",
+        "Molière"
+      ]
+    },
+    {
+      "century": 18,
+      "total": 83,
+      "byDomain": {
+        "Politics": 14,
+        "Literature": 25,
+        "Music": 6,
+        "Science": 16,
+        "Philosophy": 12,
+        "Math": 4,
+        "Art": 11
+      },
+      "sample": [
+        "Napoleon Bonaparte",
+        "George Washington",
+        "Johann Wolfgang von Goethe",
+        "Wolfgang Amadeus Mozart",
+        "Ludwig van Beethoven"
+      ]
+    },
+    {
+      "century": 19,
+      "total": 456,
+      "byDomain": {
+        "Science": 111,
+        "Politics": 94,
+        "Philosophy": 16,
+        "Literature": 93,
+        "Art": 51,
+        "Medicine": 59,
+        "Music": 22,
+        "Business": 7,
+        "Math": 12,
+        "Sports": 2
+      },
+      "sample": [
+        "Albert Einstein",
+        "Adolf Hitler",
+        "Abraham Lincoln",
+        "Mahatma Gandhi",
+        "Charles Darwin"
+      ]
+    },
+    {
+      "century": 20,
+      "total": 918,
+      "byDomain": {
+        "Politics": 85,
+        "Science": 320,
+        "Business": 105,
+        "Music": 59,
+        "Art": 103,
+        "Literature": 69,
+        "Math": 8,
+        "Philosophy": 20,
+        "Religion": 3,
+        "Sports": 24,
+        "Medicine": 146
+      },
+      "sample": [
+        "Nelson Mandela",
+        "Barack Obama",
+        "Martin Luther King Jr.",
+        "Stephen Hawking",
+        "Steve Jobs"
+      ]
+    },
+    {
+      "century": 21,
+      "total": 2,
+      "byDomain": {
+        "Politics": 1,
+        "Music": 1
+      },
+      "sample": [
+        "Greta Thunberg",
+        "Billie Eilish"
+      ]
+    }
+  ],
+  "gaps": [
+    {
+      "century": -32,
+      "total": 1,
+      "byDomain": {
+        "Politics": 1
+      },
+      "sample": [
+        "Narmer"
+      ]
+    },
+    {
+      "century": -31,
+      "total": 1,
+      "byDomain": {
+        "Politics": 1
+      },
+      "sample": [
+        "Djer"
+      ]
+    },
+    {
+      "century": -30,
+      "total": 1,
+      "byDomain": {
+        "Politics": 1
+      },
+      "sample": [
+        "Den"
+      ]
+    },
+    {
+      "century": -28,
+      "total": 2,
+      "byDomain": {
+        "Politics": 2
+      },
+      "sample": [
+        "Peribsen",
+        "Khasekhemwy"
+      ]
+    },
+    {
+      "century": -27,
+      "total": 4,
+      "byDomain": {
+        "Politics": 3,
+        "Literature": 1,
+        "Science": 1,
+        "Medicine": 1
+      },
+      "sample": [
+        "Gilgamesh",
+        "Sneferu",
+        "Imhotep",
+        "Djoser"
+      ]
+    },
+    {
+      "century": -26,
+      "total": 3,
+      "byDomain": {
+        "Politics": 3
+      },
+      "sample": [
+        "Khufu",
+        "Khafre",
+        "Menkaure"
+      ]
+    },
+    {
+      "century": -25,
+      "total": 2,
+      "byDomain": {
+        "Politics": 2
+      },
+      "sample": [
+        "Userkaf",
+        "Sahure"
+      ]
+    },
+    {
+      "century": -24,
+      "total": 3,
+      "byDomain": {
+        "Politics": 3
+      },
+      "sample": [
+        "Unas",
+        "Pepi I",
+        "Sargon of Akkad"
+      ]
+    },
+    {
+      "century": -23,
+      "total": 2,
+      "byDomain": {
+        "Politics": 2
+      },
+      "sample": [
+        "Naram-Sin of Akkad",
+        "Pepi II"
+      ]
+    },
+    {
+      "century": -21,
+      "total": 1,
+      "byDomain": {
+        "Politics": 1
+      },
+      "sample": [
+        "Mentuhotep II"
+      ]
+    },
+    {
+      "century": -20,
+      "total": 4,
+      "byDomain": {
+        "Politics": 3,
+        "Religion": 1,
+        "Philosophy": 1
+      },
+      "sample": [
+        "Amenemhat I",
+        "Senusret I",
+        "Abraham",
+        "Amenemhat II"
+      ]
+    },
+    {
+      "century": -19,
+      "total": 3,
+      "byDomain": {
+        "Politics": 3
+      },
+      "sample": [
+        "Hammurabi",
+        "Senusret III",
+        "Sobekneferu"
+      ]
+    },
+    {
+      "century": -16,
+      "total": 3,
+      "byDomain": {
+        "Politics": 3
+      },
+      "sample": [
+        "Hatshepsut",
+        "Ahmose I",
+        "Amenhotep I"
+      ]
+    },
+    {
+      "century": -15,
+      "total": 4,
+      "byDomain": {
+        "Politics": 4
+      },
+      "sample": [
+        "Thutmose III",
+        "Amenhotep III",
+        "Amenhotep II",
+        "Thutmose IV"
+      ]
+    },
+    {
+      "century": -14,
+      "total": 8,
+      "byDomain": {
+        "Politics": 7,
+        "Philosophy": 1,
+        "Religion": 1
+      },
+      "sample": [
+        "Ramses II",
+        "Moses",
+        "Tutankhamun",
+        "Nefertiti",
+        "Akhenaten"
+      ]
+    },
+    {
+      "century": -13,
+      "total": 2,
+      "byDomain": {
+        "Politics": 2
+      },
+      "sample": [
+        "Merneptah",
+        "Ramesses III"
+      ]
+    },
+    {
+      "century": -12,
+      "total": 5,
+      "byDomain": {
+        "Politics": 5
+      },
+      "sample": [
+        "Tiglath-Pileser I",
+        "Ramesses XI",
+        "Ramesses IV",
+        "Ramesses V",
+        "Ramesses VI"
+      ]
+    },
+    {
+      "century": -11,
+      "total": 2,
+      "byDomain": {
+        "Politics": 2,
+        "Religion": 2
+      },
+      "sample": [
+        "King David",
+        "Saul"
+      ]
+    },
+    {
+      "century": -10,
+      "total": 6,
+      "byDomain": {
+        "Politics": 6,
+        "Philosophy": 1
+      },
+      "sample": [
+        "King Solomon",
+        "Rehoboam",
+        "Jeroboam I",
+        "Shoshenq I",
+        "Ashur-Dan II"
+      ]
+    },
+    {
+      "century": -9,
+      "total": 9,
+      "byDomain": {
+        "Politics": 9,
+        "Philosophy": 1
+      },
+      "sample": [
+        "Ashurnasirpal II",
+        "Shalmaneser III",
+        "Ahab",
+        "Jezebel",
+        "Lycurgus of Sparta"
+      ]
+    },
+    {
+      "century": -8,
+      "total": 12,
+      "byDomain": {
+        "Literature": 2,
+        "Religion": 3,
+        "Philosophy": 2,
+        "Politics": 8
+      },
+      "sample": [
+        "Homer",
+        "Hesiod",
+        "Isaiah",
+        "Tiglath-Pileser III",
+        "Sargon II"
+      ]
+    },
+    {
+      "century": -7,
+      "total": 22,
+      "byDomain": {
+        "Philosophy": 4,
+        "Literature": 4,
+        "Science": 1,
+        "Politics": 15,
+        "Religion": 2
+      },
+      "sample": [
+        "Laozi",
+        "Sappho",
+        "Thales",
+        "Nebuchadnezzar II",
+        "Zoroaster"
+      ]
+    },
+    {
+      "century": -6,
+      "total": 27,
+      "byDomain": {
+        "Philosophy": 12,
+        "Math": 1,
+        "Literature": 8,
+        "Politics": 9,
+        "Religion": 1,
+        "Science": 1
+      },
+      "sample": [
+        "Buddha",
+        "Konfuzius",
+        "Pythagoras",
+        "Heraklit",
+        "Aischylos"
+      ]
+    },
+    {
+      "century": -2,
+      "total": 25,
+      "byDomain": {
+        "Philosophy": 4,
+        "Politics": 14,
+        "Literature": 6,
+        "Math": 1,
+        "Science": 1,
+        "Religion": 2,
+        "Medicine": 1
+      },
+      "sample": [
+        "Cicero",
+        "Polybios",
+        "Spartacus",
+        "Polybius",
+        "Hipparchus"
+      ]
+    },
+    {
+      "century": -1,
+      "total": 29,
+      "byDomain": {
+        "Philosophy": 4,
+        "Politics": 19,
+        "Literature": 7,
+        "Science": 2,
+        "Art": 1
+      },
+      "sample": [
+        "Jesus Christus",
+        "Julius Caesar",
+        "Kleopatra",
+        "Augustus",
+        "Ovid"
+      ]
+    },
+    {
+      "century": 2,
+      "total": 18,
+      "byDomain": {
+        "Philosophy": 4,
+        "Politics": 9,
+        "Medicine": 1,
+        "Literature": 6,
+        "Religion": 1
+      },
+      "sample": [
+        "Marcus Aurelius",
+        "Galenus",
+        "Origenes",
+        "Commodus",
+        "Septimius Severus"
+      ]
+    },
+    {
+      "century": 3,
+      "total": 18,
+      "byDomain": {
+        "Politics": 9,
+        "Philosophy": 6,
+        "Religion": 6,
+        "Literature": 1
+      },
+      "sample": [
+        "Konstantin der Große",
+        "Diokletian",
+        "Plotin",
+        "Zenobia",
+        "Mani"
+      ]
+    },
+    {
+      "century": 5,
+      "total": 23,
+      "byDomain": {
+        "Politics": 15,
+        "Philosophy": 4,
+        "Religion": 3,
+        "Math": 1,
+        "Literature": 2,
+        "Science": 1
+      },
+      "sample": [
+        "Attila",
+        "Justinian I.",
+        "Boethius",
+        "Saint Benedict",
+        "Theodora (Byzantine)"
+      ]
+    },
+    {
+      "century": 6,
+      "total": 18,
+      "byDomain": {
+        "Philosophy": 6,
+        "Religion": 9,
+        "Politics": 7,
+        "Literature": 3
+      },
+      "sample": [
+        "Mohammed",
+        "Gregor der Große",
+        "Isidor von Sevilla",
+        "Pope Gregory I",
+        "Gregory the Great"
+      ]
+    },
+    {
+      "century": 7,
+      "total": 28,
+      "byDomain": {
+        "Religion": 8,
+        "Politics": 20,
+        "Philosophy": 3,
+        "Literature": 2,
+        "Art": 1
+      },
+      "sample": [
+        "Ali ibn Abi Talib",
+        "Beda Venerabilis",
+        "Bede",
+        "Emperor Xuanzong of Tang",
+        "Ali"
+      ]
+    },
+    {
+      "century": 8,
+      "total": 28,
+      "byDomain": {
+        "Politics": 19,
+        "Math": 3,
+        "Science": 5,
+        "Literature": 4,
+        "Philosophy": 2,
+        "Religion": 1
+      },
+      "sample": [
+        "Karl der Große",
+        "Al-Khwarizmi",
+        "Li Bai",
+        "Harun ar-Raschid",
+        "Harun al-Rashid"
+      ]
+    },
+    {
+      "century": 10,
+      "total": 25,
+      "byDomain": {
+        "Philosophy": 5,
+        "Medicine": 1,
+        "Politics": 16,
+        "Literature": 3,
+        "Religion": 3,
+        "Science": 2,
+        "Math": 1,
+        "Music": 1
+      },
+      "sample": [
+        "Avicenna",
+        "Otto I. (HRR)",
+        "Ferdowsi",
+        "Murasaki Shikibu",
+        "Otto I"
+      ]
+    },
+    {
+      "century": 21,
+      "total": 2,
+      "byDomain": {
+        "Politics": 1,
+        "Music": 1
+      },
+      "sample": [
+        "Greta Thunberg",
+        "Billie Eilish"
+      ]
+    }
+  ]
+}

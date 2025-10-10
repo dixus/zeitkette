@@ -1,0 +1,38 @@
+{
+  "peopleCheck": {
+    "total": 1853,
+    "issues": [
+      {
+        "type": "LOW_SITELINKS_<80",
+        "count": 574,
+        "examples": [
+          {
+            "name": "Ales Bialiatski",
+            "sitelinks": 59
+          },
+          {
+            "name": "Alva Myrdal",
+            "sitelinks": 74
+          },
+          {
+            "name": "Nicholas Murray Butler",
+            "sitelinks": 54
+          },
+          {
+            "name": "Norman Angell",
+            "sitelinks": 61
+          },
+          {
+            "name": "Ferdinand Buisson",
+            "sitelinks": 53
+          }
+        ]
+      }
+    ]
+  },
+  "relCheck": {
+    "totalRelationEntries": 739,
+    "issues": []
+  },
+  "timestamp": "2025-10-10T06:16:04.562Z"
+}

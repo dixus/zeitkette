@@ -54,7 +54,9 @@ export function findPathBetween(startPerson, endPerson, people, minOverlap = 20,
       // Check if we've met a path from the end
       if (visitedEnd.has(current.name)) {
         const endPath = visitedEnd.get(current.name);
-        return [...path, ...endPath.slice(1).reverse()];
+        // Merge without duplicating the meeting node
+        const endTail = [...endPath].reverse().slice(1);
+        return [...path, ...endTail];
       }
       
       // Find neighbors
@@ -78,7 +80,9 @@ export function findPathBetween(startPerson, endPerson, people, minOverlap = 20,
       // Check if we've met a path from the start
       if (visitedStart.has(current.name)) {
         const startPath = visitedStart.get(current.name);
-        return [...startPath, ...path.slice(1).reverse()];
+        // Merge without duplicating the meeting node
+        const startTail = [...path].reverse().slice(1);
+        return [...startPath, ...startTail];
       }
       
       // Find neighbors
