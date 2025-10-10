@@ -13,7 +13,7 @@ export const DOMAIN_CHAINS = {
     icon: '🔬',
     color: '#8B5CF6', // Purple
     domains: ['Science'], // Which data domains map to this chain
-    keywords: ['quantum', 'physics', 'particle', 'atom', 'wave', 'heisenberg', 'schrödinger', 'bohr', 'planck', 'pauli', 'dirac', 'feynman'],
+    keywords: ['quantum', 'particle', 'atom', 'wave', 'heisenberg', 'schrödinger', 'bohr', 'planck', 'pauli', 'dirac', 'feynman'],
     qids: [
       'Q9021', // Max Planck
       'Q937', // Einstein

@@ -13,6 +13,9 @@ export default function DomainChainBadge({ domain, qid, onClick }) {
   // Get chains this person belongs to (only if they're actually IN the chain)
   const availableChains = qid ? getChainsForPerson(qid) : [];
   
+  // Debug: log the chain lookup
+  console.log('DomainChainBadge:', { domain, qid, availableChains });
+  
   const handleClick = (e) => {
     e.stopPropagation();
     
@@ -45,6 +48,7 @@ export default function DomainChainBadge({ domain, qid, onClick }) {
   // Show single chain indicator
   if (availableChains.length === 1) {
     const chain = availableChains[0];
+    const chainName = chain.name[lang] || chain.name.en;
     return (
       <button
         className="domain-chain-badge"
@@ -56,7 +60,7 @@ export default function DomainChainBadge({ domain, qid, onClick }) {
         title={chain.description[lang] || chain.description.en}
       >
         <span className="domain-chain-icon">{chain.icon}</span>
-        <span className="domain-chain-name">{domain}</span>
+        <span className="domain-chain-name">{chainName}</span>
         <span className="domain-chain-arrow">→</span>
       </button>
     );

@@ -28,24 +28,24 @@ export function PersonDetailModal({
       onClick={onClose}
     >
       <div
-        className="modal-container bg-gradient-to-br from-white via-purple-50/30 to-white rounded-none md:rounded-2xl p-4 md:p-6 max-w-2xl w-full min-h-screen md:min-h-0 max-h-screen md:max-h-[85vh] overflow-y-auto animate-scale-in shadow-2xl border-0 md:border-2 border-white"
+        className="modal-container bg-gradient-to-br from-white via-purple-50/30 to-white rounded-none md:rounded-xl p-3 md:p-4 max-w-2xl w-full min-h-screen md:min-h-0 max-h-screen md:max-h-[85vh] overflow-y-auto animate-scale-in shadow-2xl border-0 md:border-2 border-white"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="text-center mb-6">
-          <PersonAvatar person={selectedPerson} size="xl" className="rounded-full mx-auto mb-4" />
-          <h3 className="text-3xl font-extrabold mb-2 text-neutral-900">{selectedPerson.name}</h3>
-          <p className="text-lg text-purple-700 font-bold mb-3">{getOccupation(selectedPerson)}</p>
-          <p className="text-base text-neutral-700 mb-2 font-semibold">
+        <div className="text-center mb-4">
+          <PersonAvatar person={selectedPerson} size="lg" className="rounded-full mx-auto mb-3" />
+          <h3 className="text-xl font-extrabold mb-1 text-neutral-900">{selectedPerson.name}</h3>
+          <p className="text-sm text-purple-700 font-bold mb-2">{getOccupation(selectedPerson)}</p>
+          <p className="text-sm text-neutral-700 mb-1.5 font-semibold">
             {selectedPerson.born}–{selectedPerson.died === 9999 ? t('person.today') : selectedPerson.died}
             {' '}
-            <span className="text-sm text-neutral-600">({t('person.years', { count: selectedPerson.died === 9999 ? THIS_YEAR - selectedPerson.born : selectedPerson.died - selectedPerson.born })})</span>
+            <span className="text-xs text-neutral-600">({t('person.years', { count: selectedPerson.died === 9999 ? THIS_YEAR - selectedPerson.born : selectedPerson.died - selectedPerson.born })})</span>
           </p>
           {selectedPerson.region && (
-            <p className="text-sm text-neutral-600 font-medium">📍 {selectedPerson.region}</p>
+            <p className="text-xs text-neutral-600 font-medium">📍 {selectedPerson.region}</p>
           )}
           {selectedPerson.domains && selectedPerson.domains.length > 1 && (
-            <div className="flex flex-wrap justify-center gap-2 mt-3">
+            <div className="flex flex-wrap justify-center gap-1.5 mt-2">
               {selectedPerson.domains.map(d => (
                 <DomainChainBadge key={d} domain={d} qid={selectedPerson.qid} />
               ))}
@@ -54,9 +54,9 @@ export function PersonDetailModal({
         </div>
 
         {/* Timeline Context */}
-        <div className="mb-4 p-4 bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl">
-          <h4 className="font-bold text-base mb-3 flex items-center gap-2 text-neutral-800">
-            <Clock className="w-4 h-4" />
+        <div className="mb-3 p-3 bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg">
+          <h4 className="font-bold text-sm mb-2 flex items-center gap-1.5 text-neutral-800">
+            <Clock className="w-3 h-3" />
             {t('modal.historicalContext')}
           </h4>
           {(() => {

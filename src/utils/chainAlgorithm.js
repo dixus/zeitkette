@@ -169,11 +169,20 @@ export function buildChainThroughWaypoints(startPerson, waypoints, endPerson, pe
   if (segments.length === 0) return [];
   
   const result = [...segments[0]];
+  const seenNames = new Set(result.map(p => p.name));
   
   for (let i = 1; i < segments.length; i++) {
     const segment = segments[i];
-    // Skip first person of each segment (it's the last of the previous)
-    result.push(...segment.slice(1));
+    // Skip first person of each segment if it's already in the result
+    const startIdx = seenNames.has(segment[0]?.name) ? 1 : 0;
+    
+    for (let j = startIdx; j < segment.length; j++) {
+      const person = segment[j];
+      if (!seenNames.has(person.name)) {
+        result.push(person);
+        seenNames.add(person.name);
+      }
+    }
   }
   
   return result;
@@ -192,12 +201,21 @@ export function chainFrom(start, people, minOverlap = 20, minFame = 100) {
   let curr = typeof start === 'string' ? byName.get(start) : start;
   if (!curr) return result;
   
+  // Prevent infinite loops
+  const MAX_CHAIN_LENGTH = 50;
+  
   // Filter for well-known people (using user's fame filter)
   const topPeople = people
     .filter(p => (p.sitelinks || 0) >= minFame) // Use minFame parameter for filtering
     .sort((a, b) => (b.sitelinks || 0) - (a.sitelinks || 0));
   
-  while (true) {
+  while (result.length < MAX_CHAIN_LENGTH) {
+    // Check for duplicates before adding (safety check)
+    if (visited.has(curr.name)) {
+      console.warn(`Duplicate detected: ${curr.name}, breaking chain`);
+      break;
+    }
+    
     result.push(curr);
     visited.add(curr.name);
     

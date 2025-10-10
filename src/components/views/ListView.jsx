@@ -32,12 +32,12 @@ export function ListView({
   const { t } = useTranslation();
 
   return (
-    <div className="relative grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-6">
+    <div className="relative grid grid-cols-1 lg:grid-cols-[1fr_260px] gap-3">
       {/* Timeline Line */}
-      <div className="absolute left-8 top-0 bottom-0 w-1 bg-gradient-to-b from-purple-200 via-indigo-200 to-pink-200"></div>
+      <div className="absolute left-5 top-0 bottom-0 w-0.5 bg-gradient-to-b from-purple-200 via-indigo-200 to-pink-200"></div>
 
       {/* Chain Cards */}
-      <div className="space-y-6">
+      <div className="space-y-2">
         {chain.map((person, idx) => {
           const isLast = idx === chain.length - 1;
           const nextPerson = !isLast ? chain[idx + 1] : null;
@@ -58,9 +58,9 @@ export function ListView({
           }
 
           return (
-            <div key={person.qid} id={`card-${person.qid}`} className="relative pl-16 md:pl-20 animate-fade-in" style={{ animationDelay: `${idx * 0.1}s` }}>
+            <div key={person.qid} id={`card-${person.qid}`} className="relative pl-10 md:pl-12 animate-fade-in" style={{ animationDelay: `${idx * 0.1}s` }}>
               {/* Timeline Dot */}
-              <div className="absolute left-2 md:left-4 top-6 w-10 h-10 rounded-full bg-gradient-to-br from-violet-500 via-purple-500 to-fuchsia-500 border-4 border-white shadow-lg flex items-center justify-center text-white text-sm font-bold">
+              <div className="absolute left-0.5 md:left-1 top-3 w-7 h-7 rounded-full bg-gradient-to-br from-violet-500 via-purple-500 to-fuchsia-500 border-2 border-white shadow-lg flex items-center justify-center text-white text-[10px] font-bold">
                 {chain.length - idx}
               </div>
 
@@ -69,7 +69,7 @@ export function ListView({
                 onClick={() => onPersonClick(person)}
                 onMouseEnter={() => setHoveredQid(person.qid)}
                 onMouseLeave={() => setHoveredQid(null)}
-                className={`relative glass-strong rounded-2xl p-4 md:p-6 hover:shadow-xl transition-all duration-300 cursor-pointer hover:scale-[1.01] hover:-translate-y-1 ${hoveredQid === person.qid ? 'ring-2 ring-purple-400 shadow-xl' : ''}`}
+                className={`relative glass-strong rounded-lg p-2.5 md:p-3 hover:shadow-xl transition-all duration-300 cursor-pointer hover:scale-[1.01] hover:-translate-y-1 ${hoveredQid === person.qid ? 'ring-2 ring-purple-400 shadow-xl' : ''}`}
               >
                 {/* Replace Icon - Don't show for first person in toToday mode */}
                 {!(chainMode === 'toToday' && idx === 0) && (
@@ -122,27 +122,27 @@ export function ListView({
                       
                       setPinnedWaypoints(newWaypoints);
                     }}
-                    className="absolute top-3 right-3 w-8 h-8 rounded-full bg-gradient-to-br from-purple-500 to-fuchsia-500 text-white flex items-center justify-center hover:scale-110 transition-all shadow-md hover:shadow-lg z-10"
+                    className="absolute top-1.5 right-1.5 w-5 h-5 rounded-full bg-gradient-to-br from-purple-500 to-fuchsia-500 text-white flex items-center justify-center hover:scale-110 transition-all shadow-md hover:shadow-lg z-10 text-[10px]"
                     title="Zufällig ersetzen"
                   >
                     🎲
                   </button>
                 )}
                 
-                <div className="flex items-start gap-3 md:gap-4">
+                <div className="flex items-start gap-2">
                   {/* Avatar with Image */}
-                  <PersonAvatar person={person} size="md" />
+                  <PersonAvatar person={person} size="xs" />
 
                   {/* Info */}
                   <div className="flex-1 min-w-0">
-                    <h3 className="text-xl md:text-2xl font-bold mb-1 text-neutral-800">{person.name}</h3>
-                    <div className="text-sm text-purple-700 font-semibold mb-2">{getOccupation(person)}</div>
-                    <div className="flex flex-wrap items-center gap-2 md:gap-3 text-neutral-700 mb-2">
-                      <span className="flex items-center gap-1 font-semibold text-sm md:text-base">
-                        <Clock className="w-4 h-4 text-purple-600" />
+                    <h3 className="text-sm md:text-base font-bold mb-0.5 text-neutral-800 leading-tight">{person.name}</h3>
+                    <div className="text-[10px] text-purple-700 font-semibold mb-0.5">{getOccupation(person)}</div>
+                    <div className="flex flex-wrap items-center gap-1 text-neutral-700 mb-1">
+                      <span className="flex items-center gap-0.5 font-semibold text-[10px]">
+                        <Clock className="w-2.5 h-2.5 text-purple-600" />
                         {person.born}–{person.died === 9999 ? t('person.today') : person.died}
                       </span>
-                      <span className="text-xs md:text-sm text-neutral-600">
+                      <span className="text-[9px] text-neutral-600">
                         ({t('person.years', { count: person.died === 9999 ? THIS_YEAR - person.born : person.died - person.born })})
                       </span>
                     </div>
@@ -157,13 +157,13 @@ export function ListView({
                       const leftPct = (x1 / total) * 100;
                       const widthPct = Math.max(2, ((x2 - x1) / total) * 100);
                       return (
-                        <div className="mb-3">
-                          <div className="flex items-center gap-2 text-xs text-neutral-500 mb-1">
+                        <div className="mb-1.5">
+                          <div className="flex items-center gap-1.5 text-[8px] text-neutral-500 mb-0.5">
                             <span>{start}</span>
                             <div className="flex-1"></div>
                             <span>{end === THIS_YEAR ? t('person.today') : end}</span>
                           </div>
-                          <div className="h-3 w-full bg-neutral-200/70 rounded-full overflow-hidden relative">
+                          <div className="h-1.5 w-full bg-neutral-200/70 rounded-full overflow-hidden relative">
                             <div
                               className="h-full bg-gradient-to-r from-indigo-400 to-purple-400 rounded-full transition-all"
                               style={{ width: `${widthPct}%`, marginLeft: `${leftPct}%` }}
@@ -174,7 +174,7 @@ export function ListView({
                     })()}
                     
                     {person.domains && (
-                      <div className="flex flex-wrap gap-1.5 md:gap-2">
+                      <div className="flex flex-wrap gap-0.5 md:gap-1">
                         {person.domains.slice(0, 3).map(d => (
                           <DomainChainBadge 
                             key={d} 
@@ -190,8 +190,8 @@ export function ListView({
 
                 {/* Relations Indicator */}
                 {relations[person.qid]?.knew?.length > 0 && (
-                  <div className="mt-3 pt-3 border-t border-neutral-200/60 flex items-center gap-2 text-sm text-neutral-700 font-medium">
-                    <Users className="w-4 h-4 text-purple-600" />
+                  <div className="mt-1.5 pt-1.5 border-t border-neutral-200/60 flex items-center gap-1 text-[10px] text-neutral-700 font-medium">
+                    <Users className="w-2.5 h-2.5 text-purple-600" />
                     {t('person.knew', { count: relations[person.qid].knew.length, count_plural: relations[person.qid].knew.length === 1 ? t('person.person_one') : t('person.person_other') })}
                   </div>
                 )}
@@ -200,15 +200,15 @@ export function ListView({
               {/* Connection Info with Explore Button */}
               {nextPerson && (
                 <>
-                  <div className="mt-3 ml-2 md:ml-4 flex items-center gap-2 md:gap-3">
-                    <ArrowRight className="w-4 h-4 md:w-5 md:h-5 text-purple-400" />
+                  <div className="mt-1.5 ml-0.5 md:ml-1 flex items-center gap-1 md:gap-1.5">
+                    <ArrowRight className="w-2.5 h-2.5 md:w-3 md:h-3 text-purple-400" />
                   {hasGap ? (
-                      <div className="text-sm md:text-base flex-1">
+                      <div className="text-[10px] flex-1">
                         <span className="text-red-600 font-bold">{t('connection.gap', { years: gapYears })}</span>
                         <span className="text-neutral-600 font-medium hidden sm:inline"> {t('connection.couldNotMeet')}</span>
                     </div>
                   ) : (
-                      <div className="text-sm md:text-base flex-1">
+                      <div className="text-[10px] flex-1">
                         <span className="text-green-600 font-bold">{t('connection.overlap', { years: overlapYears })}</span>
                         <span className="text-neutral-600 font-medium hidden sm:inline"> {t('connection.couldMeet')}</span>
                     </div>
@@ -217,7 +217,7 @@ export function ListView({
                     {/* Explore Button */}
                     <button
                       onClick={() => setExpandedGap(expandedGap === idx ? null : idx)}
-                      className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-gradient-to-br from-purple-500 to-fuchsia-500 text-white flex items-center justify-center hover:scale-110 transition-all shadow-md hover:shadow-lg"
+                      className="w-6 h-6 rounded-full bg-gradient-to-br from-purple-500 to-fuchsia-500 text-white flex items-center justify-center hover:scale-110 transition-all shadow-md hover:shadow-lg text-xs"
                       title={t('connection.explore')}
                     >
                       {expandedGap === idx ? '−' : '+'}
@@ -251,42 +251,42 @@ export function ListView({
                     const alternatives = [...veryFamous, ...famous, ...lessFamous];
                     
                     return (
-                      <div className="mt-4 ml-2 md:ml-4 animate-fade-in">
-                        <div className="glass-strong rounded-2xl p-4">
-                          <div className="flex items-center justify-between mb-3">
-                            <h4 className="text-sm font-bold text-neutral-800 flex items-center gap-2">
-                              <span className="text-purple-600">🔍</span>
+                      <div className="mt-2 ml-1 md:ml-2 animate-fade-in">
+                        <div className="glass-strong rounded-xl p-3">
+                          <div className="flex items-center justify-between mb-2">
+                            <h4 className="text-xs font-bold text-neutral-800 flex items-center gap-1.5">
+                              <span className="text-purple-600 text-sm">🔍</span>
                               {t('connection.moreFromTime')}
                             </h4>
-                            <span className="text-xs text-neutral-500 font-medium">
+                            <span className="text-[10px] text-neutral-500 font-medium">
                               {t('connection.found', { count: allAlternatives.length })}
                             </span>
                           </div>
                           
                           {/* Fame tier indicator */}
                           {alternatives.length > 0 && (
-                            <div className="mb-3 flex flex-wrap gap-2 text-xs">
+                            <div className="mb-2 flex flex-wrap gap-1.5 text-[10px]">
                               {veryFamous.length > 0 && (
-                                <span className="px-2 py-1 bg-yellow-100 text-yellow-700 rounded-full font-medium">
+                                <span className="px-1.5 py-0.5 bg-yellow-100 text-yellow-700 rounded-full font-medium">
                                   {t('connection.veryFamous', { count: veryFamous.length })}
                                 </span>
                               )}
                               {famous.length > 0 && (
-                                <span className="px-2 py-1 bg-blue-100 text-blue-700 rounded-full font-medium">
+                                <span className="px-1.5 py-0.5 bg-blue-100 text-blue-700 rounded-full font-medium">
                                   {t('connection.famous', { count: famous.length })}
                                 </span>
                               )}
                               {lessFamous.length > 0 && (
-                                <span className="px-2 py-1 bg-purple-100 text-purple-700 rounded-full font-medium">
+                                <span className="px-1.5 py-0.5 bg-purple-100 text-purple-700 rounded-full font-medium">
                                   {t('connection.lessFamous', { count: lessFamous.length })}
                                 </span>
                               )}
                             </div>
                           )}
                           
-                          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+                          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
                             {alternatives.length === 0 ? (
-                              <p className="col-span-full text-sm text-neutral-500">{t('connection.noAlternatives')}</p>
+                              <p className="col-span-full text-xs text-neutral-500">{t('connection.noAlternatives')}</p>
                             ) : (
                               alternatives.map(p => {
                                 // Determine fame tier color
@@ -296,21 +296,21 @@ export function ListView({
                                 <button
                                   key={p.qid}
                                   onClick={() => onPersonClick(p)}
-                                  className="p-3 bg-white/70 backdrop-blur-sm rounded-xl hover:bg-white hover:shadow-md transition-all text-left group"
+                                  className="p-2 bg-white/70 backdrop-blur-sm rounded-lg hover:bg-white hover:shadow-md transition-all text-left group"
                                 >
-                                  <div className="mx-auto mb-2 group-hover:scale-110 transition-transform">
-                                    <PersonAvatar person={p} size="sm" className="rounded-full" />
+                                  <div className="mx-auto mb-1.5 group-hover:scale-110 transition-transform">
+                                    <PersonAvatar person={p} size="xs" className="rounded-full" />
                                   </div>
-                                    <div className="font-semibold text-xs text-neutral-800 text-center line-clamp-2 mb-1">
+                                    <div className="font-semibold text-[10px] text-neutral-800 text-center line-clamp-2 mb-0.5">
                                       {p.name}
                                     </div>
-                                    <div className="text-xs text-purple-600 font-medium text-center truncate">
+                                    <div className="text-[9px] text-purple-600 font-medium text-center truncate">
                                       {getOccupation(p)}
                                     </div>
-                                    <div className="text-xs text-neutral-500 text-center mt-1">
+                                    <div className="text-[9px] text-neutral-500 text-center mt-0.5">
                                       {p.born}–{p.died === 9999 ? t('person.today') : p.died}
                                     </div>
-                                    <div className="text-xs text-neutral-400 text-center mt-1 flex items-center justify-center gap-1">
+                                    <div className="text-[9px] text-neutral-400 text-center mt-0.5 flex items-center justify-center gap-0.5">
                                       {fameLevel === 'gold' && '⭐⭐⭐'}
                                       {fameLevel === 'blue' && '⭐⭐'}
                                       {fameLevel === 'purple' && '⭐'}
@@ -332,23 +332,23 @@ export function ListView({
         })}
 
         {/* End Marker */}
-        <div className="mt-8 glass-strong rounded-2xl p-6 md:p-8 text-center shadow-xl">
-          <div className="text-5xl md:text-6xl mb-4 drop-shadow-lg">
+        <div className="mt-3 glass-strong rounded-lg p-3 md:p-4 text-center shadow-xl">
+          <div className="text-2xl md:text-3xl mb-1.5 drop-shadow-lg">
             {chainMode === 'toToday' ? '🎯' : '🔗'}
           </div>
-          <h2 className="text-2xl md:text-3xl font-bold mb-3 text-neutral-800">
+          <h2 className="text-base md:text-lg font-bold mb-1.5 text-neutral-800">
             {chainMode === 'toToday' ? 'Ziel erreicht!' : 'Verbindung gefunden!'}
           </h2>
-          <p className="text-base md:text-lg text-neutral-700 mb-6 font-medium">
+          <p className="text-xs text-neutral-700 mb-3 font-medium">
             {chainMode === 'toToday' ? (
               <>Von <strong className="text-purple-700">{t('person.today')}</strong> bis <strong className="text-purple-700">{typeof targetPerson === 'string' ? targetPerson : targetPerson?.name}</strong></>
             ) : (
               <>Von <strong className="text-violet-700">{typeof startPerson === 'string' ? startPerson : startPerson?.name}</strong> bis <strong className="text-fuchsia-700">{typeof endPerson === 'string' ? endPerson : endPerson?.name}</strong></>
             )}
           </p>
-          <div className="space-y-4">
-            <div className="inline-block px-6 md:px-8 py-4 bg-gradient-to-r from-purple-100 via-fuchsia-100 to-pink-100 rounded-2xl shadow-md">
-              <div className="text-3xl md:text-4xl font-extrabold bg-gradient-to-r from-violet-600 via-purple-600 to-fuchsia-600 bg-clip-text text-transparent">
+          <div className="space-y-2">
+            <div className="inline-block px-3 md:px-4 py-2 bg-gradient-to-r from-purple-100 via-fuchsia-100 to-pink-100 rounded-lg shadow-md">
+              <div className="text-base md:text-lg font-extrabold bg-gradient-to-r from-violet-600 via-purple-600 to-fuchsia-600 bg-clip-text text-transparent">
                 {chainMode === 'toToday' ? (
                   <>Nur {lifetimeCount} Lebenszeiten!</>
                 ) : (
@@ -378,7 +378,7 @@ export function ListView({
                   alert(t('share.copied'));
                 }
               }}
-              className="px-6 py-3 bg-gradient-to-r from-violet-600 to-fuchsia-600 text-white rounded-xl font-semibold hover:shadow-lg transition-all hover:scale-105"
+              className="px-3 py-1.5 bg-gradient-to-r from-violet-600 to-fuchsia-600 text-white rounded-lg text-xs font-semibold hover:shadow-lg transition-all hover:scale-105"
             >
               {t('endMarker.shareButton')}
             </button>
@@ -387,9 +387,9 @@ export function ListView({
       </div>
       
       {/* Alternatives Panel */}
-        <aside className="hidden lg:block sticky top-24 self-start">
-          <div className="glass-strong rounded-3xl p-6">
-            <h3 className="text-base font-bold text-neutral-800 mb-4">
+        <aside className="hidden lg:block sticky top-16 self-start">
+          <div className="glass-strong rounded-xl p-3">
+            <h3 className="text-xs font-bold text-neutral-800 mb-2">
             {hoveredQid ? 'Lebten zur gleichen Zeit' : 'Andere Zeitgenossen'}
           </h3>
           {(() => {
@@ -411,21 +411,21 @@ export function ListView({
               .slice(0, 10);
             
             return (
-              <div className="space-y-3">
+              <div className="space-y-1.5">
                 {alternatives.length === 0 ? (
-                  <p className="text-sm text-neutral-500">Keine weiteren bekannten Personen gefunden</p>
+                  <p className="text-[10px] text-neutral-500">Keine weiteren bekannten Personen gefunden</p>
                 ) : (
                   alternatives.map(p => (
                     <div
                       key={p.qid}
-                      className="p-4 bg-white/70 backdrop-blur-sm rounded-2xl hover:bg-white hover:shadow-lg transition-all duration-300 cursor-pointer hover:scale-105 border border-white"
+                      className="p-2 bg-white/70 backdrop-blur-sm rounded-lg hover:bg-white hover:shadow-lg transition-all duration-300 cursor-pointer hover:scale-105 border border-white"
                       onClick={() => onPersonClick(p)}
                     >
-                      <div className="font-bold text-neutral-800 line-clamp-1 mb-1">{p.name}</div>
-                      <div className="text-xs text-purple-600 font-semibold mb-1 line-clamp-1">
+                      <div className="font-bold text-[10px] text-neutral-800 line-clamp-1 mb-0.5">{p.name}</div>
+                      <div className="text-[9px] text-purple-600 font-semibold mb-0.5 line-clamp-1">
                         {getOccupation(p)}
                       </div>
-                      <div className="text-sm text-neutral-600">
+                      <div className="text-[9px] text-neutral-600">
                         {p.born}–{p.died === 9999 ? t('person.today') : p.died}
                       </div>
                     </div>

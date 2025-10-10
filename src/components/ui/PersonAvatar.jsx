@@ -9,17 +9,18 @@ export function PersonAvatar({ person, size = 'md', className = '' }) {
   const { imageUrl, loading } = usePersonImage(person);
   
   const sizeClasses = {
-    sm: 'w-12 h-12 text-lg',
-    md: 'w-16 h-16 md:w-20 md:h-20 text-2xl md:text-3xl',
-    lg: 'w-20 h-20 md:w-24 md:h-24 text-4xl md:text-5xl',
-    xl: 'w-36 h-36 text-7xl'
+    xs: 'w-10 h-10 text-sm',
+    sm: 'w-12 h-12 text-base',
+    md: 'w-14 h-14 md:w-16 md:h-16 text-lg md:text-xl',
+    lg: 'w-16 h-16 md:w-20 md:h-20 text-2xl md:text-3xl',
+    xl: 'w-24 h-24 text-4xl'
   };
   
   return (
-    <div className={`${sizeClasses[size]} rounded-2xl bg-gradient-to-br from-violet-400 via-purple-400 to-fuchsia-400 flex items-center justify-center text-white font-bold flex-shrink-0 shadow-md overflow-hidden relative ${className}`}>
+    <div className={`${sizeClasses[size]} rounded-xl bg-gradient-to-br from-violet-400 via-purple-400 to-fuchsia-400 flex items-center justify-center text-white font-bold flex-shrink-0 shadow-md overflow-hidden relative ${className}`}>
       {loading ? (
         <div className="absolute inset-0 bg-gradient-to-br from-violet-400 via-purple-400 to-fuchsia-400 animate-pulse flex items-center justify-center">
-          <ImageIcon className="w-6 h-6 text-white/50 animate-pulse" />
+          <ImageIcon className="w-4 h-4 text-white/50 animate-pulse" />
         </div>
       ) : imageUrl ? (
         <img 

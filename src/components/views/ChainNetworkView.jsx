@@ -98,6 +98,9 @@ export function ChainNetworkView({ chain, people, relations, onClose, onPersonCl
     const maxYear = Math.max(...birthYears);
     const yearRange = maxYear - minYear;
     
+    // Debug: log the year range
+    console.log('Year range:', { minYear, maxYear, yearRange, birthYears });
+    
     // Create force simulation with temporal Y-axis constraint
     const sim = d3.forceSimulation(newGraphData.nodes)
       .force('link', d3.forceLink(newGraphData.links)
@@ -118,7 +121,11 @@ export function ChainNetworkView({ chain, people, relations, onClose, onPersonCl
     
     // Add temporal year markers on the left
     const yearMarkers = [];
-    for (let year = Math.ceil(minYear / 10) * 10; year <= maxYear; year += 20) {
+    const startYear = Math.ceil(minYear / 50) * 50; // Round to nearest 50 for cleaner display
+    const endYear = Math.floor(maxYear / 50) * 50;
+    const yearStep = Math.max(50, Math.floor(yearRange / 8)); // Dynamic step size
+    
+    for (let year = startYear; year <= endYear; year += yearStep) {
       const normalizedYear = (year - minYear) / yearRange;
       const y = 100 + normalizedYear * (height - 200);
       yearMarkers.push({ year, y });
