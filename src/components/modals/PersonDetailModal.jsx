@@ -2,6 +2,7 @@ import { Clock, Users } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { PersonAvatar } from '../ui/PersonAvatar';
 import { THIS_YEAR, getOccupation } from '../../utils';
+import DomainChainBadge from '../DomainChainBadge';
 
 /**
  * PersonDetailModal Component
@@ -46,9 +47,7 @@ export function PersonDetailModal({
           {selectedPerson.domains && selectedPerson.domains.length > 1 && (
             <div className="flex flex-wrap justify-center gap-2 mt-3">
               {selectedPerson.domains.map(d => (
-                <span key={d} className="px-3 py-1 bg-gradient-to-r from-purple-100 via-fuchsia-100 to-pink-100 text-purple-700 rounded-full text-sm font-bold shadow-sm">
-                  {d}
-                </span>
+                <DomainChainBadge key={d} domain={d} qid={selectedPerson.qid} />
               ))}
             </div>
           )}

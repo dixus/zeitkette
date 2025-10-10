@@ -98,7 +98,7 @@ function getCountry(claims) {
  * Save progress (in case of interruption)
  */
 function saveProgress() {
-  const outputPath = path.join(__dirname, '../data/people.json');
+  const outputPath = path.join(__dirname, '../public/people.json');
   const tempPath = outputPath + '.tmp';
   
   // Sort by sitelinks before saving
@@ -234,13 +234,13 @@ async function processDump(dumpPath) {
   // Also copy to public folder
   const publicPath = path.join(__dirname, '../public/people.json');
   fs.copyFileSync(
-    path.join(__dirname, '../data/people.json'),
+    path.join(__dirname, '../public/people.json'),
     publicPath
   );
   console.log(`💾 Copied to: ${publicPath}`);
   
   const elapsed = ((Date.now() - startTime) / 60000).toFixed(1);
-  const outputPath = path.join(__dirname, '../data/people.json');
+  const outputPath = path.join(__dirname, '../public/people.json');
   
   console.log('\n\n✅ DONE!');
   console.log(`⏱️  Time: ${elapsed} minutes`);

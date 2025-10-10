@@ -1,0 +1,371 @@
+/* Chain View Styles */
+
+.chain-view {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background: var(--color-bg-primary);
+}
+
+.chain-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2rem;
+  background: var(--color-bg-secondary);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.chain-header-content {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.chain-icon {
+  font-size: 3rem;
+  line-height: 1;
+}
+
+.chain-header h1 {
+  font-size: 2rem;
+  margin: 0 0 0.5rem 0;
+  font-weight: 700;
+}
+
+.chain-description {
+  color: var(--color-text-secondary);
+  margin: 0 0 0.75rem 0;
+  max-width: 600px;
+}
+
+.chain-meta {
+  display: flex;
+  gap: 1.5rem;
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+}
+
+.chain-meta span {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* View Mode Selector */
+.view-mode-selector {
+  display: flex;
+  gap: 0.5rem;
+  background: var(--color-bg-primary);
+  padding: 0.25rem;
+  border-radius: 0.5rem;
+}
+
+.view-mode-selector button {
+  padding: 0.5rem 1rem;
+  border: none;
+  background: transparent;
+  color: var(--color-text-secondary);
+  border-radius: 0.375rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.view-mode-selector button:hover {
+  background: var(--color-bg-tertiary);
+  color: var(--color-text-primary);
+}
+
+.view-mode-selector button.active {
+  background: var(--color-primary);
+  color: white;
+}
+
+/* Timeline View */
+.chain-visualization {
+  flex: 1;
+  position: relative;
+  overflow: auto;
+  padding: 2rem;
+}
+
+.timeline-view {
+  position: relative;
+  min-height: 600px;
+  background: var(--color-bg-secondary);
+  border-radius: 1rem;
+  padding: 2rem;
+}
+
+.timeline-axis {
+  position: relative;
+  height: 40px;
+  border-bottom: 2px solid var(--color-border);
+  margin-bottom: 2rem;
+}
+
+.timeline-marker {
+  position: absolute;
+  bottom: 0;
+  transform: translateX(-50%);
+}
+
+.timeline-marker::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 2px;
+  height: 10px;
+  background: var(--color-border);
+}
+
+.timeline-marker span {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.75rem;
+  color: var(--color-text-tertiary);
+  white-space: nowrap;
+}
+
+/* Timeline People */
+.timeline-people {
+  position: relative;
+  min-height: 500px;
+}
+
+.timeline-person {
+  position: absolute;
+  height: 60px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.timeline-person:hover {
+  transform: translateY(-4px);
+  z-index: 10;
+}
+
+.timeline-person.selected {
+  z-index: 20;
+}
+
+.timeline-person.highlighted {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+.timeline-person-bar {
+  height: 100%;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: white;
+  font-size: 0.75rem;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.timeline-person:hover .timeline-person-bar {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.timeline-person-name {
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.timeline-person-years {
+  font-size: 0.625rem;
+  opacity: 0.9;
+}
+
+/* Timeline Connections */
+.timeline-connections {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+/* Person Detail Sidebar */
+.person-detail-sidebar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 400px;
+  height: 100vh;
+  background: var(--color-bg-primary);
+  border-left: 1px solid var(--color-border);
+  box-shadow: -4px 0 12px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+.sidebar-header {
+  padding: 1.5rem;
+  border-bottom: 3px solid;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.sidebar-header h2 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.close-button {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: none;
+  background: var(--color-bg-secondary);
+  color: var(--color-text-primary);
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.close-button:hover {
+  background: var(--color-bg-tertiary);
+  transform: rotate(90deg);
+}
+
+.sidebar-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1.5rem;
+}
+
+.person-years {
+  font-size: 1.125rem;
+  color: var(--color-text-secondary);
+  margin-bottom: 1.5rem;
+  font-weight: 500;
+}
+
+.connections-section {
+  margin-bottom: 2rem;
+}
+
+.connections-section h3 {
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-text-tertiary);
+  margin-bottom: 0.75rem;
+}
+
+.connections-section ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.connections-section li {
+  padding: 0.75rem;
+  background: var(--color-bg-secondary);
+  border-radius: 0.5rem;
+  margin-bottom: 0.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.connection-name {
+  font-weight: 500;
+}
+
+.connection-type {
+  font-size: 0.75rem;
+  color: var(--color-text-tertiary);
+  background: var(--color-bg-tertiary);
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+}
+
+/* Network and Tree Views (Placeholder) */
+.network-view,
+.tree-view {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 600px;
+  background: var(--color-bg-secondary);
+  border-radius: 1rem;
+}
+
+.coming-soon {
+  text-align: center;
+  color: var(--color-text-secondary);
+}
+
+.coming-soon p:first-child {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Loading State */
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  font-size: 1.25rem;
+  color: var(--color-text-secondary);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .chain-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  
+  .person-detail-sidebar {
+    width: 100%;
+  }
+  
+  .timeline-view {
+    padding: 1rem;
+  }
+  
+  .timeline-person-bar {
+    font-size: 0.625rem;
+  }
+}
+

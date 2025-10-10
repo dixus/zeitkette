@@ -1,7 +1,7 @@
 const fs = require('fs');
 
 function loadPeople() {
-  const people = JSON.parse(fs.readFileSync('./data/people.json', 'utf8'));
+  const people = JSON.parse(fs.readFileSync('./public/people.json', 'utf8'));
   return people;
 }
 

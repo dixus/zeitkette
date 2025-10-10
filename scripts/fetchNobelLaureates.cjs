@@ -42,11 +42,11 @@ function mapCountryQidToRegion(qid) {
 }
 
 function loadPeople() {
-  return JSON.parse(fs.readFileSync('./data/people.json', 'utf8'));
+  return JSON.parse(fs.readFileSync('./public/people.json', 'utf8'));
 }
 
 function savePeople(people) {
-  fs.writeFileSync('./data/people.json', JSON.stringify(people, null, 2));
+  fs.writeFileSync('./public/people.json', JSON.stringify(people, null, 2));
   fs.writeFileSync('./public/people.json', JSON.stringify(people, null, 2));
 }
 

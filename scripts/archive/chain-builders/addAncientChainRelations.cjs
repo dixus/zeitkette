@@ -169,16 +169,16 @@ const ancientRelations = [
 ];
 
 function loadRelations() {
-  return JSON.parse(fs.readFileSync('./data/relations.json', 'utf8'));
+  return JSON.parse(fs.readFileSync('./public/relations.json', 'utf8'));
 }
 
 function saveRelations(relations) {
-  fs.writeFileSync('./data/relations.json', JSON.stringify(relations, null, 2));
+  fs.writeFileSync('./public/relations.json', JSON.stringify(relations, null, 2));
   fs.writeFileSync('./public/relations.json', JSON.stringify(relations, null, 2));
 }
 
 function loadPeople() {
-  return JSON.parse(fs.readFileSync('./data/people.json', 'utf8'));
+  return JSON.parse(fs.readFileSync('./public/people.json', 'utf8'));
 }
 
 function main() {

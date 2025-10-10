@@ -441,6 +441,41 @@
         "name": "Ernst Haeckel",
         "type": "influenced",
         "confidence": 0.95
+      },
+      {
+        "qid": "Q160627",
+        "type": "colleague",
+        "confidence": 0.95
+      },
+      {
+        "qid": "Q234050",
+        "type": "influenced",
+        "confidence": 0.95
+      },
+      {
+        "qid": "Q158272",
+        "type": "influenced",
+        "confidence": 0.95
+      },
+      {
+        "qid": "Q160159",
+        "type": "influenced",
+        "confidence": 0.95
+      },
+      {
+        "qid": "Q185062",
+        "type": "influenced",
+        "confidence": 0.95
+      },
+      {
+        "qid": "Q156349",
+        "type": "influenced",
+        "confidence": 0.95
+      },
+      {
+        "qid": "Q106542",
+        "type": "influenced",
+        "confidence": 0.95
       }
     ]
   },
@@ -558,6 +593,11 @@
         "name": "Henri Becquerel",
         "type": "Mit-Preisträger",
         "confidence": 1
+      },
+      {
+        "qid": "Q84296",
+        "type": "influenced",
+        "confidence": 0.95
       }
     ]
   },
@@ -592,6 +632,46 @@
         "name": "Erwin Schrödinger",
         "type": "influenced",
         "confidence": 0.95
+      },
+      {
+        "qid": "Q84296",
+        "type": "influenced",
+        "confidence": 0.95
+      },
+      {
+        "qid": "Q38096",
+        "type": "colleague",
+        "confidence": 0.95
+      },
+      {
+        "qid": "Q7186",
+        "type": "influenced",
+        "confidence": 0.95
+      },
+      {
+        "qid": "Q39739",
+        "type": "influenced",
+        "confidence": 0.95
+      },
+      {
+        "qid": "Q9007",
+        "type": "colleague",
+        "confidence": 0.95
+      },
+      {
+        "qid": "Q83331",
+        "type": "influenced",
+        "confidence": 0.95
+      },
+      {
+        "qid": "Q65989",
+        "type": "colleague",
+        "confidence": 0.95
+      },
+      {
+        "qid": "Q37939",
+        "type": "colleague",
+        "confidence": 0.95
       }
     ]
   },
@@ -601,6 +681,41 @@
         "name": "Albert Einstein",
         "type": "Kollege/Debattenpartner",
         "confidence": 1
+      },
+      {
+        "qid": "Q103293",
+        "type": "teacher",
+        "confidence": 0.95
+      },
+      {
+        "qid": "Q65989",
+        "type": "influenced",
+        "confidence": 0.95
+      },
+      {
+        "qid": "Q84296",
+        "type": "colleague",
+        "confidence": 0.95
+      },
+      {
+        "qid": "Q83331",
+        "type": "colleague",
+        "confidence": 0.95
+      },
+      {
+        "qid": "Q47480",
+        "type": "influenced",
+        "confidence": 0.95
+      },
+      {
+        "qid": "Q213926",
+        "type": "influenced",
+        "confidence": 0.95
+      },
+      {
+        "qid": "Q37939",
+        "type": "colleague",
+        "confidence": 0.95
       }
     ]
   },
@@ -770,6 +885,21 @@
       {
         "name": "John Archibald Wheeler",
         "type": "influenced",
+        "confidence": 0.95
+      },
+      {
+        "qid": "Q39246",
+        "type": "teacher",
+        "confidence": 0.95
+      },
+      {
+        "qid": "Q125245",
+        "type": "colleague",
+        "confidence": 0.95
+      },
+      {
+        "qid": "Q213926",
+        "type": "teacher",
         "confidence": 0.95
       }
     ]
@@ -1460,6 +1590,26 @@
         "name": "Wolfgang Pauli",
         "type": "Kollege/Freund",
         "confidence": 0.9
+      },
+      {
+        "qid": "Q103293",
+        "type": "influenced",
+        "confidence": 0.95
+      },
+      {
+        "qid": "Q84296",
+        "type": "colleague",
+        "confidence": 0.95
+      },
+      {
+        "qid": "Q82122",
+        "type": "influenced",
+        "confidence": 0.95
+      },
+      {
+        "qid": "Q7186",
+        "type": "colleague",
+        "confidence": 0.95
       }
     ]
   },
@@ -1484,6 +1634,16 @@
         "name": "Richard Feynman",
         "type": "influenced",
         "confidence": 0.95
+      },
+      {
+        "qid": "Q47480",
+        "type": "colleague",
+        "confidence": 0.95
+      },
+      {
+        "qid": "Q83331",
+        "type": "influenced",
+        "confidence": 0.95
       }
     ]
   },
@@ -1502,6 +1662,36 @@
       {
         "name": "Max von Laue",
         "type": "teacher",
+        "confidence": 0.95
+      },
+      {
+        "qid": "Q77078",
+        "type": "teacher",
+        "confidence": 0.95
+      },
+      {
+        "qid": "Q38096",
+        "type": "influenced",
+        "confidence": 0.95
+      },
+      {
+        "qid": "Q937",
+        "type": "colleague",
+        "confidence": 0.95
+      },
+      {
+        "qid": "Q39739",
+        "type": "colleague",
+        "confidence": 0.95
+      },
+      {
+        "qid": "Q9007",
+        "type": "influenced",
+        "confidence": 0.95
+      },
+      {
+        "qid": "Q37939",
+        "type": "influenced",
         "confidence": 0.95
       }
     ]
@@ -4272,6 +4462,21 @@
         "name": "Sheldon Glashow",
         "type": "Mit-Preisträger",
         "confidence": 1
+      },
+      {
+        "qid": "Q125245",
+        "type": "colleague",
+        "confidence": 0.95
+      },
+      {
+        "qid": "Q185743",
+        "type": "influenced",
+        "confidence": 0.95
+      },
+      {
+        "qid": "Q39246",
+        "type": "contemporary",
+        "confidence": 0.95
       }
     ]
   },
@@ -5792,6 +5997,26 @@
         "name": "Linus Pauling",
         "type": "influenced",
         "confidence": 0.95
+      },
+      {
+        "qid": "Q84296",
+        "type": "colleague",
+        "confidence": 0.95
+      },
+      {
+        "qid": "Q47480",
+        "type": "colleague",
+        "confidence": 0.95
+      },
+      {
+        "qid": "Q103293",
+        "type": "colleague",
+        "confidence": 0.95
+      },
+      {
+        "qid": "Q9007",
+        "type": "colleague",
+        "confidence": 0.95
       }
     ]
   },
@@ -6648,6 +6873,36 @@
       {
         "name": "Rigoberta Menchú",
         "type": "influenced",
+        "confidence": 0.95
+      },
+      {
+        "qid": "Q38096",
+        "type": "influenced",
+        "confidence": 0.95
+      },
+      {
+        "qid": "Q103293",
+        "type": "colleague",
+        "confidence": 0.95
+      },
+      {
+        "qid": "Q84296",
+        "type": "colleague",
+        "confidence": 0.95
+      },
+      {
+        "qid": "Q39246",
+        "type": "influenced",
+        "confidence": 0.95
+      },
+      {
+        "qid": "Q39246",
+        "type": "teacher",
+        "confidence": 0.95
+      },
+      {
+        "qid": "Q132537",
+        "type": "colleague",
         "confidence": 0.95
       }
     ]
@@ -9922,6 +10177,11 @@
         "name": "Richard Feynman",
         "type": "teacher",
         "confidence": 0.95
+      },
+      {
+        "qid": "Q39246",
+        "type": "teacher",
+        "confidence": 0.95
       }
     ]
   },
@@ -9946,6 +10206,31 @@
         "name": "Max von Laue",
         "type": "contemporary",
         "confidence": 0.95
+      },
+      {
+        "qid": "Q103293",
+        "type": "teacher",
+        "confidence": 0.95
+      },
+      {
+        "qid": "Q82122",
+        "type": "teacher",
+        "confidence": 0.95
+      },
+      {
+        "qid": "Q84296",
+        "type": "influenced",
+        "confidence": 0.95
+      },
+      {
+        "qid": "Q105478",
+        "type": "teacher",
+        "confidence": 0.95
+      },
+      {
+        "qid": "Q65989",
+        "type": "teacher",
+        "confidence": 0.95
       }
     ]
   },
@@ -9954,6 +10239,16 @@
       {
         "name": "Erwin Schrödinger",
         "type": "influenced",
+        "confidence": 0.95
+      },
+      {
+        "qid": "Q84296",
+        "type": "influenced",
+        "confidence": 0.95
+      },
+      {
+        "qid": "Q9007",
+        "type": "colleague",
         "confidence": 0.95
       }
     ]
@@ -9979,6 +10274,41 @@
         "name": "Erwin Schrödinger",
         "type": "debated",
         "confidence": 0.95
+      },
+      {
+        "qid": "Q82122",
+        "type": "colleague",
+        "confidence": 0.95
+      },
+      {
+        "qid": "Q84296",
+        "type": "colleague",
+        "confidence": 0.95
+      },
+      {
+        "qid": "Q7186",
+        "type": "colleague",
+        "confidence": 0.95
+      },
+      {
+        "qid": "Q47480",
+        "type": "colleague",
+        "confidence": 0.95
+      },
+      {
+        "qid": "Q57260",
+        "type": "colleague",
+        "confidence": 0.95
+      },
+      {
+        "qid": "Q57242",
+        "type": "colleague",
+        "confidence": 0.95
+      },
+      {
+        "qid": "Q65989",
+        "type": "colleague",
+        "confidence": 0.95
       }
     ]
   },
@@ -9997,6 +10327,26 @@
       {
         "name": "J. Robert Oppenheimer",
         "type": "teacher",
+        "confidence": 0.95
+      },
+      {
+        "qid": "Q103293",
+        "type": "teacher",
+        "confidence": 0.95
+      },
+      {
+        "qid": "Q132537",
+        "type": "teacher",
+        "confidence": 0.95
+      },
+      {
+        "qid": "Q65989",
+        "type": "colleague",
+        "confidence": 0.95
+      },
+      {
+        "qid": "Q84296",
+        "type": "colleague",
         "confidence": 0.95
       }
     ]
@@ -10054,6 +10404,26 @@
         "name": "J. Robert Oppenheimer",
         "type": "collaborated",
         "confidence": 0.95
+      },
+      {
+        "qid": "Q9007",
+        "type": "colleague",
+        "confidence": 0.95
+      },
+      {
+        "qid": "Q103293",
+        "type": "colleague",
+        "confidence": 0.95
+      },
+      {
+        "qid": "Q132537",
+        "type": "colleague",
+        "confidence": 0.95
+      },
+      {
+        "qid": "Q17457",
+        "type": "influenced",
+        "confidence": 0.95
       }
     ]
   },
@@ -10095,6 +10465,16 @@
         "name": "Bjarne Stroustrup",
         "type": "influenced",
         "confidence": 0.95
+      },
+      {
+        "qid": "Q72029",
+        "type": "influenced",
+        "confidence": 0.95
+      },
+      {
+        "qid": "Q92616",
+        "type": "influenced",
+        "confidence": 0.95
       }
     ]
   },
@@ -10122,6 +10502,11 @@
         "name": "Linus Torvalds",
         "type": "influenced",
         "confidence": 0.95
+      },
+      {
+        "qid": "Q92616",
+        "type": "influenced",
+        "confidence": 0.95
       }
     ]
   },
@@ -10130,6 +10515,16 @@
       {
         "name": "Charles Darwin",
         "type": "influenced",
+        "confidence": 0.95
+      },
+      {
+        "qid": "Q84296",
+        "type": "colleague",
+        "confidence": 0.95
+      },
+      {
+        "qid": "Q47480",
+        "type": "colleague",
         "confidence": 0.95
       }
     ]
@@ -10485,6 +10880,26 @@
       {
         "name": "Antonín Dvořák",
         "type": "mentored",
+        "confidence": 0.95
+      },
+      {
+        "qid": "Q7346",
+        "type": "influenced",
+        "confidence": 0.95
+      },
+      {
+        "qid": "Q189975",
+        "type": "influenced",
+        "confidence": 0.95
+      },
+      {
+        "qid": "Q76364",
+        "type": "influenced",
+        "confidence": 0.95
+      },
+      {
+        "qid": "Q178528",
+        "type": "influenced",
         "confidence": 0.95
       }
     ]
@@ -10893,6 +11308,564 @@
       {
         "name": "Jasper Johns",
         "type": "contemporary",
+        "confidence": 0.95
+      }
+    ]
+  },
+  "Q39739": {
+    "knew": [
+      {
+        "qid": "Q937",
+        "type": "colleague",
+        "confidence": 0.95
+      },
+      {
+        "qid": "Q9021",
+        "type": "colleague",
+        "confidence": 0.95
+      },
+      {
+        "qid": "Q38096",
+        "type": "influenced",
+        "confidence": 0.95
+      },
+      {
+        "qid": "Q9007",
+        "type": "influenced",
+        "confidence": 0.95
+      }
+    ]
+  },
+  "Q213926": {
+    "knew": [
+      {
+        "qid": "Q39246",
+        "type": "teacher",
+        "confidence": 0.95
+      },
+      {
+        "qid": "Q9007",
+        "type": "colleague",
+        "confidence": 0.95
+      }
+    ]
+  },
+  "Q57242": {
+    "knew": [
+      {
+        "qid": "Q103293",
+        "type": "colleague",
+        "confidence": 0.95
+      },
+      {
+        "qid": "Q65989",
+        "type": "colleague",
+        "confidence": 0.95
+      },
+      {
+        "qid": "Q37939",
+        "type": "colleague",
+        "confidence": 0.95
+      }
+    ]
+  },
+  "Q57260": {
+    "knew": [
+      {
+        "qid": "Q103293",
+        "type": "colleague",
+        "confidence": 0.95
+      }
+    ]
+  },
+  "Q77078": {
+    "knew": [
+      {
+        "qid": "Q937",
+        "type": "colleague",
+        "confidence": 0.95
+      },
+      {
+        "qid": "Q9021",
+        "type": "teacher",
+        "confidence": 0.95
+      }
+    ]
+  },
+  "Q105478": {
+    "knew": [
+      {
+        "qid": "Q78613",
+        "type": "colleague",
+        "confidence": 0.95
+      },
+      {
+        "qid": "Q937",
+        "type": "colleague",
+        "confidence": 0.95
+      }
+    ]
+  },
+  "Q185743": {
+    "knew": [
+      {
+        "qid": "Q185721",
+        "type": "colleague",
+        "confidence": 0.95
+      },
+      {
+        "qid": "Q125245",
+        "type": "colleague",
+        "confidence": 0.95
+      }
+    ]
+  },
+  "Q185721": {
+    "knew": [
+      {
+        "qid": "Q185743",
+        "type": "colleague",
+        "confidence": 0.95
+      }
+    ]
+  },
+  "Q309430": {
+    "knew": [
+      {
+        "qid": "Q937",
+        "type": "influenced",
+        "confidence": 0.95
+      },
+      {
+        "qid": "Q9007",
+        "type": "influenced",
+        "confidence": 0.95
+      }
+    ]
+  },
+  "Q448174": {
+    "knew": [
+      {
+        "qid": "Q309430",
+        "type": "influenced",
+        "confidence": 0.95
+      },
+      {
+        "qid": "Q9007",
+        "type": "influenced",
+        "confidence": 0.95
+      }
+    ]
+  },
+  "Q125245": {
+    "knew": [
+      {
+        "qid": "Q39246",
+        "type": "colleague",
+        "confidence": 0.95
+      },
+      {
+        "qid": "Q179282",
+        "type": "colleague",
+        "confidence": 0.95
+      }
+    ]
+  },
+  "Q7259": {
+    "knew": [
+      {
+        "qid": "Q5790",
+        "type": "colleague",
+        "confidence": 0.95
+      },
+      {
+        "qid": "Q5885",
+        "type": "influenced",
+        "confidence": 0.95
+      }
+    ]
+  },
+  "Q5790": {
+    "knew": [
+      {
+        "qid": "Q7259",
+        "type": "colleague",
+        "confidence": 0.95
+      }
+    ]
+  },
+  "Q34253": {
+    "knew": [
+      {
+        "qid": "Q92604",
+        "type": "influenced",
+        "confidence": 0.95
+      },
+      {
+        "qid": "Q5588",
+        "type": "influenced",
+        "confidence": 0.95
+      },
+      {
+        "qid": "Q20022",
+        "type": "contemporary",
+        "confidence": 0.95
+      }
+    ]
+  },
+  "Q204815": {
+    "knew": [
+      {
+        "qid": "Q5885",
+        "type": "colleague",
+        "confidence": 0.95
+      },
+      {
+        "qid": "Q17455",
+        "type": "colleague",
+        "confidence": 0.95
+      },
+      {
+        "qid": "Q92559",
+        "type": "influenced",
+        "confidence": 0.95
+      }
+    ]
+  },
+  "Q17297": {
+    "knew": [
+      {
+        "qid": "Q5885",
+        "type": "influenced",
+        "confidence": 0.95
+      },
+      {
+        "qid": "Q17455",
+        "type": "influenced",
+        "confidence": 0.95
+      },
+      {
+        "qid": "Q92621",
+        "type": "influenced",
+        "confidence": 0.95
+      }
+    ]
+  },
+  "Q72029": {
+    "knew": [
+      {
+        "qid": "Q92621",
+        "type": "influenced",
+        "confidence": 0.95
+      },
+      {
+        "qid": "Q17297",
+        "type": "influenced",
+        "confidence": 0.95
+      },
+      {
+        "qid": "Q5588",
+        "type": "influenced",
+        "confidence": 0.95
+      }
+    ]
+  },
+  "Q160627": {
+    "knew": [
+      {
+        "qid": "Q1035",
+        "type": "colleague",
+        "confidence": 0.95
+      },
+      {
+        "qid": "Q234050",
+        "type": "influenced",
+        "confidence": 0.95
+      }
+    ]
+  },
+  "Q234050": {
+    "knew": [
+      {
+        "qid": "Q1035",
+        "type": "influenced",
+        "confidence": 0.95
+      },
+      {
+        "qid": "Q160627",
+        "type": "colleague",
+        "confidence": 0.95
+      },
+      {
+        "qid": "Q50644",
+        "type": "influenced",
+        "confidence": 0.95
+      }
+    ]
+  },
+  "Q158272": {
+    "knew": [
+      {
+        "qid": "Q1035",
+        "type": "influenced",
+        "confidence": 0.95
+      },
+      {
+        "qid": "Q37970",
+        "type": "influenced",
+        "confidence": 0.95
+      },
+      {
+        "qid": "Q184458",
+        "type": "influenced",
+        "confidence": 0.95
+      }
+    ]
+  },
+  "Q160159": {
+    "knew": [
+      {
+        "qid": "Q1035",
+        "type": "influenced",
+        "confidence": 0.95
+      },
+      {
+        "qid": "Q181600",
+        "type": "colleague",
+        "confidence": 0.95
+      },
+      {
+        "qid": "Q231280",
+        "type": "colleague",
+        "confidence": 0.95
+      }
+    ]
+  },
+  "Q7346": {
+    "knew": [
+      {
+        "qid": "Q7294",
+        "type": "influenced",
+        "confidence": 0.95
+      },
+      {
+        "qid": "Q7315",
+        "type": "influenced",
+        "confidence": 0.95
+      },
+      {
+        "qid": "Q7298",
+        "type": "influenced",
+        "confidence": 0.95
+      }
+    ]
+  },
+  "Q189975": {
+    "knew": [
+      {
+        "qid": "Q7346",
+        "type": "influenced",
+        "confidence": 0.95
+      },
+      {
+        "qid": "Q7294",
+        "type": "influenced",
+        "confidence": 0.95
+      },
+      {
+        "qid": "Q7315",
+        "type": "contemporary",
+        "confidence": 0.95
+      }
+    ]
+  },
+  "Q41264": {
+    "knew": [
+      {
+        "qid": "Q5598",
+        "type": "contemporary",
+        "confidence": 0.95
+      },
+      {
+        "qid": "Q5582",
+        "type": "influenced",
+        "confidence": 0.95
+      }
+    ]
+  },
+  "Q7836": {
+    "knew": [
+      {
+        "qid": "Q5581",
+        "type": "influenced",
+        "confidence": 0.95
+      },
+      {
+        "qid": "Q5582",
+        "type": "colleague",
+        "confidence": 0.95
+      },
+      {
+        "qid": "Q46373",
+        "type": "colleague",
+        "confidence": 0.95
+      }
+    ]
+  },
+  "Q5885": {
+    "knew": [
+      {
+        "qid": "Q17297",
+        "type": "influenced",
+        "confidence": 0.95
+      },
+      {
+        "qid": "Q17457",
+        "type": "influenced",
+        "confidence": 0.95
+      }
+    ]
+  },
+  "Q17455": {
+    "knew": [
+      {
+        "qid": "Q17297",
+        "type": "influenced",
+        "confidence": 0.95
+      }
+    ]
+  },
+  "Q5588": {
+    "knew": [
+      {
+        "qid": "Q72029",
+        "type": "influenced",
+        "confidence": 0.95
+      }
+    ]
+  },
+  "Q17457": {
+    "knew": [
+      {
+        "qid": "Q5885",
+        "type": "influenced",
+        "confidence": 0.95
+      },
+      {
+        "qid": "Q92621",
+        "type": "influenced",
+        "confidence": 0.95
+      }
+    ]
+  },
+  "Q92616": {
+    "knew": [
+      {
+        "qid": "Q92624",
+        "type": "influenced",
+        "confidence": 0.95
+      },
+      {
+        "qid": "Q92621",
+        "type": "influenced",
+        "confidence": 0.95
+      }
+    ]
+  },
+  "Q185062": {
+    "knew": [
+      {
+        "qid": "Q1035",
+        "type": "influenced",
+        "confidence": 0.95
+      },
+      {
+        "qid": "Q160627",
+        "type": "colleague",
+        "confidence": 0.95
+      }
+    ]
+  },
+  "Q156349": {
+    "knew": [
+      {
+        "qid": "Q1035",
+        "type": "influenced",
+        "confidence": 0.95
+      },
+      {
+        "qid": "Q37970",
+        "type": "influenced",
+        "confidence": 0.95
+      }
+    ]
+  },
+  "Q106542": {
+    "knew": [
+      {
+        "qid": "Q1035",
+        "type": "influenced",
+        "confidence": 0.95
+      },
+      {
+        "qid": "Q82171",
+        "type": "colleague",
+        "confidence": 0.95
+      }
+    ]
+  },
+  "Q76364": {
+    "knew": [
+      {
+        "qid": "Q7294",
+        "type": "influenced",
+        "confidence": 0.95
+      },
+      {
+        "qid": "Q7315",
+        "type": "influenced",
+        "confidence": 0.95
+      }
+    ]
+  },
+  "Q178528": {
+    "knew": [
+      {
+        "qid": "Q76364",
+        "type": "influenced",
+        "confidence": 0.95
+      },
+      {
+        "qid": "Q7294",
+        "type": "influenced",
+        "confidence": 0.95
+      }
+    ]
+  },
+  "Q160026": {
+    "knew": [
+      {
+        "qid": "Q1035",
+        "type": "influenced",
+        "confidence": 0.95
+      },
+      {
+        "qid": "Q82171",
+        "type": "colleague",
+        "confidence": 0.95
+      }
+    ]
+  },
+  "Q193234": {
+    "knew": [
+      {
+        "qid": "Q76364",
+        "type": "influenced",
+        "confidence": 0.95
+      },
+      {
+        "qid": "Q7294",
+        "type": "influenced",
         "confidence": 0.95
       }
     ]

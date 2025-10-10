@@ -1,7 +1,7 @@
 const fs = require('fs');
 
 function checkPeople() {
-  const people = JSON.parse(fs.readFileSync('./data/people.json', 'utf8'));
+  const people = JSON.parse(fs.readFileSync('./public/people.json', 'utf8'));
   const issues = [];
   
   // Check for duplicates by QID
@@ -47,8 +47,8 @@ function checkPeople() {
 }
 
 function checkRelations() {
-  const people = JSON.parse(fs.readFileSync('./data/people.json', 'utf8'));
-  const relations = JSON.parse(fs.readFileSync('./data/relations.json', 'utf8'));
+  const people = JSON.parse(fs.readFileSync('./public/people.json', 'utf8'));
+  const relations = JSON.parse(fs.readFileSync('./public/relations.json', 'utf8'));
   const peopleQids = new Set(people.map(p => p.qid));
   const issues = [];
   

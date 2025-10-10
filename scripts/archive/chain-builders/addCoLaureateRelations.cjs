@@ -9,8 +9,8 @@ function save(file, data) {
 }
 
 function main() {
-  const people = load('./data/people.json');
-  const relations = load('./data/relations.json');
+  const people = load('./public/people.json');
+  const relations = load('./public/relations.json');
   const awards = load('./scripts/nobel_awards_cache.json');
 
   const personByQid = new Map(people.map(p => [p.qid, p]));
@@ -45,7 +45,7 @@ function main() {
     }
   }
 
-  save('./data/relations.json', relations);
+  save('./public/relations.json', relations);
   save('./public/relations.json', relations);
   console.log(`Added ${added} co-laureate relation edges.`);
 }

@@ -120,7 +120,7 @@ const correctQIDs = {
 };
 
 function removeDuplicates() {
-  const people = JSON.parse(fs.readFileSync('./data/people.json', 'utf8'));
+  const people = JSON.parse(fs.readFileSync('./public/people.json', 'utf8'));
   
   console.log(`Starting with ${people.length} people`);
   
@@ -167,10 +167,10 @@ function removeDuplicates() {
   console.log(`Final count: ${cleaned.length} people`);
   
   // Save cleaned data
-  fs.writeFileSync('./data/people.json', JSON.stringify(cleaned, null, 2));
+  fs.writeFileSync('./public/people.json', JSON.stringify(cleaned, null, 2));
   fs.writeFileSync('./public/people.json', JSON.stringify(cleaned, null, 2));
   
-  console.log('Cleaned data saved to data/people.json and public/people.json');
+  console.log('Cleaned data saved to public/people.json and public/people.json');
   
   return { original: people.length, cleaned: cleaned.length, removed: duplicatesFixed };
 }

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Domain Chains</title>
+</head>
+<body>
+    <h1>Testing Domain Chain Functions</h1>
+    <div id="output"></div>
+
+    <script type="module">
+        import { getChainsForPerson, getChainsForDomain } from './src/config/domainChains.js';
+
+        const output = document.getElementById('output');
+        
+        // Test Einstein
+        const einsteinChains = getChainsForPerson('Q937');
+        output.innerHTML += `<h2>Einstein (Q937) chains:</h2>`;
+        output.innerHTML += `<pre>${JSON.stringify(einsteinChains, null, 2)}</pre>`;
+        
+        // Test Science domain
+        const scienceChains = getChainsForDomain('Science');
+        output.innerHTML += `<h2>Science domain chains:</h2>`;
+        output.innerHTML += `<pre>${JSON.stringify(scienceChains.map(c => ({ id: c.id, name: c.name })), null, 2)}</pre>`;
+    </script>
+</body>
+</html>
+

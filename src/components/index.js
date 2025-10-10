@@ -12,6 +12,8 @@ export { KeyboardShortcuts } from './ui/KeyboardShortcuts';
 export { TimelineView } from './views/TimelineView';
 export { NetworkView } from './views/NetworkView';
 export { ListView } from './views/ListView';
+export { ChainExplorerView } from './views/ChainExplorerView';
+export { ChainNetworkView } from './views/ChainNetworkView';
 
 // Modals
 export { SearchModal } from './modals/SearchModal';

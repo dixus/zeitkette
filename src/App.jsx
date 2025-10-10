@@ -11,7 +11,7 @@ import { THIS_YEAR, fetchPersonImage, getOccupation, chainFrom, findPathBetween,
 import { usePersonImage, useKeyboardShortcuts } from './hooks';
 
 // Extracted components
-import { PersonAvatar, TimelineView, NetworkView, SearchModal, YearExplorerModal, PersonDetailModal, Header, StatsBar, ListView, LandingPage, FunFacts, KeyboardShortcuts } from './components';
+import { PersonAvatar, TimelineView, NetworkView, SearchModal, YearExplorerModal, PersonDetailModal, Header, StatsBar, ListView, LandingPage, FunFacts, KeyboardShortcuts, ChainExplorerView, ChainNetworkView } from './components';
 
 // All utility functions, hooks, and small components have been extracted to separate files
 // See src/utils, src/hooks, and src/components folders
@@ -47,6 +47,8 @@ function App() {
   const [explorerYear, setExplorerYear] = useState(1500); // Year to explore
   const [explorerDomain, setExplorerDomain] = useState('all'); // Domain filter
   const [explorerFame, setExplorerFame] = useState(140); // Fame filter for explorer
+  const [showChainExplorer, setShowChainExplorer] = useState(false); // Show chain explorer view
+  const [activeChain, setActiveChain] = useState(null); // Active chain to explore
 
   useEffect(() => {
     loadAllData().then(({ people, relations }) => {
@@ -444,6 +446,12 @@ function App() {
               setShowLanding(false);
               setSelectedPerson(null);
             }}
+            onChainClick={(chains) => {
+              if (chains && chains.length > 0) {
+                setActiveChain(chains[0]);
+                setShowChainExplorer(true);
+              }
+            }}
           />
         )}
       </main>
@@ -511,6 +519,19 @@ function App() {
         }}
       />
 
+      {/* Chain Network View */}
+      {showChainExplorer && activeChain && (
+        <ChainNetworkView
+          chain={activeChain}
+          people={people}
+          relations={relations}
+          onClose={() => {
+            setShowChainExplorer(false);
+            setActiveChain(null);
+          }}
+          onPersonClick={setSelectedPerson}
+        />
+      )}
 
       {/* Keyboard Shortcuts Helper */}
       <KeyboardShortcuts showLanding={showLanding} />

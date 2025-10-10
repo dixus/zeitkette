@@ -2,6 +2,7 @@ import { ArrowRight, Clock, Users } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { PersonAvatar } from '../ui/PersonAvatar';
 import { THIS_YEAR, getOccupation } from '../../utils';
+import DomainChainBadge from '../DomainChainBadge';
 
 /**
  * ListView Component
@@ -25,7 +26,8 @@ export function ListView({
   pinnedWaypoints,
   setPinnedWaypoints,
   lifetimeCount,
-  onStartNewChain
+  onStartNewChain,
+  onChainClick
 }) {
   const { t } = useTranslation();
 
@@ -174,9 +176,12 @@ export function ListView({
                     {person.domains && (
                       <div className="flex flex-wrap gap-1.5 md:gap-2">
                         {person.domains.slice(0, 3).map(d => (
-                          <span key={d} className="px-2 md:px-3 py-1 bg-gradient-to-r from-purple-100 to-fuchsia-100 text-purple-700 rounded-full text-xs font-semibold shadow-sm">
-                            {d}
-                          </span>
+                          <DomainChainBadge 
+                            key={d} 
+                            domain={d} 
+                            qid={person.qid}
+                            onClick={onChainClick}
+                          />
                         ))}
                       </div>
                     )}
