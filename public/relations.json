@@ -183,6 +183,11 @@
         "name": "Michelangelo",
         "type": "Zeitgenosse/Rivale",
         "confidence": 1
+      },
+      {
+        "name": "Raphael",
+        "type": "teacher",
+        "confidence": 0.95
       }
     ]
   },
@@ -197,6 +202,26 @@
         "name": "Raphael",
         "type": "Zeitgenosse",
         "confidence": 1
+      },
+      {
+        "name": "Caravaggio",
+        "type": "influenced",
+        "confidence": 0.95
+      },
+      {
+        "name": "André Derain",
+        "type": "teacher",
+        "confidence": 0.95
+      },
+      {
+        "name": "Maurice de Vlaminck",
+        "type": "influenced",
+        "confidence": 0.95
+      },
+      {
+        "name": "Mark Rothko",
+        "type": "influenced",
+        "confidence": 0.95
       }
     ]
   },
@@ -457,6 +482,21 @@
         "name": "Friedrich Nietzsche",
         "type": "Freund (später Bruch)",
         "confidence": 1
+      },
+      {
+        "name": "Anton Bruckner",
+        "type": "influenced",
+        "confidence": 0.95
+      },
+      {
+        "name": "Gustav Mahler",
+        "type": "influenced",
+        "confidence": 0.95
+      },
+      {
+        "name": "Peter Tschaikowski",
+        "type": "influenced",
+        "confidence": 0.95
       }
     ]
   },
@@ -622,6 +662,16 @@
         "name": "Ernest Hemingway",
         "type": "Freund",
         "confidence": 0.9
+      },
+      {
+        "name": "Paul Cézanne",
+        "type": "influenced",
+        "confidence": 0.95
+      },
+      {
+        "name": "Auguste Rodin",
+        "type": "contemporary",
+        "confidence": 0.95
       }
     ]
   },
@@ -1623,6 +1673,16 @@
         "name": "Arnold Schoenberg",
         "type": "Förderer",
         "confidence": 0.9
+      },
+      {
+        "name": "Alban Berg",
+        "type": "influenced",
+        "confidence": 0.95
+      },
+      {
+        "name": "Anton Bruckner",
+        "type": "conductor of",
+        "confidence": 0.95
       }
     ]
   },
@@ -2307,6 +2367,16 @@
         "name": "Rembrandt",
         "type": "Zeitgenosse",
         "confidence": 0.6
+      },
+      {
+        "name": "Velázquez",
+        "type": "influenced",
+        "confidence": 0.95
+      },
+      {
+        "name": "Jacques-Louis David",
+        "type": "influenced",
+        "confidence": 0.95
       }
     ]
   },
@@ -2321,6 +2391,26 @@
         "name": "Camille Pissarro",
         "type": "Kollege",
         "confidence": 0.9
+      },
+      {
+        "name": "Pablo Picasso",
+        "type": "collaborated",
+        "confidence": 0.95
+      },
+      {
+        "name": "Berthe Morisot",
+        "type": "collaborated",
+        "confidence": 0.95
+      },
+      {
+        "name": "Paul Cézanne",
+        "type": "contemporary",
+        "confidence": 0.95
+      },
+      {
+        "name": "Albrecht Dürer",
+        "type": "influenced",
+        "confidence": 0.95
       }
     ]
   },
@@ -2363,6 +2453,16 @@
         "name": "Pierre-Auguste Renoir",
         "type": "Freund",
         "confidence": 0.9
+      },
+      {
+        "name": "Vincent van Gogh",
+        "type": "influenced",
+        "confidence": 0.95
+      },
+      {
+        "name": "Michelangelo",
+        "type": "influenced",
+        "confidence": 0.95
       }
     ]
   },
@@ -2381,6 +2481,21 @@
         "name": "Pablo Picasso",
         "type": "Freund/Rivale",
         "confidence": 0.9
+      },
+      {
+        "name": "René Magritte",
+        "type": "contemporary",
+        "confidence": 0.95
+      },
+      {
+        "name": "Max Ernst",
+        "type": "contemporary",
+        "confidence": 0.95
+      },
+      {
+        "name": "Joan Miró",
+        "type": "influenced",
+        "confidence": 0.95
       }
     ]
   },
@@ -8655,6 +8770,11 @@
         "name": "Dante",
         "type": "Zeitgenosse",
         "confidence": 0.8
+      },
+      {
+        "name": "Masaccio",
+        "type": "influenced",
+        "confidence": 0.95
       }
     ]
   },
@@ -10137,6 +10257,641 @@
     "knew": [
       {
         "name": "Thomas Henry Huxley",
+        "type": "contemporary",
+        "confidence": 0.95
+      }
+    ]
+  },
+  "Q53068": {
+    "knew": [
+      {
+        "name": "Heinrich Schütz",
+        "type": "influenced",
+        "confidence": 0.95
+      },
+      {
+        "name": "Jean-Baptiste Lully",
+        "type": "influenced",
+        "confidence": 0.95
+      }
+    ]
+  },
+  "Q180578": {
+    "knew": [
+      {
+        "name": "Antonio Vivaldi",
+        "type": "influenced",
+        "confidence": 0.95
+      }
+    ]
+  },
+  "Q1340": {
+    "knew": [
+      {
+        "name": "Johann Sebastian Bach",
+        "type": "influenced",
+        "confidence": 0.95
+      },
+      {
+        "name": "George Frideric Handel",
+        "type": "influenced",
+        "confidence": 0.95
+      }
+    ]
+  },
+  "Q57282": {
+    "knew": [
+      {
+        "name": "Johann Sebastian Bach",
+        "type": "contemporary",
+        "confidence": 0.95
+      }
+    ]
+  },
+  "Q191526": {
+    "knew": [
+      {
+        "name": "Franz Schubert",
+        "type": "influenced",
+        "confidence": 0.95
+      }
+    ]
+  },
+  "Q1339": {
+    "knew": [
+      {
+        "name": "Carl Philipp Emanuel Bach",
+        "type": "teacher",
+        "confidence": 0.95
+      },
+      {
+        "name": "Joseph Haydn",
+        "type": "influenced",
+        "confidence": 0.95
+      },
+      {
+        "name": "Ludwig van Beethoven",
+        "type": "influenced",
+        "confidence": 0.95
+      },
+      {
+        "name": "Johannes Brahms",
+        "type": "influenced",
+        "confidence": 0.95
+      }
+    ]
+  },
+  "Q7302": {
+    "knew": [
+      {
+        "name": "Christoph Willibald Gluck",
+        "type": "influenced",
+        "confidence": 0.95
+      },
+      {
+        "name": "Ludwig van Beethoven",
+        "type": "influenced",
+        "confidence": 0.95
+      }
+    ]
+  },
+  "Q76428": {
+    "knew": [
+      {
+        "name": "Joseph Haydn",
+        "type": "influenced",
+        "confidence": 0.95
+      }
+    ]
+  },
+  "Q7349": {
+    "knew": [
+      {
+        "name": "Ludwig van Beethoven",
+        "type": "teacher",
+        "confidence": 0.95
+      },
+      {
+        "name": "Wolfgang Amadeus Mozart",
+        "type": "teacher",
+        "confidence": 0.95
+      }
+    ]
+  },
+  "Q51088": {
+    "knew": [
+      {
+        "name": "Wolfgang Amadeus Mozart",
+        "type": "teacher",
+        "confidence": 0.95
+      },
+      {
+        "name": "Franz Schubert",
+        "type": "teacher",
+        "confidence": 0.95
+      }
+    ]
+  },
+  "Q254": {
+    "knew": [
+      {
+        "name": "Franz Schubert",
+        "type": "influenced",
+        "confidence": 0.95
+      },
+      {
+        "name": "Johannes Brahms",
+        "type": "influenced",
+        "confidence": 0.95
+      },
+      {
+        "name": "Richard Wagner",
+        "type": "influenced",
+        "confidence": 0.95
+      },
+      {
+        "name": "Anton Bruckner",
+        "type": "influenced",
+        "confidence": 0.95
+      },
+      {
+        "name": "Gustav Mahler",
+        "type": "influenced",
+        "confidence": 0.95
+      }
+    ]
+  },
+  "Q154812": {
+    "knew": [
+      {
+        "name": "Richard Wagner",
+        "type": "influenced",
+        "confidence": 0.95
+      }
+    ]
+  },
+  "Q7312": {
+    "knew": [
+      {
+        "name": "Johannes Brahms",
+        "type": "influenced",
+        "confidence": 0.95
+      }
+    ]
+  },
+  "Q46096": {
+    "knew": [
+      {
+        "name": "Robert Schumann",
+        "type": "influenced",
+        "confidence": 0.95
+      }
+    ]
+  },
+  "Q7351": {
+    "knew": [
+      {
+        "name": "Johannes Brahms",
+        "type": "influenced",
+        "confidence": 0.95
+      }
+    ]
+  },
+  "Q1268": {
+    "knew": [
+      {
+        "name": "Franz Liszt",
+        "type": "contemporary",
+        "confidence": 0.95
+      }
+    ]
+  },
+  "Q41309": {
+    "knew": [
+      {
+        "name": "Richard Wagner",
+        "type": "influenced",
+        "confidence": 0.95
+      }
+    ]
+  },
+  "Q7294": {
+    "knew": [
+      {
+        "name": "Camille Saint-Saëns",
+        "type": "contemporary",
+        "confidence": 0.95
+      },
+      {
+        "name": "Antonín Dvořák",
+        "type": "mentored",
+        "confidence": 0.95
+      }
+    ]
+  },
+  "Q132682": {
+    "knew": [
+      {
+        "name": "Nikolai Rimsky-Korsakov",
+        "type": "influenced",
+        "confidence": 0.95
+      }
+    ]
+  },
+  "Q93188": {
+    "knew": [
+      {
+        "name": "Sergei Prokofiev",
+        "type": "influenced",
+        "confidence": 0.95
+      },
+      {
+        "name": "Dmitri Shostakovich",
+        "type": "influenced",
+        "confidence": 0.95
+      }
+    ]
+  },
+  "Q7315": {
+    "knew": [
+      {
+        "name": "Alban Berg",
+        "type": "contemporary",
+        "confidence": 0.95
+      }
+    ]
+  },
+  "Q104919": {
+    "knew": [
+      {
+        "name": "Claude Debussy",
+        "type": "influenced",
+        "confidence": 0.95
+      }
+    ]
+  },
+  "Q4700": {
+    "knew": [
+      {
+        "name": "Maurice Ravel",
+        "type": "influenced",
+        "confidence": 0.95
+      }
+    ]
+  },
+  "Q1178": {
+    "knew": [
+      {
+        "name": "Pierre Boulez",
+        "type": "influenced",
+        "confidence": 0.95
+      }
+    ]
+  },
+  "Q83326": {
+    "knew": [
+      {
+        "name": "Paul Hindemith",
+        "type": "contemporary",
+        "confidence": 0.95
+      }
+    ]
+  },
+  "Q131180": {
+    "knew": [
+      {
+        "name": "Dmitri Shostakovich",
+        "type": "influenced",
+        "confidence": 0.95
+      }
+    ]
+  },
+  "Q133686": {
+    "knew": [
+      {
+        "name": "Leonard Bernstein",
+        "type": "contemporary",
+        "confidence": 0.95
+      }
+    ]
+  },
+  "Q152158": {
+    "knew": [
+      {
+        "name": "Karlheinz Stockhausen",
+        "type": "contemporary",
+        "confidence": 0.95
+      }
+    ]
+  },
+  "Q152505": {
+    "knew": [
+      {
+        "name": "John Williams",
+        "type": "influenced",
+        "confidence": 0.95
+      }
+    ]
+  },
+  "Q154556": {
+    "knew": [
+      {
+        "name": "Philip Glass",
+        "type": "influenced",
+        "confidence": 0.95
+      }
+    ]
+  },
+  "Q5811": {
+    "knew": [
+      {
+        "name": "Francisco Goya",
+        "type": "contemporary",
+        "confidence": 0.95
+      },
+      {
+        "name": "Piero della Francesca",
+        "type": "influenced",
+        "confidence": 0.95
+      }
+    ]
+  },
+  "Q5602": {
+    "knew": [
+      {
+        "name": "Leonardo da Vinci",
+        "type": "influenced",
+        "confidence": 0.95
+      }
+    ]
+  },
+  "Q5669": {
+    "knew": [
+      {
+        "name": "Raphael",
+        "type": "influenced",
+        "confidence": 0.95
+      }
+    ]
+  },
+  "Q5597": {
+    "knew": [
+      {
+        "name": "Tizian",
+        "type": "contemporary",
+        "confidence": 0.95
+      }
+    ]
+  },
+  "Q47551": {
+    "knew": [
+      {
+        "name": "Caravaggio",
+        "type": "influenced",
+        "confidence": 0.95
+      }
+    ]
+  },
+  "Q42207": {
+    "knew": [
+      {
+        "name": "Peter Paul Rubens",
+        "type": "influenced",
+        "confidence": 0.95
+      },
+      {
+        "name": "Velázquez",
+        "type": "influenced",
+        "confidence": 0.95
+      }
+    ]
+  },
+  "Q297": {
+    "knew": [
+      {
+        "name": "Jan Vermeer",
+        "type": "influenced",
+        "confidence": 0.95
+      }
+    ]
+  },
+  "Q183221": {
+    "knew": [
+      {
+        "name": "François Boucher",
+        "type": "influenced",
+        "confidence": 0.95
+      }
+    ]
+  },
+  "Q180932": {
+    "knew": [
+      {
+        "name": "Jean-Honoré Fragonard",
+        "type": "teacher",
+        "confidence": 0.95
+      }
+    ]
+  },
+  "Q83155": {
+    "knew": [
+      {
+        "name": "Eugène Delacroix",
+        "type": "teacher",
+        "confidence": 0.95
+      }
+    ]
+  },
+  "Q159758": {
+    "knew": [
+      {
+        "name": "John Constable",
+        "type": "contemporary",
+        "confidence": 0.95
+      },
+      {
+        "name": "Édouard Manet",
+        "type": "influenced",
+        "confidence": 0.95
+      }
+    ]
+  },
+  "Q104884": {
+    "knew": [
+      {
+        "name": "J.M.W. Turner",
+        "type": "contemporary",
+        "confidence": 0.95
+      }
+    ]
+  },
+  "Q33477": {
+    "knew": [
+      {
+        "name": "Gustave Courbet",
+        "type": "influenced",
+        "confidence": 0.95
+      }
+    ]
+  },
+  "Q34618": {
+    "knew": [
+      {
+        "name": "Édouard Manet",
+        "type": "influenced",
+        "confidence": 0.95
+      }
+    ]
+  },
+  "Q148458": {
+    "knew": [
+      {
+        "name": "Paul Gauguin",
+        "type": "influenced",
+        "confidence": 0.95
+      }
+    ]
+  },
+  "Q40599": {
+    "knew": [
+      {
+        "name": "Claude Monet",
+        "type": "influenced",
+        "confidence": 0.95
+      },
+      {
+        "name": "Pablo Picasso",
+        "type": "influenced",
+        "confidence": 0.95
+      },
+      {
+        "name": "Edgar Degas",
+        "type": "influenced",
+        "confidence": 0.95
+      },
+      {
+        "name": "Berthe Morisot",
+        "type": "influenced",
+        "confidence": 0.95
+      }
+    ]
+  },
+  "Q46373": {
+    "knew": [
+      {
+        "name": "Mary Cassatt",
+        "type": "mentored",
+        "confidence": 0.95
+      }
+    ]
+  },
+  "Q5580": {
+    "knew": [
+      {
+        "name": "Paul Gauguin",
+        "type": "influenced",
+        "confidence": 0.95
+      },
+      {
+        "name": "Edvard Munch",
+        "type": "influenced",
+        "confidence": 0.95
+      }
+    ]
+  },
+  "Q37693": {
+    "knew": [
+      {
+        "name": "Michelangelo",
+        "type": "influenced",
+        "confidence": 0.95
+      }
+    ]
+  },
+  "Q34013": {
+    "knew": [
+      {
+        "name": "Vincent van Gogh",
+        "type": "influenced",
+        "confidence": 0.95
+      }
+    ]
+  },
+  "Q41406": {
+    "knew": [
+      {
+        "name": "Egon Schiele",
+        "type": "influenced",
+        "confidence": 0.95
+      }
+    ]
+  },
+  "Q5582": {
+    "knew": [
+      {
+        "name": "Georges Braque",
+        "type": "collaborated",
+        "confidence": 0.95
+      },
+      {
+        "name": "Juan Gris",
+        "type": "influenced",
+        "confidence": 0.95
+      },
+      {
+        "name": "Henri Matisse",
+        "type": "influenced",
+        "confidence": 0.95
+      },
+      {
+        "name": "Jackson Pollock",
+        "type": "influenced",
+        "confidence": 0.95
+      },
+      {
+        "name": "Andy Warhol",
+        "type": "influenced",
+        "confidence": 0.95
+      }
+    ]
+  },
+  "Q34853": {
+    "knew": [
+      {
+        "name": "Fernand Léger",
+        "type": "influenced",
+        "confidence": 0.95
+      }
+    ]
+  },
+  "Q37571": {
+    "knew": [
+      {
+        "name": "Willem de Kooning",
+        "type": "contemporary",
+        "confidence": 0.95
+      },
+      {
+        "name": "Franz Kline",
+        "type": "influenced",
+        "confidence": 0.95
+      },
+      {
+        "name": "Robert Rauschenberg",
+        "type": "influenced",
+        "confidence": 0.95
+      }
+    ]
+  },
+  "Q5603": {
+    "knew": [
+      {
+        "name": "Roy Lichtenstein",
+        "type": "contemporary",
+        "confidence": 0.95
+      },
+      {
+        "name": "Jasper Johns",
         "type": "contemporary",
         "confidence": 0.95
       }

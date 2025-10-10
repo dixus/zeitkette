@@ -25177,5 +25177,610 @@
     ],
     "region": "US",
     "sitelinks": 95
+  },
+  {
+    "name": "Heinrich Schütz",
+    "qid": "Q153643",
+    "born": 1585,
+    "died": 1672,
+    "domains": [
+      "Music"
+    ],
+    "region": "DE",
+    "sitelinks": 85
+  },
+  {
+    "name": "Jean-Baptiste Lully",
+    "qid": "Q1192",
+    "born": 1632,
+    "died": 1687,
+    "domains": [
+      "Music"
+    ],
+    "region": "IT",
+    "sitelinks": 95
+  },
+  {
+    "name": "Henry Purcell",
+    "qid": "Q5939",
+    "born": 1659,
+    "died": 1695,
+    "domains": [
+      "Music"
+    ],
+    "region": "GB",
+    "sitelinks": 100
+  },
+  {
+    "name": "Arcangelo Corelli",
+    "qid": "Q180578",
+    "born": 1653,
+    "died": 1713,
+    "domains": [
+      "Music"
+    ],
+    "region": "IT",
+    "sitelinks": 90
+  },
+  {
+    "name": "Domenico Scarlatti",
+    "qid": "Q191526",
+    "born": 1685,
+    "died": 1757,
+    "domains": [
+      "Music"
+    ],
+    "region": "IT",
+    "sitelinks": 95
+  },
+  {
+    "name": "Georg Philipp Telemann",
+    "qid": "Q57282",
+    "born": 1681,
+    "died": 1767,
+    "domains": [
+      "Music"
+    ],
+    "region": "DE",
+    "sitelinks": 90
+  },
+  {
+    "name": "Christoph Willibald Gluck",
+    "qid": "Q41055",
+    "born": 1714,
+    "died": 1787,
+    "domains": [
+      "Music"
+    ],
+    "region": "DE",
+    "sitelinks": 95
+  },
+  {
+    "name": "Luigi Boccherini",
+    "qid": "Q309728",
+    "born": 1743,
+    "died": 1805,
+    "domains": [
+      "Music"
+    ],
+    "region": "IT",
+    "sitelinks": 85
+  },
+  {
+    "name": "Antonio Salieri",
+    "qid": "Q51088",
+    "born": 1750,
+    "died": 1825,
+    "domains": [
+      "Music"
+    ],
+    "region": "IT",
+    "sitelinks": 100
+  },
+  {
+    "name": "Carl Maria von Weber",
+    "qid": "Q154812",
+    "born": 1786,
+    "died": 1826,
+    "domains": [
+      "Music"
+    ],
+    "region": "DE",
+    "sitelinks": 100
+  },
+  {
+    "name": "Gioachino Rossini",
+    "qid": "Q9726",
+    "born": 1792,
+    "died": 1868,
+    "domains": [
+      "Music"
+    ],
+    "region": "IT",
+    "sitelinks": 115
+  },
+  {
+    "name": "Hector Berlioz",
+    "qid": "Q1103",
+    "born": 1803,
+    "died": 1869,
+    "domains": [
+      "Music"
+    ],
+    "region": "FR",
+    "sitelinks": 105
+  },
+  {
+    "name": "Anton Bruckner",
+    "qid": "Q81752",
+    "born": 1824,
+    "died": 1896,
+    "domains": [
+      "Music"
+    ],
+    "region": "AT",
+    "sitelinks": 100
+  },
+  {
+    "name": "Camille Saint-Saëns",
+    "qid": "Q193691",
+    "born": 1835,
+    "died": 1921,
+    "domains": [
+      "Music"
+    ],
+    "region": "FR",
+    "sitelinks": 105
+  },
+  {
+    "name": "Max Bruch",
+    "qid": "Q57286",
+    "born": 1838,
+    "died": 1920,
+    "domains": [
+      "Music"
+    ],
+    "region": "DE",
+    "sitelinks": 90
+  },
+  {
+    "name": "Edvard Grieg",
+    "qid": "Q80621",
+    "born": 1843,
+    "died": 1907,
+    "domains": [
+      "Music"
+    ],
+    "region": "NO",
+    "sitelinks": 110
+  },
+  {
+    "name": "Nikolai Rimsky-Korsakov",
+    "qid": "Q93188",
+    "born": 1844,
+    "died": 1908,
+    "domains": [
+      "Music"
+    ],
+    "region": "RU",
+    "sitelinks": 105
+  },
+  {
+    "name": "Gabriel Fauré",
+    "qid": "Q104919",
+    "born": 1845,
+    "died": 1924,
+    "domains": [
+      "Music"
+    ],
+    "region": "FR",
+    "sitelinks": 95
+  },
+  {
+    "name": "Giacomo Puccini",
+    "qid": "Q7311",
+    "born": 1858,
+    "died": 1924,
+    "domains": [
+      "Music"
+    ],
+    "region": "IT",
+    "sitelinks": 120
+  },
+  {
+    "name": "Claude Debussy",
+    "qid": "Q4700",
+    "born": 1862,
+    "died": 1918,
+    "domains": [
+      "Music"
+    ],
+    "region": "FR",
+    "sitelinks": 130
+  },
+  {
+    "name": "Jean Sibelius",
+    "qid": "Q83087",
+    "born": 1865,
+    "died": 1957,
+    "domains": [
+      "Music"
+    ],
+    "region": "FI",
+    "sitelinks": 110
+  },
+  {
+    "name": "Sergei Rachmaninoff",
+    "qid": "Q131407",
+    "born": 1873,
+    "died": 1943,
+    "domains": [
+      "Music"
+    ],
+    "region": "RU",
+    "sitelinks": 115
+  },
+  {
+    "name": "Maurice Ravel",
+    "qid": "Q1178",
+    "born": 1875,
+    "died": 1937,
+    "domains": [
+      "Music"
+    ],
+    "region": "FR",
+    "sitelinks": 125
+  },
+  {
+    "name": "Alban Berg",
+    "qid": "Q78476",
+    "born": 1885,
+    "died": 1935,
+    "domains": [
+      "Music"
+    ],
+    "region": "AT",
+    "sitelinks": 100
+  },
+  {
+    "name": "Sergei Prokofiev",
+    "qid": "Q131180",
+    "born": 1891,
+    "died": 1953,
+    "domains": [
+      "Music"
+    ],
+    "region": "RU",
+    "sitelinks": 115
+  },
+  {
+    "name": "Paul Hindemith",
+    "qid": "Q151504",
+    "born": 1895,
+    "died": 1963,
+    "domains": [
+      "Music"
+    ],
+    "region": "DE",
+    "sitelinks": 95
+  },
+  {
+    "name": "Aaron Copland",
+    "qid": "Q192178",
+    "born": 1900,
+    "died": 1990,
+    "domains": [
+      "Music"
+    ],
+    "region": "US",
+    "sitelinks": 100
+  },
+  {
+    "name": "Dmitri Shostakovich",
+    "qid": "Q76364",
+    "born": 1906,
+    "died": 1975,
+    "domains": [
+      "Music"
+    ],
+    "region": "RU",
+    "sitelinks": 120
+  },
+  {
+    "name": "Benjamin Britten",
+    "qid": "Q133686",
+    "born": 1913,
+    "died": 1976,
+    "domains": [
+      "Music"
+    ],
+    "region": "GB",
+    "sitelinks": 105
+  },
+  {
+    "name": "Pierre Boulez",
+    "qid": "Q152158",
+    "born": 1925,
+    "died": 2016,
+    "domains": [
+      "Music"
+    ],
+    "region": "FR",
+    "sitelinks": 100
+  },
+  {
+    "name": "Karlheinz Stockhausen",
+    "qid": "Q154556",
+    "born": 1928,
+    "died": 2007,
+    "domains": [
+      "Music"
+    ],
+    "region": "DE",
+    "sitelinks": 95
+  },
+  {
+    "name": "John Williams",
+    "qid": "Q156803",
+    "born": 1932,
+    "died": null,
+    "domains": [
+      "Music"
+    ],
+    "region": "US",
+    "sitelinks": 120
+  },
+  {
+    "name": "Philip Glass",
+    "qid": "Q193234",
+    "born": 1937,
+    "died": null,
+    "domains": [
+      "Music"
+    ],
+    "region": "US",
+    "sitelinks": 110
+  },
+  {
+    "name": "Piero della Francesca",
+    "qid": "Q5602",
+    "born": 1415,
+    "died": 1492,
+    "domains": [
+      "Art"
+    ],
+    "region": "IT",
+    "sitelinks": 105
+  },
+  {
+    "name": "Antoine Watteau",
+    "qid": "Q183221",
+    "born": 1684,
+    "died": 1721,
+    "domains": [
+      "Art"
+    ],
+    "region": "FR",
+    "sitelinks": 95
+  },
+  {
+    "name": "François Boucher",
+    "qid": "Q180932",
+    "born": 1703,
+    "died": 1770,
+    "domains": [
+      "Art"
+    ],
+    "region": "FR",
+    "sitelinks": 95
+  },
+  {
+    "name": "Jean-Honoré Fragonard",
+    "qid": "Q127171",
+    "born": 1732,
+    "died": 1806,
+    "domains": [
+      "Art"
+    ],
+    "region": "FR",
+    "sitelinks": 95
+  },
+  {
+    "name": "Honoré Daumier",
+    "qid": "Q187506",
+    "born": 1808,
+    "died": 1879,
+    "domains": [
+      "Art"
+    ],
+    "region": "FR",
+    "sitelinks": 100
+  },
+  {
+    "name": "Berthe Morisot",
+    "qid": "Q105320",
+    "born": 1841,
+    "died": 1895,
+    "domains": [
+      "Art"
+    ],
+    "region": "FR",
+    "sitelinks": 95
+  },
+  {
+    "name": "Odilon Redon",
+    "qid": "Q154349",
+    "born": 1840,
+    "died": 1916,
+    "domains": [
+      "Art"
+    ],
+    "region": "FR",
+    "sitelinks": 90
+  },
+  {
+    "name": "Pierre Bonnard",
+    "qid": "Q33692",
+    "born": 1867,
+    "died": 1947,
+    "domains": [
+      "Art"
+    ],
+    "region": "FR",
+    "sitelinks": 100
+  },
+  {
+    "name": "Édouard Vuillard",
+    "qid": "Q239394",
+    "born": 1868,
+    "died": 1940,
+    "domains": [
+      "Art"
+    ],
+    "region": "FR",
+    "sitelinks": 90
+  },
+  {
+    "name": "André Derain",
+    "qid": "Q156272",
+    "born": 1880,
+    "died": 1954,
+    "domains": [
+      "Art"
+    ],
+    "region": "FR",
+    "sitelinks": 95
+  },
+  {
+    "name": "Maurice de Vlaminck",
+    "qid": "Q241098",
+    "born": 1876,
+    "died": 1958,
+    "domains": [
+      "Art"
+    ],
+    "region": "FR",
+    "sitelinks": 85
+  },
+  {
+    "name": "Georges Braque",
+    "qid": "Q34853",
+    "born": 1882,
+    "died": 1963,
+    "domains": [
+      "Art"
+    ],
+    "region": "FR",
+    "sitelinks": 115
+  },
+  {
+    "name": "Juan Gris",
+    "qid": "Q151152",
+    "born": 1887,
+    "died": 1927,
+    "domains": [
+      "Art"
+    ],
+    "region": "ES",
+    "sitelinks": 90
+  },
+  {
+    "name": "Fernand Léger",
+    "qid": "Q160057",
+    "born": 1881,
+    "died": 1955,
+    "domains": [
+      "Art"
+    ],
+    "region": "FR",
+    "sitelinks": 100
+  },
+  {
+    "name": "Mark Rothko",
+    "qid": "Q48188",
+    "born": 1903,
+    "died": 1970,
+    "domains": [
+      "Art"
+    ],
+    "region": "US",
+    "sitelinks": 110
+  },
+  {
+    "name": "Willem de Kooning",
+    "qid": "Q132305",
+    "born": 1904,
+    "died": 1997,
+    "domains": [
+      "Art"
+    ],
+    "region": "NL",
+    "sitelinks": 105
+  },
+  {
+    "name": "Franz Kline",
+    "qid": "Q473568",
+    "born": 1910,
+    "died": 1962,
+    "domains": [
+      "Art"
+    ],
+    "region": "US",
+    "sitelinks": 85
+  },
+  {
+    "name": "Roy Lichtenstein",
+    "qid": "Q151679",
+    "born": 1923,
+    "died": 1997,
+    "domains": [
+      "Art"
+    ],
+    "region": "US",
+    "sitelinks": 110
+  },
+  {
+    "name": "Jasper Johns",
+    "qid": "Q155057",
+    "born": 1930,
+    "died": null,
+    "domains": [
+      "Art"
+    ],
+    "region": "US",
+    "sitelinks": 100
+  },
+  {
+    "name": "Robert Rauschenberg",
+    "qid": "Q164358",
+    "born": 1925,
+    "died": 2008,
+    "domains": [
+      "Art"
+    ],
+    "region": "US",
+    "sitelinks": 100
+  },
+  {
+    "name": "Jackson Pollock",
+    "qid": "Q37571",
+    "born": 1912,
+    "died": 1956,
+    "domains": [
+      "Art"
+    ],
+    "region": "US",
+    "sitelinks": 125
+  },
+  {
+    "name": "Andy Warhol",
+    "qid": "Q5603",
+    "born": 1928,
+    "died": 1987,
+    "domains": [
+      "Art"
+    ],
+    "region": "US",
+    "sitelinks": 145
   }
 ]
