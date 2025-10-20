@@ -1,0 +1,6 @@
+# robots.txt for zeitkette.com
+User-agent: *
+Allow: /
+
+Sitemap: https://zeitkette.com/sitemap.xml
+
