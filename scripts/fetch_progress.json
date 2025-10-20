@@ -1,0 +1,1239 @@
+{
+  "startTime": "2025-10-20T06:36:49.879Z",
+  "config": {
+    "startYear": 1,
+    "endYear": 2024,
+    "minSitelinks": 60,
+    "decadeSize": 10,
+    "delayMs": 2000,
+    "maxRetries": 3,
+    "maxResults": 1000,
+    "dryRun": false,
+    "verbose": false
+  },
+  "decades": [
+    {
+      "startYear": 1,
+      "endYear": 10,
+      "fetched": 0,
+      "new": 0
+    },
+    {
+      "startYear": 11,
+      "endYear": 20,
+      "fetched": 0,
+      "new": 0
+    },
+    {
+      "startYear": 21,
+      "endYear": 30,
+      "fetched": 0,
+      "new": 0
+    },
+    {
+      "startYear": 31,
+      "endYear": 40,
+      "fetched": 0,
+      "new": 0
+    },
+    {
+      "startYear": 41,
+      "endYear": 50,
+      "fetched": 0,
+      "new": 0
+    },
+    {
+      "startYear": 51,
+      "endYear": 60,
+      "fetched": 0,
+      "new": 0
+    },
+    {
+      "startYear": 61,
+      "endYear": 70,
+      "fetched": 0,
+      "new": 0
+    },
+    {
+      "startYear": 71,
+      "endYear": 80,
+      "fetched": 0,
+      "new": 0
+    },
+    {
+      "startYear": 81,
+      "endYear": 90,
+      "fetched": 1,
+      "new": 1
+    },
+    {
+      "startYear": 91,
+      "endYear": 100,
+      "fetched": 0,
+      "new": 0
+    },
+    {
+      "startYear": 101,
+      "endYear": 110,
+      "fetched": 0,
+      "new": 0
+    },
+    {
+      "startYear": 111,
+      "endYear": 120,
+      "fetched": 0,
+      "new": 0
+    },
+    {
+      "startYear": 121,
+      "endYear": 130,
+      "fetched": 0,
+      "new": 0
+    },
+    {
+      "startYear": 131,
+      "endYear": 140,
+      "fetched": 0,
+      "new": 0
+    },
+    {
+      "startYear": 141,
+      "endYear": 150,
+      "fetched": 1,
+      "new": 1
+    },
+    {
+      "startYear": 151,
+      "endYear": 160,
+      "fetched": 0,
+      "new": 0
+    },
+    {
+      "startYear": 161,
+      "endYear": 170,
+      "fetched": 0,
+      "new": 0
+    },
+    {
+      "startYear": 171,
+      "endYear": 180,
+      "fetched": 0,
+      "new": 0
+    },
+    {
+      "startYear": 181,
+      "endYear": 190,
+      "fetched": 0,
+      "new": 0
+    },
+    {
+      "startYear": 191,
+      "endYear": 200,
+      "fetched": 1,
+      "new": 1
+    },
+    {
+      "startYear": 201,
+      "endYear": 210,
+      "fetched": 0,
+      "new": 0
+    },
+    {
+      "startYear": 211,
+      "endYear": 220,
+      "fetched": 0,
+      "new": 0
+    },
+    {
+      "startYear": 221,
+      "endYear": 230,
+      "fetched": 2,
+      "new": 2
+    },
+    {
+      "startYear": 231,
+      "endYear": 240,
+      "fetched": 0,
+      "new": 0
+    },
+    {
+      "startYear": 241,
+      "endYear": 250,
+      "fetched": 2,
+      "new": 2
+    },
+    {
+      "startYear": 251,
+      "endYear": 260,
+      "fetched": 0,
+      "new": 0
+    },
+    {
+      "startYear": 261,
+      "endYear": 270,
+      "fetched": 0,
+      "new": 0
+    },
+    {
+      "startYear": 271,
+      "endYear": 280,
+      "fetched": 0,
+      "new": 0
+    },
+    {
+      "startYear": 281,
+      "endYear": 290,
+      "fetched": 1,
+      "new": 1
+    },
+    {
+      "startYear": 291,
+      "endYear": 300,
+      "fetched": 2,
+      "new": 2
+    },
+    {
+      "startYear": 301,
+      "endYear": 310,
+      "fetched": 0,
+      "new": 0
+    },
+    {
+      "startYear": 311,
+      "endYear": 320,
+      "fetched": 1,
+      "new": 1
+    },
+    {
+      "startYear": 321,
+      "endYear": 330,
+      "fetched": 0,
+      "new": 0
+    },
+    {
+      "startYear": 331,
+      "endYear": 340,
+      "fetched": 4,
+      "new": 4
+    },
+    {
+      "startYear": 341,
+      "endYear": 350,
+      "fetched": 2,
+      "new": 2
+    },
+    {
+      "startYear": 351,
+      "endYear": 360,
+      "fetched": 0,
+      "new": 0
+    },
+    {
+      "startYear": 361,
+      "endYear": 370,
+      "fetched": 0,
+      "new": 0
+    },
+    {
+      "startYear": 371,
+      "endYear": 380,
+      "fetched": 1,
+      "new": 1
+    },
+    {
+      "startYear": 381,
+      "endYear": 390,
+      "fetched": 1,
+      "new": 1
+    },
+    {
+      "startYear": 391,
+      "endYear": 400,
+      "fetched": 1,
+      "new": 1
+    },
+    {
+      "startYear": 401,
+      "endYear": 410,
+      "fetched": 1,
+      "new": 1
+    },
+    {
+      "startYear": 411,
+      "endYear": 420,
+      "fetched": 1,
+      "new": 1
+    },
+    {
+      "startYear": 421,
+      "endYear": 430,
+      "fetched": 0,
+      "new": 0
+    },
+    {
+      "startYear": 431,
+      "endYear": 440,
+      "fetched": 0,
+      "new": 0
+    },
+    {
+      "startYear": 441,
+      "endYear": 450,
+      "fetched": 8,
+      "new": 8
+    },
+    {
+      "startYear": 451,
+      "endYear": 460,
+      "fetched": 0,
+      "new": 0
+    },
+    {
+      "startYear": 461,
+      "endYear": 470,
+      "fetched": 3,
+      "new": 3
+    },
+    {
+      "startYear": 471,
+      "endYear": 480,
+      "fetched": 1,
+      "new": 1
+    },
+    {
+      "startYear": 481,
+      "endYear": 490,
+      "fetched": 3,
+      "new": 3
+    },
+    {
+      "startYear": 491,
+      "endYear": 500,
+      "fetched": 2,
+      "new": 2
+    },
+    {
+      "startYear": 501,
+      "endYear": 510,
+      "fetched": 2,
+      "new": 2
+    },
+    {
+      "startYear": 511,
+      "endYear": 520,
+      "fetched": 1,
+      "new": 1
+    },
+    {
+      "startYear": 521,
+      "endYear": 530,
+      "fetched": 0,
+      "new": 0
+    },
+    {
+      "startYear": 531,
+      "endYear": 540,
+      "fetched": 1,
+      "new": 1
+    },
+    {
+      "startYear": 541,
+      "endYear": 550,
+      "fetched": 3,
+      "new": 3
+    },
+    {
+      "startYear": 551,
+      "endYear": 560,
+      "fetched": 2,
+      "new": 2
+    },
+    {
+      "startYear": 561,
+      "endYear": 570,
+      "fetched": 1,
+      "new": 1
+    },
+    {
+      "startYear": 571,
+      "endYear": 580,
+      "fetched": 2,
+      "new": 2
+    },
+    {
+      "startYear": 581,
+      "endYear": 590,
+      "fetched": 1,
+      "new": 1
+    },
+    {
+      "startYear": 591,
+      "endYear": 600,
+      "fetched": 6,
+      "new": 6
+    },
+    {
+      "startYear": 601,
+      "endYear": 610,
+      "fetched": 1,
+      "new": 1
+    },
+    {
+      "startYear": 611,
+      "endYear": 620,
+      "fetched": 3,
+      "new": 2
+    },
+    {
+      "startYear": 621,
+      "endYear": 630,
+      "fetched": 3,
+      "new": 3
+    },
+    {
+      "startYear": 631,
+      "endYear": 640,
+      "fetched": 4,
+      "new": 4
+    },
+    {
+      "startYear": 641,
+      "endYear": 650,
+      "fetched": 4,
+      "new": 4
+    },
+    {
+      "startYear": 651,
+      "endYear": 660,
+      "fetched": 1,
+      "new": 1
+    },
+    {
+      "startYear": 661,
+      "endYear": 670,
+      "fetched": 3,
+      "new": 3
+    },
+    {
+      "startYear": 671,
+      "endYear": 680,
+      "fetched": 3,
+      "new": 3
+    },
+    {
+      "startYear": 681,
+      "endYear": 690,
+      "fetched": 1,
+      "new": 1
+    },
+    {
+      "startYear": 691,
+      "endYear": 700,
+      "fetched": 6,
+      "new": 6
+    },
+    {
+      "startYear": 701,
+      "endYear": 710,
+      "fetched": 6,
+      "new": 6
+    },
+    {
+      "startYear": 711,
+      "endYear": 720,
+      "fetched": 2,
+      "new": 2
+    },
+    {
+      "startYear": 721,
+      "endYear": 730,
+      "fetched": 0,
+      "new": 0
+    },
+    {
+      "startYear": 731,
+      "endYear": 740,
+      "fetched": 4,
+      "new": 4
+    },
+    {
+      "startYear": 741,
+      "endYear": 750,
+      "fetched": 3,
+      "new": 3
+    },
+    {
+      "startYear": 751,
+      "endYear": 760,
+      "fetched": 5,
+      "new": 5
+    },
+    {
+      "startYear": 761,
+      "endYear": 770,
+      "fetched": 1,
+      "new": 1
+    },
+    {
+      "startYear": 771,
+      "endYear": 780,
+      "fetched": 4,
+      "new": 3
+    },
+    {
+      "startYear": 781,
+      "endYear": 790,
+      "fetched": 3,
+      "new": 3
+    },
+    {
+      "startYear": 791,
+      "endYear": 800,
+      "fetched": 4,
+      "new": 4
+    },
+    {
+      "startYear": 801,
+      "endYear": 810,
+      "fetched": 6,
+      "new": 6
+    },
+    {
+      "startYear": 811,
+      "endYear": 820,
+      "fetched": 3,
+      "new": 3
+    },
+    {
+      "startYear": 821,
+      "endYear": 830,
+      "fetched": 6,
+      "new": 6
+    },
+    {
+      "startYear": 831,
+      "endYear": 840,
+      "fetched": 4,
+      "new": 3
+    },
+    {
+      "startYear": 841,
+      "endYear": 850,
+      "fetched": 6,
+      "new": 6
+    },
+    {
+      "startYear": 851,
+      "endYear": 860,
+      "fetched": 3,
+      "new": 2
+    },
+    {
+      "startYear": 861,
+      "endYear": 870,
+      "fetched": 5,
+      "new": 5
+    },
+    {
+      "startYear": 871,
+      "endYear": 880,
+      "fetched": 8,
+      "new": 7
+    },
+    {
+      "startYear": 881,
+      "endYear": 890,
+      "fetched": 4,
+      "new": 4
+    },
+    {
+      "startYear": 891,
+      "endYear": 900,
+      "fetched": 14,
+      "new": 14
+    },
+    {
+      "startYear": 901,
+      "endYear": 910,
+      "fetched": 5,
+      "new": 5
+    },
+    {
+      "startYear": 911,
+      "endYear": 920,
+      "fetched": 6,
+      "new": 6
+    },
+    {
+      "startYear": 921,
+      "endYear": 930,
+      "fetched": 10,
+      "new": 10
+    },
+    {
+      "startYear": 931,
+      "endYear": 940,
+      "fetched": 7,
+      "new": 7
+    },
+    {
+      "startYear": 941,
+      "endYear": 950,
+      "fetched": 16,
+      "new": 15
+    },
+    {
+      "startYear": 951,
+      "endYear": 960,
+      "fetched": 13,
+      "new": 11
+    },
+    {
+      "startYear": 961,
+      "endYear": 970,
+      "fetched": 18,
+      "new": 16
+    },
+    {
+      "startYear": 971,
+      "endYear": 980,
+      "fetched": 14,
+      "new": 13
+    },
+    {
+      "startYear": 981,
+      "endYear": 990,
+      "fetched": 8,
+      "new": 7
+    },
+    {
+      "startYear": 991,
+      "endYear": 1000,
+      "fetched": 20,
+      "new": 19
+    },
+    {
+      "startYear": 1001,
+      "endYear": 1010,
+      "fetched": 5,
+      "new": 5
+    },
+    {
+      "startYear": 1011,
+      "endYear": 1020,
+      "fetched": 3,
+      "new": 3
+    },
+    {
+      "startYear": 1021,
+      "endYear": 1030,
+      "fetched": 8,
+      "new": 8
+    },
+    {
+      "startYear": 1031,
+      "endYear": 1040,
+      "fetched": 3,
+      "new": 3
+    },
+    {
+      "startYear": 1041,
+      "endYear": 1050,
+      "fetched": 6,
+      "new": 6
+    },
+    {
+      "startYear": 1051,
+      "endYear": 1060,
+      "fetched": 8,
+      "new": 8
+    },
+    {
+      "startYear": 1061,
+      "endYear": 1070,
+      "fetched": 4,
+      "new": 4
+    },
+    {
+      "startYear": 1071,
+      "endYear": 1080,
+      "fetched": 6,
+      "new": 5
+    },
+    {
+      "startYear": 1081,
+      "endYear": 1090,
+      "fetched": 3,
+      "new": 3
+    },
+    {
+      "startYear": 1091,
+      "endYear": 1100,
+      "fetched": 11,
+      "new": 11
+    },
+    {
+      "startYear": 1101,
+      "endYear": 1110,
+      "fetched": 10,
+      "new": 9
+    },
+    {
+      "startYear": 1111,
+      "endYear": 1120,
+      "fetched": 11,
+      "new": 11
+    },
+    {
+      "startYear": 1121,
+      "endYear": 1130,
+      "fetched": 10,
+      "new": 8
+    },
+    {
+      "startYear": 1131,
+      "endYear": 1140,
+      "fetched": 11,
+      "new": 11
+    },
+    {
+      "startYear": 1141,
+      "endYear": 1150,
+      "fetched": 14,
+      "new": 14
+    },
+    {
+      "startYear": 1151,
+      "endYear": 1160,
+      "fetched": 15,
+      "new": 15
+    },
+    {
+      "startYear": 1161,
+      "endYear": 1170,
+      "fetched": 9,
+      "new": 8
+    },
+    {
+      "startYear": 1171,
+      "endYear": 1180,
+      "fetched": 12,
+      "new": 12
+    },
+    {
+      "startYear": 1181,
+      "endYear": 1190,
+      "fetched": 7,
+      "new": 7
+    },
+    {
+      "startYear": 1191,
+      "endYear": 1200,
+      "fetched": 9,
+      "new": 9
+    },
+    {
+      "startYear": 1201,
+      "endYear": 1210,
+      "fetched": 11,
+      "new": 11
+    },
+    {
+      "startYear": 1211,
+      "endYear": 1220,
+      "fetched": 11,
+      "new": 11
+    },
+    {
+      "startYear": 1221,
+      "endYear": 1230,
+      "fetched": 9,
+      "new": 8
+    },
+    {
+      "startYear": 1231,
+      "endYear": 1240,
+      "fetched": 6,
+      "new": 5
+    },
+    {
+      "startYear": 1241,
+      "endYear": 1250,
+      "fetched": 12,
+      "new": 12
+    },
+    {
+      "startYear": 1251,
+      "endYear": 1260,
+      "fetched": 6,
+      "new": 6
+    },
+    {
+      "startYear": 1261,
+      "endYear": 1270,
+      "fetched": 7,
+      "new": 7
+    },
+    {
+      "startYear": 1271,
+      "endYear": 1280,
+      "fetched": 7,
+      "new": 7
+    },
+    {
+      "startYear": 1281,
+      "endYear": 1290,
+      "fetched": 14,
+      "new": 14
+    },
+    {
+      "startYear": 1291,
+      "endYear": 1300,
+      "fetched": 13,
+      "new": 13
+    },
+    {
+      "startYear": 1301,
+      "endYear": 1310,
+      "fetched": 6,
+      "new": 6
+    },
+    {
+      "startYear": 1311,
+      "endYear": 1320,
+      "fetched": 8,
+      "new": 7
+    },
+    {
+      "startYear": 1321,
+      "endYear": 1330,
+      "fetched": 8,
+      "new": 8
+    },
+    {
+      "startYear": 1331,
+      "endYear": 1340,
+      "fetched": 18,
+      "new": 17
+    },
+    {
+      "startYear": 1341,
+      "endYear": 1350,
+      "fetched": 5,
+      "new": 5
+    },
+    {
+      "startYear": 1351,
+      "endYear": 1360,
+      "fetched": 3,
+      "new": 3
+    },
+    {
+      "startYear": 1361,
+      "endYear": 1370,
+      "fetched": 9,
+      "new": 9
+    },
+    {
+      "startYear": 1371,
+      "endYear": 1380,
+      "fetched": 6,
+      "new": 6
+    },
+    {
+      "startYear": 1381,
+      "endYear": 1390,
+      "fetched": 6,
+      "new": 6
+    },
+    {
+      "startYear": 1391,
+      "endYear": 1400,
+      "fetched": 6,
+      "new": 6
+    },
+    {
+      "startYear": 1401,
+      "endYear": 1410,
+      "fetched": 16,
+      "new": 15
+    },
+    {
+      "startYear": 1411,
+      "endYear": 1420,
+      "fetched": 5,
+      "new": 5
+    },
+    {
+      "startYear": 1421,
+      "endYear": 1430,
+      "fetched": 7,
+      "new": 7
+    },
+    {
+      "startYear": 1431,
+      "endYear": 1440,
+      "fetched": 10,
+      "new": 10
+    },
+    {
+      "startYear": 1441,
+      "endYear": 1450,
+      "fetched": 7,
+      "new": 6
+    },
+    {
+      "startYear": 1451,
+      "endYear": 1460,
+      "fetched": 13,
+      "new": 13
+    },
+    {
+      "startYear": 1461,
+      "endYear": 1470,
+      "fetched": 15,
+      "new": 15
+    },
+    {
+      "startYear": 1471,
+      "endYear": 1480,
+      "fetched": 26,
+      "new": 25
+    },
+    {
+      "startYear": 1481,
+      "endYear": 1490,
+      "fetched": 28,
+      "new": 27
+    },
+    {
+      "startYear": 1491,
+      "endYear": 1500,
+      "fetched": 23,
+      "new": 21
+    },
+    {
+      "startYear": 1501,
+      "endYear": 1510,
+      "fetched": 8,
+      "new": 7
+    },
+    {
+      "startYear": 1511,
+      "endYear": 1520,
+      "fetched": 5,
+      "new": 5
+    },
+    {
+      "startYear": 1521,
+      "endYear": 1530,
+      "fetched": 12,
+      "new": 12
+    },
+    {
+      "startYear": 1531,
+      "endYear": 1540,
+      "fetched": 7,
+      "new": 7
+    },
+    {
+      "startYear": 1541,
+      "endYear": 1550,
+      "fetched": 11,
+      "new": 11
+    },
+    {
+      "startYear": 1551,
+      "endYear": 1560,
+      "fetched": 7,
+      "new": 7
+    },
+    {
+      "startYear": 1561,
+      "endYear": 1570,
+      "fetched": 6,
+      "new": 6
+    },
+    {
+      "startYear": 1571,
+      "endYear": 1580,
+      "fetched": 5,
+      "new": 5
+    },
+    {
+      "startYear": 1581,
+      "endYear": 1590,
+      "fetched": 7,
+      "new": 7
+    },
+    {
+      "startYear": 1591,
+      "endYear": 1600,
+      "fetched": 10,
+      "new": 6
+    },
+    {
+      "startYear": 1601,
+      "endYear": 1610,
+      "fetched": 7,
+      "new": 7
+    },
+    {
+      "startYear": 1611,
+      "endYear": 1620,
+      "fetched": 16,
+      "new": 14
+    },
+    {
+      "startYear": 1621,
+      "endYear": 1630,
+      "fetched": 10,
+      "new": 10
+    },
+    {
+      "startYear": 1631,
+      "endYear": 1640,
+      "fetched": 9,
+      "new": 9
+    },
+    {
+      "startYear": 1641,
+      "endYear": 1650,
+      "fetched": 11,
+      "new": 10
+    },
+    {
+      "startYear": 1651,
+      "endYear": 1660,
+      "fetched": 11,
+      "new": 11
+    },
+    {
+      "startYear": 1661,
+      "endYear": 1670,
+      "fetched": 9,
+      "new": 9
+    },
+    {
+      "startYear": 1671,
+      "endYear": 1680,
+      "fetched": 7,
+      "new": 7
+    },
+    {
+      "startYear": 1681,
+      "endYear": 1690,
+      "fetched": 10,
+      "new": 10
+    },
+    {
+      "startYear": 1691,
+      "endYear": 1700,
+      "fetched": 10,
+      "new": 9
+    },
+    {
+      "startYear": 1701,
+      "endYear": 1710,
+      "fetched": 10,
+      "new": 8
+    },
+    {
+      "startYear": 1711,
+      "endYear": 1720,
+      "fetched": 9,
+      "new": 8
+    },
+    {
+      "startYear": 1721,
+      "endYear": 1730,
+      "fetched": 9,
+      "new": 8
+    },
+    {
+      "startYear": 1731,
+      "endYear": 1740,
+      "fetched": 12,
+      "new": 12
+    },
+    {
+      "startYear": 1741,
+      "endYear": 1750,
+      "fetched": 27,
+      "new": 23
+    },
+    {
+      "startYear": 1751,
+      "endYear": 1760,
+      "fetched": 34,
+      "new": 31
+    },
+    {
+      "startYear": 1761,
+      "endYear": 1770,
+      "fetched": 26,
+      "new": 22
+    },
+    {
+      "startYear": 1771,
+      "endYear": 1780,
+      "fetched": 25,
+      "new": 24
+    },
+    {
+      "startYear": 1781,
+      "endYear": 1790,
+      "fetched": 35,
+      "new": 34
+    },
+    {
+      "startYear": 1791,
+      "endYear": 1800,
+      "fetched": 26,
+      "new": 23
+    },
+    {
+      "startYear": 1801,
+      "endYear": 1810,
+      "fetched": 45,
+      "new": 37
+    },
+    {
+      "startYear": 1811,
+      "endYear": 1820,
+      "fetched": 40,
+      "new": 33
+    },
+    {
+      "startYear": 1821,
+      "endYear": 1830,
+      "fetched": 52,
+      "new": 42
+    },
+    {
+      "startYear": 1831,
+      "endYear": 1840,
+      "fetched": 53,
+      "new": 38
+    },
+    {
+      "startYear": 1841,
+      "endYear": 1850,
+      "fetched": 70,
+      "new": 44
+    },
+    {
+      "startYear": 1851,
+      "endYear": 1860,
+      "fetched": 67,
+      "new": 48
+    },
+    {
+      "startYear": 1861,
+      "endYear": 1870,
+      "fetched": 60,
+      "new": 34
+    },
+    {
+      "startYear": 1871,
+      "endYear": 1880,
+      "fetched": 55,
+      "new": 43
+    },
+    {
+      "startYear": 1881,
+      "endYear": 1890,
+      "fetched": 57,
+      "new": 42
+    },
+    {
+      "startYear": 1891,
+      "endYear": 1900,
+      "fetched": 56,
+      "new": 39
+    },
+    {
+      "startYear": 1901,
+      "endYear": 1910,
+      "fetched": 75,
+      "new": 48
+    },
+    {
+      "startYear": 1911,
+      "endYear": 1920,
+      "fetched": 83,
+      "new": 55
+    },
+    {
+      "startYear": 1921,
+      "endYear": 1930,
+      "fetched": 102,
+      "new": 74
+    },
+    {
+      "startYear": 1931,
+      "endYear": 1940,
+      "fetched": 119,
+      "new": 86
+    },
+    {
+      "startYear": 1941,
+      "endYear": 1950,
+      "fetched": 129,
+      "new": 111
+    },
+    {
+      "startYear": 1951,
+      "endYear": 1960,
+      "fetched": 64,
+      "new": 58
+    },
+    {
+      "startYear": 1961,
+      "endYear": 1970,
+      "fetched": 39,
+      "new": 36
+    },
+    {
+      "startYear": 1971,
+      "endYear": 1980,
+      "fetched": 16,
+      "new": 15
+    },
+    {
+      "startYear": 1981,
+      "endYear": 1990,
+      "fetched": 9,
+      "new": 9
+    },
+    {
+      "startYear": 1991,
+      "endYear": 2000,
+      "fetched": 4,
+      "new": 4
+    },
+    {
+      "startYear": 2001,
+      "endYear": 2010,
+      "fetched": 0,
+      "new": 0
+    },
+    {
+      "startYear": 2011,
+      "endYear": 2020,
+      "fetched": 0,
+      "new": 0
+    },
+    {
+      "startYear": 2021,
+      "endYear": 2024,
+      "fetched": 0,
+      "new": 0
+    }
+  ],
+  "totalFetched": 2367,
+  "totalNew": 2011,
+  "totalSkipped": 356,
+  "errors": [],
+  "endTime": "2025-10-20T06:49:58.937Z"
+}

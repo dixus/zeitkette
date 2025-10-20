@@ -42,7 +42,19 @@ All scripts now work directly with `public/people.json` and `public/relations.js
   ```
 
 **Core Data Processing:**
-- **`processWikidataDump.js`** - Processes Wikidata JSON dumps
+- **`fetchWikidataByDecade.cjs`** ⭐ NEW - Fetch people from Wikidata iteratively by decade
+  ```bash
+  node scripts/fetchWikidataByDecade.cjs --all --min-sitelinks 60
+  ```
+  Solves timeout issues by querying in small chunks. See `WIKIDATA_EXPANSION_GUIDE.md`
+
+- **`analyzeGaps.cjs`** ⭐ NEW - Analyze database gaps and suggest fetch commands
+  ```bash
+  node scripts/analyzeGaps.cjs
+  ```
+  Shows centuries with low coverage, domain distribution, and generates fetch commands
+
+- **`processWikidataDump.js`** - Processes Wikidata JSON dumps (legacy, use decade fetcher instead)
 - **`fetchNobelLaureates.cjs`** - Fetches Nobel Prize winners from Wikidata
 
 ### 📦 Archived Scripts
@@ -64,7 +76,7 @@ All scripts now work directly with `public/people.json` and `public/relations.js
 
 ## 📊 Current Dataset Status
 
-- **People**: 2,327
+- **People**: ~2,350 (can be expanded to 5,000+ with new tools!)
 - **Relations**: 1,500+
 - **Domain Chains**: 5 (all 100% connected! ✅)
   - 🔬 Quantum Mechanics (25 people)
@@ -72,6 +84,23 @@ All scripts now work directly with `public/people.json` and `public/relations.js
   - 🧬 Evolutionary Biology (18 people)
   - 🎵 Classical Music (26 people)
   - 🎨 Art Movements (24 people)
+
+## 🚀 Quick Start: Expand Your Database
+
+Want to add thousands more important historical figures?
+
+```bash
+# 1. See what's missing
+node scripts/analyzeGaps.cjs
+
+# 2. Fetch everything from Wikidata (30-60 minutes)
+node scripts/fetchWikidataByDecade.cjs --all --min-sitelinks 60
+
+# 3. Verify results
+node scripts/consistencyCheck.cjs
+```
+
+See `WIKIDATA_EXPANSION_GUIDE.md` for detailed instructions!
 
 ## 🚀 Future Script Ideas
 
@@ -84,7 +113,8 @@ Want to add more chains? Here are good candidates:
 
 ## 📝 Documentation
 
-- **`DUMP_GUIDE.md`** - Instructions for processing Wikidata dumps
+- **`WIKIDATA_EXPANSION_GUIDE.md`** ⭐ NEW - Complete guide for massively expanding the database
+- **`DUMP_GUIDE.md`** - Instructions for processing Wikidata dumps (legacy method)
 - **`README.md`** - This file
 
 ---

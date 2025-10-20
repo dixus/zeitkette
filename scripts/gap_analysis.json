@@ -1,0 +1,1058 @@
+{
+  "timestamp": "2025-10-20T06:18:36.610Z",
+  "totalPeople": 2327,
+  "centuries": [
+    {
+      "century": -32,
+      "count": 1,
+      "avgSitelinks": 95
+    },
+    {
+      "century": -31,
+      "count": 1,
+      "avgSitelinks": 80
+    },
+    {
+      "century": -30,
+      "count": 1,
+      "avgSitelinks": 80
+    },
+    {
+      "century": -28,
+      "count": 2,
+      "avgSitelinks": 75
+    },
+    {
+      "century": -27,
+      "count": 4,
+      "avgSitelinks": 114
+    },
+    {
+      "century": -26,
+      "count": 3,
+      "avgSitelinks": 112
+    },
+    {
+      "century": -25,
+      "count": 2,
+      "avgSitelinks": 75
+    },
+    {
+      "century": -24,
+      "count": 3,
+      "avgSitelinks": 90
+    },
+    {
+      "century": -23,
+      "count": 2,
+      "avgSitelinks": 88
+    },
+    {
+      "century": -21,
+      "count": 1,
+      "avgSitelinks": 80
+    },
+    {
+      "century": -20,
+      "count": 4,
+      "avgSitelinks": 100
+    },
+    {
+      "century": -19,
+      "count": 3,
+      "avgSitelinks": 108
+    },
+    {
+      "century": -16,
+      "count": 3,
+      "avgSitelinks": 100
+    },
+    {
+      "century": -15,
+      "count": 4,
+      "avgSitelinks": 94
+    },
+    {
+      "century": -14,
+      "count": 8,
+      "avgSitelinks": 138
+    },
+    {
+      "century": -13,
+      "count": 2,
+      "avgSitelinks": 98
+    },
+    {
+      "century": -12,
+      "count": 5,
+      "avgSitelinks": 78
+    },
+    {
+      "century": -11,
+      "count": 2,
+      "avgSitelinks": 140
+    },
+    {
+      "century": -10,
+      "count": 6,
+      "avgSitelinks": 89
+    },
+    {
+      "century": -9,
+      "count": 9,
+      "avgSitelinks": 84
+    },
+    {
+      "century": -8,
+      "count": 12,
+      "avgSitelinks": 101
+    },
+    {
+      "century": -7,
+      "count": 22,
+      "avgSitelinks": 94
+    },
+    {
+      "century": -6,
+      "count": 27,
+      "avgSitelinks": 106
+    },
+    {
+      "century": -5,
+      "count": 43,
+      "avgSitelinks": 99
+    },
+    {
+      "century": -4,
+      "count": 41,
+      "avgSitelinks": 93
+    },
+    {
+      "century": -3,
+      "count": 35,
+      "avgSitelinks": 87
+    },
+    {
+      "century": -2,
+      "count": 25,
+      "avgSitelinks": 96
+    },
+    {
+      "century": -1,
+      "count": 29,
+      "avgSitelinks": 115
+    },
+    {
+      "century": 0,
+      "count": 38,
+      "avgSitelinks": 106
+    },
+    {
+      "century": 1,
+      "count": 19,
+      "avgSitelinks": 95
+    },
+    {
+      "century": 2,
+      "count": 19,
+      "avgSitelinks": 97
+    },
+    {
+      "century": 3,
+      "count": 29,
+      "avgSitelinks": 90
+    },
+    {
+      "century": 4,
+      "count": 23,
+      "avgSitelinks": 95
+    },
+    {
+      "century": 5,
+      "count": 20,
+      "avgSitelinks": 103
+    },
+    {
+      "century": 6,
+      "count": 29,
+      "avgSitelinks": 91
+    },
+    {
+      "century": 7,
+      "count": 27,
+      "avgSitelinks": 90
+    },
+    {
+      "century": 8,
+      "count": 34,
+      "avgSitelinks": 82
+    },
+    {
+      "century": 9,
+      "count": 25,
+      "avgSitelinks": 90
+    },
+    {
+      "century": 10,
+      "count": 36,
+      "avgSitelinks": 89
+    },
+    {
+      "century": 11,
+      "count": 37,
+      "avgSitelinks": 99
+    },
+    {
+      "century": 12,
+      "count": 40,
+      "avgSitelinks": 97
+    },
+    {
+      "century": 13,
+      "count": 34,
+      "avgSitelinks": 102
+    },
+    {
+      "century": 14,
+      "count": 32,
+      "avgSitelinks": 140
+    },
+    {
+      "century": 15,
+      "count": 41,
+      "avgSitelinks": 132
+    },
+    {
+      "century": 16,
+      "count": 38,
+      "avgSitelinks": 120
+    },
+    {
+      "century": 17,
+      "count": 90,
+      "avgSitelinks": 126
+    },
+    {
+      "century": 18,
+      "count": 472,
+      "avgSitelinks": 110
+    },
+    {
+      "century": 19,
+      "count": 942,
+      "avgSitelinks": 94
+    },
+    {
+      "century": 20,
+      "count": 2,
+      "avgSitelinks": 150
+    }
+  ],
+  "gaps": [
+    {
+      "century": -32,
+      "centuryLabel": "32th century BCE",
+      "count": 1,
+      "status": "Critical",
+      "priority": "High",
+      "startYear": -3200,
+      "endYear": -3101
+    },
+    {
+      "century": -31,
+      "centuryLabel": "31th century BCE",
+      "count": 1,
+      "status": "Critical",
+      "priority": "High",
+      "startYear": -3100,
+      "endYear": -3001
+    },
+    {
+      "century": -30,
+      "centuryLabel": "30th century BCE",
+      "count": 1,
+      "status": "Critical",
+      "priority": "High",
+      "startYear": -3000,
+      "endYear": -2901
+    },
+    {
+      "century": -21,
+      "centuryLabel": "21th century BCE",
+      "count": 1,
+      "status": "Critical",
+      "priority": "High",
+      "startYear": -2100,
+      "endYear": -2001
+    },
+    {
+      "century": -28,
+      "centuryLabel": "28th century BCE",
+      "count": 2,
+      "status": "Critical",
+      "priority": "High",
+      "startYear": -2800,
+      "endYear": -2701
+    },
+    {
+      "century": -25,
+      "centuryLabel": "25th century BCE",
+      "count": 2,
+      "status": "Critical",
+      "priority": "High",
+      "startYear": -2500,
+      "endYear": -2401
+    },
+    {
+      "century": -23,
+      "centuryLabel": "23th century BCE",
+      "count": 2,
+      "status": "Critical",
+      "priority": "High",
+      "startYear": -2300,
+      "endYear": -2201
+    },
+    {
+      "century": -13,
+      "centuryLabel": "13th century BCE",
+      "count": 2,
+      "status": "Critical",
+      "priority": "High",
+      "startYear": -1300,
+      "endYear": -1201
+    },
+    {
+      "century": -11,
+      "centuryLabel": "11th century BCE",
+      "count": 2,
+      "status": "Critical",
+      "priority": "High",
+      "startYear": -1100,
+      "endYear": -1001
+    },
+    {
+      "century": 20,
+      "centuryLabel": "21th century CE",
+      "count": 2,
+      "status": "Critical",
+      "priority": "High",
+      "startYear": 2000,
+      "endYear": 2099
+    },
+    {
+      "century": -26,
+      "centuryLabel": "26th century BCE",
+      "count": 3,
+      "status": "Critical",
+      "priority": "High",
+      "startYear": -2600,
+      "endYear": -2501
+    },
+    {
+      "century": -24,
+      "centuryLabel": "24th century BCE",
+      "count": 3,
+      "status": "Critical",
+      "priority": "High",
+      "startYear": -2400,
+      "endYear": -2301
+    },
+    {
+      "century": -19,
+      "centuryLabel": "19th century BCE",
+      "count": 3,
+      "status": "Critical",
+      "priority": "High",
+      "startYear": -1900,
+      "endYear": -1801
+    },
+    {
+      "century": -16,
+      "centuryLabel": "16th century BCE",
+      "count": 3,
+      "status": "Critical",
+      "priority": "High",
+      "startYear": -1600,
+      "endYear": -1501
+    },
+    {
+      "century": -27,
+      "centuryLabel": "27th century BCE",
+      "count": 4,
+      "status": "Critical",
+      "priority": "High",
+      "startYear": -2700,
+      "endYear": -2601
+    },
+    {
+      "century": -20,
+      "centuryLabel": "20th century BCE",
+      "count": 4,
+      "status": "Critical",
+      "priority": "High",
+      "startYear": -2000,
+      "endYear": -1901
+    },
+    {
+      "century": -15,
+      "centuryLabel": "15th century BCE",
+      "count": 4,
+      "status": "Critical",
+      "priority": "High",
+      "startYear": -1500,
+      "endYear": -1401
+    },
+    {
+      "century": -12,
+      "centuryLabel": "12th century BCE",
+      "count": 5,
+      "status": "Critical",
+      "priority": "High",
+      "startYear": -1200,
+      "endYear": -1101
+    },
+    {
+      "century": -10,
+      "centuryLabel": "10th century BCE",
+      "count": 6,
+      "status": "Critical",
+      "priority": "High",
+      "startYear": -1000,
+      "endYear": -901
+    },
+    {
+      "century": -14,
+      "centuryLabel": "14th century BCE",
+      "count": 8,
+      "status": "Critical",
+      "priority": "High",
+      "startYear": -1400,
+      "endYear": -1301
+    },
+    {
+      "century": -9,
+      "centuryLabel": "9th century BCE",
+      "count": 9,
+      "status": "Critical",
+      "priority": "High",
+      "startYear": -900,
+      "endYear": -801
+    },
+    {
+      "century": -8,
+      "centuryLabel": "8th century BCE",
+      "count": 12,
+      "status": "Low",
+      "priority": "Medium",
+      "startYear": -800,
+      "endYear": -701
+    },
+    {
+      "century": 1,
+      "centuryLabel": "2th century CE",
+      "count": 19,
+      "status": "Low",
+      "priority": "Medium",
+      "startYear": 100,
+      "endYear": 199
+    },
+    {
+      "century": 2,
+      "centuryLabel": "3th century CE",
+      "count": 19,
+      "status": "Low",
+      "priority": "Medium",
+      "startYear": 200,
+      "endYear": 299
+    },
+    {
+      "century": 5,
+      "centuryLabel": "6th century CE",
+      "count": 20,
+      "status": "Moderate",
+      "priority": "Low",
+      "startYear": 500,
+      "endYear": 599
+    },
+    {
+      "century": -7,
+      "centuryLabel": "7th century BCE",
+      "count": 22,
+      "status": "Moderate",
+      "priority": "Low",
+      "startYear": -700,
+      "endYear": -601
+    },
+    {
+      "century": 4,
+      "centuryLabel": "5th century CE",
+      "count": 23,
+      "status": "Moderate",
+      "priority": "Low",
+      "startYear": 400,
+      "endYear": 499
+    },
+    {
+      "century": -2,
+      "centuryLabel": "2th century BCE",
+      "count": 25,
+      "status": "Moderate",
+      "priority": "Low",
+      "startYear": -200,
+      "endYear": -101
+    },
+    {
+      "century": 9,
+      "centuryLabel": "10th century CE",
+      "count": 25,
+      "status": "Moderate",
+      "priority": "Low",
+      "startYear": 900,
+      "endYear": 999
+    },
+    {
+      "century": -6,
+      "centuryLabel": "6th century BCE",
+      "count": 27,
+      "status": "Moderate",
+      "priority": "Low",
+      "startYear": -600,
+      "endYear": -501
+    },
+    {
+      "century": 7,
+      "centuryLabel": "8th century CE",
+      "count": 27,
+      "status": "Moderate",
+      "priority": "Low",
+      "startYear": 700,
+      "endYear": 799
+    },
+    {
+      "century": -1,
+      "centuryLabel": "1th century BCE",
+      "count": 29,
+      "status": "Moderate",
+      "priority": "Low",
+      "startYear": -100,
+      "endYear": -1
+    },
+    {
+      "century": 3,
+      "centuryLabel": "4th century CE",
+      "count": 29,
+      "status": "Moderate",
+      "priority": "Low",
+      "startYear": 300,
+      "endYear": 399
+    },
+    {
+      "century": 6,
+      "centuryLabel": "7th century CE",
+      "count": 29,
+      "status": "Moderate",
+      "priority": "Low",
+      "startYear": 600,
+      "endYear": 699
+    }
+  ],
+  "domains": [
+    {
+      "domain": "Politics",
+      "count": 616,
+      "percentage": "26.5"
+    },
+    {
+      "domain": "Science",
+      "count": 511,
+      "percentage": "22.0"
+    },
+    {
+      "domain": "Literature",
+      "count": 307,
+      "percentage": "13.2"
+    },
+    {
+      "domain": "Art",
+      "count": 236,
+      "percentage": "10.1"
+    },
+    {
+      "domain": "Medicine",
+      "count": 219,
+      "percentage": "9.4"
+    },
+    {
+      "domain": "Philosophy",
+      "count": 210,
+      "percentage": "9.0"
+    },
+    {
+      "domain": "Music",
+      "count": 135,
+      "percentage": "5.8"
+    },
+    {
+      "domain": "Business",
+      "count": 112,
+      "percentage": "4.8"
+    },
+    {
+      "domain": "Religion",
+      "count": 86,
+      "percentage": "3.7"
+    },
+    {
+      "domain": "Math",
+      "count": 56,
+      "percentage": "2.4"
+    },
+    {
+      "domain": "Sports",
+      "count": 26,
+      "percentage": "1.1"
+    }
+  ],
+  "regions": [
+    {
+      "region": "US",
+      "count": 550,
+      "percentage": "23.6"
+    },
+    {
+      "region": "UK",
+      "count": 226,
+      "percentage": "9.7"
+    },
+    {
+      "region": "FR",
+      "count": 211,
+      "percentage": "9.1"
+    },
+    {
+      "region": "IT",
+      "count": 194,
+      "percentage": "8.3"
+    },
+    {
+      "region": "DE",
+      "count": 175,
+      "percentage": "7.5"
+    },
+    {
+      "region": "GR",
+      "count": 102,
+      "percentage": "4.4"
+    },
+    {
+      "region": "EG",
+      "count": 72,
+      "percentage": "3.1"
+    },
+    {
+      "region": "TR",
+      "count": 66,
+      "percentage": "2.8"
+    },
+    {
+      "region": "IL",
+      "count": 48,
+      "percentage": "2.1"
+    },
+    {
+      "region": "ES",
+      "count": 48,
+      "percentage": "2.1"
+    },
+    {
+      "region": "IQ",
+      "count": 43,
+      "percentage": "1.8"
+    },
+    {
+      "region": "RU",
+      "count": 41,
+      "percentage": "1.8"
+    },
+    {
+      "region": "SE",
+      "count": 38,
+      "percentage": "1.6"
+    },
+    {
+      "region": "AT",
+      "count": 37,
+      "percentage": "1.6"
+    },
+    {
+      "region": "GB",
+      "count": 34,
+      "percentage": "1.5"
+    },
+    {
+      "region": "JP",
+      "count": 34,
+      "percentage": "1.5"
+    },
+    {
+      "region": "CN",
+      "count": 31,
+      "percentage": "1.3"
+    },
+    {
+      "region": "IR",
+      "count": 28,
+      "percentage": "1.2"
+    },
+    {
+      "region": "CH",
+      "count": 26,
+      "percentage": "1.1"
+    },
+    {
+      "region": "SY",
+      "count": 25,
+      "percentage": "1.1"
+    },
+    {
+      "region": "IN",
+      "count": 21,
+      "percentage": "0.9"
+    },
+    {
+      "region": "BE",
+      "count": 20,
+      "percentage": "0.9"
+    },
+    {
+      "region": "CZ",
+      "count": 18,
+      "percentage": "0.8"
+    },
+    {
+      "region": "NO",
+      "count": 17,
+      "percentage": "0.7"
+    },
+    {
+      "region": "CA",
+      "count": 16,
+      "percentage": "0.7"
+    },
+    {
+      "region": "NL",
+      "count": 15,
+      "percentage": "0.6"
+    },
+    {
+      "region": "AU",
+      "count": 14,
+      "percentage": "0.6"
+    },
+    {
+      "region": "PL",
+      "count": 12,
+      "percentage": "0.5"
+    },
+    {
+      "region": "AR",
+      "count": 12,
+      "percentage": "0.5"
+    },
+    {
+      "region": "SA",
+      "count": 11,
+      "percentage": "0.5"
+    },
+    {
+      "region": "IE",
+      "count": 10,
+      "percentage": "0.4"
+    },
+    {
+      "region": "ZA",
+      "count": 9,
+      "percentage": "0.4"
+    },
+    {
+      "region": "DZ",
+      "count": 8,
+      "percentage": "0.3"
+    },
+    {
+      "region": "HU",
+      "count": 7,
+      "percentage": "0.3"
+    },
+    {
+      "region": "MX",
+      "count": 6,
+      "percentage": "0.3"
+    },
+    {
+      "region": "PK",
+      "count": 6,
+      "percentage": "0.3"
+    },
+    {
+      "region": "PT",
+      "count": 6,
+      "percentage": "0.3"
+    },
+    {
+      "region": "FI",
+      "count": 6,
+      "percentage": "0.3"
+    },
+    {
+      "region": "DK",
+      "count": 5,
+      "percentage": "0.2"
+    },
+    {
+      "region": "TN",
+      "count": 5,
+      "percentage": "0.2"
+    },
+    {
+      "region": "UZ",
+      "count": 5,
+      "percentage": "0.2"
+    },
+    {
+      "region": "RS",
+      "count": 4,
+      "percentage": "0.2"
+    },
+    {
+      "region": "LY",
+      "count": 4,
+      "percentage": "0.2"
+    },
+    {
+      "region": "MN",
+      "count": 3,
+      "percentage": "0.1"
+    },
+    {
+      "region": "RO",
+      "count": 3,
+      "percentage": "0.1"
+    },
+    {
+      "region": "KP",
+      "count": 3,
+      "percentage": "0.1"
+    },
+    {
+      "region": "BR",
+      "count": 3,
+      "percentage": "0.1"
+    },
+    {
+      "region": "CL",
+      "count": 3,
+      "percentage": "0.1"
+    },
+    {
+      "region": "NZ",
+      "count": 2,
+      "percentage": "0.1"
+    },
+    {
+      "region": "MA",
+      "count": 2,
+      "percentage": "0.1"
+    },
+    {
+      "region": "JM",
+      "count": 2,
+      "percentage": "0.1"
+    },
+    {
+      "region": "NG",
+      "count": 2,
+      "percentage": "0.1"
+    },
+    {
+      "region": "GT",
+      "count": 2,
+      "percentage": "0.1"
+    },
+    {
+      "region": "BG",
+      "count": 2,
+      "percentage": "0.1"
+    },
+    {
+      "region": "AM",
+      "count": 2,
+      "percentage": "0.1"
+    },
+    {
+      "region": "MK",
+      "count": 2,
+      "percentage": "0.1"
+    },
+    {
+      "region": "NP",
+      "count": 1,
+      "percentage": "0.0"
+    },
+    {
+      "region": "VE",
+      "count": 1,
+      "percentage": "0.0"
+    },
+    {
+      "region": "HR",
+      "count": 1,
+      "percentage": "0.0"
+    },
+    {
+      "region": "VN",
+      "count": 1,
+      "percentage": "0.0"
+    },
+    {
+      "region": "CU",
+      "count": 1,
+      "percentage": "0.0"
+    },
+    {
+      "region": "PS",
+      "count": 1,
+      "percentage": "0.0"
+    },
+    {
+      "region": "CO",
+      "count": 1,
+      "percentage": "0.0"
+    },
+    {
+      "region": "KE",
+      "count": 1,
+      "percentage": "0.0"
+    },
+    {
+      "region": "GH",
+      "count": 1,
+      "percentage": "0.0"
+    },
+    {
+      "region": "TZ",
+      "count": 1,
+      "percentage": "0.0"
+    },
+    {
+      "region": "ET",
+      "count": 1,
+      "percentage": "0.0"
+    },
+    {
+      "region": "CD",
+      "count": 1,
+      "percentage": "0.0"
+    },
+    {
+      "region": "BF",
+      "count": 1,
+      "percentage": "0.0"
+    },
+    {
+      "region": "SG",
+      "count": 1,
+      "percentage": "0.0"
+    },
+    {
+      "region": "KR",
+      "count": 1,
+      "percentage": "0.0"
+    },
+    {
+      "region": "ID",
+      "count": 1,
+      "percentage": "0.0"
+    },
+    {
+      "region": "PH",
+      "count": 1,
+      "percentage": "0.0"
+    },
+    {
+      "region": "MM",
+      "count": 1,
+      "percentage": "0.0"
+    },
+    {
+      "region": "BB",
+      "count": 1,
+      "percentage": "0.0"
+    },
+    {
+      "region": "TT",
+      "count": 1,
+      "percentage": "0.0"
+    },
+    {
+      "region": "AF",
+      "count": 1,
+      "percentage": "0.0"
+    },
+    {
+      "region": "PE",
+      "count": 1,
+      "percentage": "0.0"
+    },
+    {
+      "region": "NI",
+      "count": 1,
+      "percentage": "0.0"
+    },
+    {
+      "region": "TW",
+      "count": 1,
+      "percentage": "0.0"
+    },
+    {
+      "region": "BD",
+      "count": 1,
+      "percentage": "0.0"
+    },
+    {
+      "region": "KZ",
+      "count": 1,
+      "percentage": "0.0"
+    },
+    {
+      "region": "CY",
+      "count": 1,
+      "percentage": "0.0"
+    },
+    {
+      "region": "LB",
+      "count": 1,
+      "percentage": "0.0"
+    },
+    {
+      "region": "UA",
+      "count": 1,
+      "percentage": "0.0"
+    },
+    {
+      "region": "IS",
+      "count": 1,
+      "percentage": "0.0"
+    }
+  ],
+  "sitelinkDistribution": {
+    "200+": 12,
+    "150-199": 269,
+    "100-149": 831,
+    "80-99": 449,
+    "60-79": 466,
+    "40-59": 290,
+    "20-39": 10,
+    "<20": 0
+  }
+}
