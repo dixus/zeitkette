@@ -11,7 +11,7 @@ import { THIS_YEAR, fetchPersonImage, getOccupation, chainFrom, findPathBetween,
 import { usePersonImage, useKeyboardShortcuts } from './hooks';
 
 // Extracted components
-import { PersonAvatar, TimelineView, NetworkView, SearchModal, YearExplorerModal, PersonDetailModal, Header, StatsBar, ListView, LandingPage, FunFacts, KeyboardShortcuts, ChainExplorerView, ChainNetworkView } from './components';
+import { PersonAvatar, TimelineView, NetworkView, SearchModal, YearExplorerModal, PersonDetailModal, Header, StatsBar, ListView, LandingPage, FunFacts, KeyboardShortcuts, ChainExplorerView, ChainNetworkView, Footer } from './components';
 
 // All utility functions, hooks, and small components have been extracted to separate files
 // See src/utils, src/hooks, and src/components folders
@@ -54,6 +54,30 @@ function App() {
       setPeople(people);
       setRelations(relations);
       setLoading(false);
+      
+      // Check for shared chain parameters in URL
+      const params = new URLSearchParams(window.location.search);
+      if (params.has('mode')) {
+        const mode = params.get('mode');
+        setChainMode(mode);
+        
+        if (mode === 'toToday' && params.has('target')) {
+          setTargetPerson(params.get('target'));
+          setShowLanding(false);
+        } else if (mode === 'between' && params.has('start') && params.has('end')) {
+          setStartPerson(params.get('start'));
+          setEndPerson(params.get('end'));
+          setShowLanding(false);
+        }
+        
+        if (params.has('waypoints')) {
+          setPinnedWaypoints(params.get('waypoints').split(','));
+        }
+        
+        if (params.has('overlap')) {
+          setMinOverlapYears(parseInt(params.get('overlap')));
+        }
+      }
     });
   }, []);
 
@@ -551,6 +575,9 @@ function App() {
 
       {/* Keyboard Shortcuts Helper */}
       <KeyboardShortcuts showLanding={showLanding} />
+
+      {/* Footer */}
+      <Footer />
     </div>
   );
 }

@@ -239,6 +239,26 @@
       "contemporary": "Gegenwart"
     },
     "shortcut": "Tastaturkürzel: Y"
+  },
+  "footer": {
+    "about": "Über",
+    "impressum": "Impressum",
+    "dataSource": "Daten: Wikidata",
+    "copyright": "© {{year}} Zeitkette"
+  },
+  "about": {
+    "whatIsThis": "Was ist Zeitkette?",
+    "description": "Zeitkette verbindet dich mit jeder historischen Persönlichkeit durch Ketten von Menschen, die sich zu ihren Lebzeiten hätten treffen können. Erkunde, wie Ideen, Wissen und Einfluss durch die Geschichte wanderten – eine Lebenszeit nach der anderen.",
+    "howItWorks": "Wie funktioniert das?",
+    "algorithm": "Unser Algorithmus nutzt eine bidirektionale Breitensuche, um die kürzeste Kette von Personen zu finden, bei der aufeinanderfolgende Personen überlappende Lebenszeiten hatten:",
+    "step1": "Wir starten von beiden Enden (du/heute und die Zielperson) und suchen gleichzeitig",
+    "step2": "Jede Person in der Kette muss zur gleichen Zeit gelebt haben wie die nächste (Geburt-Tod-Überlappung)",
+    "step3": "Der Algorithmus bevorzugt berühmte Personen (mehr Wikipedia-Artikel) für bedeutungsvolle Verbindungen",
+    "dataSource": "Woher kommen die Daten?",
+    "wikidataInfo": "Alle historischen Daten stammen von Wikidata, der freien Wissensdatenbank, die jeder bearbeiten kann. Sie enthält Informationen über Millionen von Menschen, einschließlich Geburts-/Sterbedaten, Berufe und Beziehungen. Die Daten stehen unter CC0-Lizenz (gemeinfrei).",
+    "technology": "Technologie",
+    "credits": "Credits",
+    "creditsText": "Erstellt mit React, D3.js und Tailwind CSS. Daten von Wikidata. Profilbilder von Wikimedia Commons."
   }
 }
 

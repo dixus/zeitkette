@@ -1,6 +1,8 @@
+import { useState } from 'react';
 import { ArrowRight, Clock, Users, Dice5, Target, Link, Share2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { PersonAvatar } from '../ui/PersonAvatar';
+import { Toast } from '../ui/Toast';
 import { THIS_YEAR, getOccupation } from '../../utils';
 import DomainChainBadge from '../DomainChainBadge';
 
@@ -29,6 +31,7 @@ export function ListView({
   onChainClick
 }) {
   const { t } = useTranslation();
+  const [showToast, setShowToast] = useState(false);
 
   return (
     <div className="relative grid grid-cols-1 lg:grid-cols-[1fr_240px] gap-2">
@@ -367,21 +370,44 @@ export function ListView({
                 const startName = typeof startPerson === 'string' ? startPerson : startPerson?.name;
                 const endName = typeof endPerson === 'string' ? endPerson : endPerson?.name;
                 
+                // Create shareable URL with chain parameters
+                const params = new URLSearchParams();
+                params.set('mode', chainMode);
+                if (chainMode === 'toToday') {
+                  params.set('target', personName);
+                } else {
+                  params.set('start', startName);
+                  params.set('end', endName);
+                }
+                if (pinnedWaypoints.length > 0) {
+                  params.set('waypoints', pinnedWaypoints.join(','));
+                }
+                params.set('overlap', minOverlapYears.toString());
+                
+                const shareUrl = `${window.location.origin}${window.location.pathname}?${params.toString()}`;
+                
                 const shareText = chainMode === 'toToday'
                   ? t('share.toToday', { person: personName, steps: chain.length, lifetimes: lifetimeCount })
                   : t('share.between', { start: startName, end: endName, steps: chain.length });
                 
+                const fullShareText = `${shareText}\n\n${shareUrl}`;
+                
                 if (navigator.share) {
                   navigator.share({
                     title: t('app.name'),
-                    text: shareText
-                  }).catch(() => {});
+                    text: fullShareText,
+                    url: shareUrl
+                  }).catch(() => {
+                    // Fallback to clipboard if share fails
+                    navigator.clipboard.writeText(fullShareText);
+                    setShowToast(true);
+                  });
                 } else {
-                  navigator.clipboard.writeText(shareText);
-                  alert(t('share.copied'));
+                  navigator.clipboard.writeText(fullShareText);
+                  setShowToast(true);
                 }
               }}
-              className="px-3 py-1.5 bg-gradient-to-r from-violet-600 to-fuchsia-600 text-white rounded-md text-xs font-semibold hover:shadow-md transition-all hover:scale-105"
+              className="px-3 py-1.5 bg-gradient-to-r from-violet-600 to-fuchsia-600 text-white rounded-md text-xs font-semibold hover:shadow-md transition-all hover:scale-105 active:scale-95"
             >
               <span className="flex items-center gap-1.5">
                 <Share2 className="w-3 h-3" />
@@ -442,6 +468,13 @@ export function ListView({
           })()}
         </div>
       </aside>
+      
+      {/* Toast Notification */}
+      <Toast 
+        message={t('share.copied')}
+        show={showToast}
+        onClose={() => setShowToast(false)}
+      />
     </div>
   );
 }

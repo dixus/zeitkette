@@ -2,6 +2,7 @@ import { Globe, Sparkles, Clock, Target, Flag, Link, Search, Calendar } from 'lu
 import { useTranslation } from 'react-i18next';
 import { PersonAvatar } from '../ui/PersonAvatar';
 import { SearchModal } from '../modals/SearchModal';
+import { Footer } from '../ui/Footer';
 import { useState, useMemo } from 'react';
 
 /**
@@ -55,7 +56,7 @@ export function LandingPage({
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-violet-50 via-purple-50 to-fuchsia-50 flex items-center justify-center p-4 md:p-6 relative">
+    <div className="min-h-screen bg-gradient-to-br from-violet-50 via-purple-50 to-fuchsia-50 flex flex-col relative">
       {/* Language Switcher - Top Right */}
       <button
         onClick={() => i18n.changeLanguage(i18n.language === 'en' ? 'de' : 'en')}
@@ -66,7 +67,8 @@ export function LandingPage({
         <span className="text-sm">{i18n.language === 'en' ? '🇩🇪' : '🇬🇧'}</span>
       </button>
       
-      <div className="max-w-4xl w-full">
+      <div className="flex-1 flex items-center justify-center p-4 md:p-6">
+        <div className="max-w-4xl w-full">
         {/* Hero */}
         <div className="text-center mb-6 animate-fade-in">
           <div className="mb-3 animate-bounce drop-shadow-lg">
@@ -270,6 +272,7 @@ export function LandingPage({
             <div className="text-sm text-neutral-600 font-medium">{t('modal.relations')}</div>
           </div>
         </div>
+        </div>
       </div>
       
       {/* Search Modal */}
@@ -282,6 +285,9 @@ export function LandingPage({
         people={people}
         onSelectPerson={handleSelectPerson}
       />
+
+      {/* Footer */}
+      <Footer />
     </div>
   );
 }

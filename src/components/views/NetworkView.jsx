@@ -5,14 +5,13 @@ import { THIS_YEAR, fetchPersonImage } from '../../utils';
 
 /**
  * Network View Component - Force-Directed Graph
- * Displays chain as an interactive D3.js force-directed network graph
+ * Displays network focused on target person (most recent in chain)
  */
 export function NetworkView({ chain, people, onPersonClick, hoveredQid, setHoveredQid }) {
   const { t } = useTranslation();
   const svgRef = useRef(null);
   const [dimensions, setDimensions] = useState({ width: 1200, height: 800 });
-  const [showAllConnections, setShowAllConnections] = useState(true);
-  const [stats, setStats] = useState({ totalNodes: chain.length, totalLinks: 0, nearbyPeople: 0 });
+  const [stats, setStats] = useState({ totalNodes: 0, totalLinks: 0, focusPerson: null });
   
   useEffect(() => {
     if (!svgRef.current || chain.length === 0) return;
@@ -23,47 +22,43 @@ export function NetworkView({ chain, people, onPersonClick, hoveredQid, setHover
     const width = dimensions.width;
     const height = dimensions.height;
     
-    // Create nodes from chain
+    // Focus on the target person (last person in chain - most recent)
+    const targetPerson = chain[chain.length - 1];
+    const targetStart = targetPerson.born;
+    const targetEnd = targetPerson.died === 9999 ? THIS_YEAR : targetPerson.died;
+    
+    // Create nodes - target person + people from their time period
+    const nodes = [];
     const chainQids = new Set(chain.map(p => p.qid));
-    const chainQidToIndex = new Map(chain.map((p, i) => [p.qid, i]));
     
-    // Create graph data - start with chain members
-    const nodes = chain.map(p => ({
-      ...p,
+    // Add target person (highlighted)
+    nodes.push({
+      ...targetPerson,
+      isTarget: true,
       inChain: true,
-      chainIndex: chainQidToIndex.get(p.qid),
-      color: `hsl(${250 + (chainQidToIndex.get(p.qid) / chain.length) * 60}, 70%, 60%)`
-    }));
+      color: '#8b5cf6' // Purple for target
+    });
     
-    // Add nearby people who overlap with chain members (to show the network)
-    const nearbyPeople = [];
-    if (showAllConnections && people.length > 0) {
-      people.forEach(p => {
-        if (chainQids.has(p.qid)) return; // Skip if already in chain
-        if ((p.sitelinks || 0) < 140) return; // Only show famous people
-        
-        // Check if this person overlaps with ANY chain member
-        const overlapsWithChain = chain.some(chainPerson => {
-          const p1End = chainPerson.died === 9999 ? THIS_YEAR : chainPerson.died;
-          const p2End = p.died === 9999 ? THIS_YEAR : p.died;
-          const overlap = Math.min(p1End, p2End) - Math.max(chainPerson.born, p.born);
-          return overlap > 20; // At least 20 years overlap
-        });
-        
-        if (overlapsWithChain && nearbyPeople.length < 30) { // Limit to 30 extra nodes
-          nearbyPeople.push(p);
-        }
+    // Add people who lived during the target's lifetime
+    const contemporaries = people
+      .filter(p => {
+        if (p.qid === targetPerson.qid) return false; // Skip target
+        const pEnd = p.died === 9999 ? THIS_YEAR : p.died;
+        const overlap = Math.min(targetEnd, pEnd) - Math.max(targetStart, p.born);
+        return overlap > 20 && (p.sitelinks || 0) >= 140; // Overlapped for 20+ years and very famous
+      })
+      .sort((a, b) => (b.sitelinks || 0) - (a.sitelinks || 0)) // Most famous first
+      .slice(0, 20); // Limit to 20 people for clarity
+    
+    contemporaries.forEach(p => {
+      const isInChain = chainQids.has(p.qid);
+      nodes.push({
+        ...p,
+        isTarget: false,
+        inChain: isInChain,
+        color: isInChain ? '#a78bfa' : '#cbd5e1' // Purple tint for chain members, gray for others
       });
-      
-      // Add nearby people as nodes
-      nearbyPeople.forEach(p => {
-        nodes.push({
-          ...p,
-          inChain: false,
-          color: '#94a3b8' // Gray color for non-chain people
-        });
-      });
-    }
+    });
     
     const links = [];
     
@@ -76,16 +71,16 @@ export function NetworkView({ chain, people, onPersonClick, hoveredQid, setHover
         const p2End = p2.died === 9999 ? THIS_YEAR : p2.died;
         const overlap = Math.min(p1End, p2End) - Math.max(p1.born, p2.born);
         
-        if (overlap > 20) { // They overlapped for at least 20 years
+        if (overlap > 10) { // They overlapped for at least 10 years
+          const involvesTarget = p1.isTarget || p2.isTarget;
           const bothInChain = p1.inChain && p2.inChain;
-          const isConsecutive = bothInChain && Math.abs((p1.chainIndex || 0) - (p2.chainIndex || 0)) === 1;
           
           links.push({
             source: p1.qid,
             target: p2.qid,
             overlap,
-            strength: isConsecutive ? 2 : 0.3,
-            type: isConsecutive ? 'chain' : 'connection'
+            strength: involvesTarget ? 1.5 : (bothInChain ? 0.8 : 0.2),
+            type: involvesTarget ? 'target' : (bothInChain ? 'chain' : 'connection')
           });
         }
       }
@@ -95,7 +90,7 @@ export function NetworkView({ chain, people, onPersonClick, hoveredQid, setHover
     setStats({
       totalNodes: nodes.length,
       totalLinks: links.length,
-      nearbyPeople: nearbyPeople.length
+      focusPerson: targetPerson.name
     });
     
     // Setup D3 force simulation
@@ -160,26 +155,26 @@ export function NetworkView({ chain, people, onPersonClick, hoveredQid, setHover
     
     // Node background circles
     node.append('circle')
-      .attr('r', d => d.inChain ? 30 : 15)
+      .attr('r', d => d.isTarget ? 40 : (d.inChain ? 25 : 15))
       .attr('fill', d => d.color)
-      .attr('stroke', '#fff')
-      .attr('stroke-width', d => d.inChain ? 3 : 2)
-      .attr('opacity', d => d.inChain ? 1 : 0.6)
+      .attr('stroke', d => d.isTarget ? '#7c3aed' : '#fff')
+      .attr('stroke-width', d => d.isTarget ? 4 : (d.inChain ? 3 : 2))
+      .attr('opacity', d => d.isTarget ? 1 : (d.inChain ? 0.9 : 0.5))
       .on('mouseover', function(event, d) {
         setHoveredQid(d.qid);
         d3.select(this.parentNode)
           .select('circle')
           .transition()
           .duration(200)
-          .attr('r', d => d.inChain ? 40 : 22);
+          .attr('r', d => d.isTarget ? 50 : (d.inChain ? 35 : 22));
         d3.select(this.parentNode)
           .select('image')
           .transition()
           .duration(200)
-          .attr('width', d => d.inChain ? 76 : 40)
-          .attr('height', d => d.inChain ? 76 : 40)
-          .attr('x', d => d.inChain ? -38 : -20)
-          .attr('y', d => d.inChain ? -38 : -20);
+          .attr('width', d => d.isTarget ? 96 : (d.inChain ? 66 : 40))
+          .attr('height', d => d.isTarget ? 96 : (d.inChain ? 66 : 40))
+          .attr('x', d => d.isTarget ? -48 : (d.inChain ? -33 : -20))
+          .attr('y', d => d.isTarget ? -48 : (d.inChain ? -33 : -20));
       })
       .on('mouseout', function(event, d) {
         setHoveredQid(null);
@@ -187,15 +182,15 @@ export function NetworkView({ chain, people, onPersonClick, hoveredQid, setHover
           .select('circle')
           .transition()
           .duration(200)
-          .attr('r', d => d.inChain ? 30 : 15);
+          .attr('r', d => d.isTarget ? 40 : (d.inChain ? 25 : 15));
         d3.select(this.parentNode)
           .select('image')
           .transition()
           .duration(200)
-          .attr('width', d => d.inChain ? 56 : 26)
-          .attr('height', d => d.inChain ? 56 : 26)
-          .attr('x', d => d.inChain ? -28 : -13)
-          .attr('y', d => d.inChain ? -28 : -13);
+          .attr('width', d => d.isTarget ? 76 : (d.inChain ? 46 : 26))
+          .attr('height', d => d.isTarget ? 76 : (d.inChain ? 46 : 26))
+          .attr('x', d => d.isTarget ? -38 : (d.inChain ? -23 : -13))
+          .attr('y', d => d.isTarget ? -38 : (d.inChain ? -23 : -13));
       })
       .on('click', (event, d) => {
         event.stopPropagation();
@@ -208,17 +203,17 @@ export function NetworkView({ chain, people, onPersonClick, hoveredQid, setHover
       defs.append('clipPath')
         .attr('id', `clip-${d.qid}`)
         .append('circle')
-        .attr('r', d.inChain ? 28 : 13)
+        .attr('r', d.isTarget ? 38 : (d.inChain ? 23 : 13))
         .attr('cx', 0)
         .attr('cy', 0);
     });
     
     // Avatar images
     node.append('image')
-      .attr('width', d => d.inChain ? 56 : 26)
-      .attr('height', d => d.inChain ? 56 : 26)
-      .attr('x', d => d.inChain ? -28 : -13)
-      .attr('y', d => d.inChain ? -28 : -13)
+      .attr('width', d => d.isTarget ? 76 : (d.inChain ? 46 : 26))
+      .attr('height', d => d.isTarget ? 76 : (d.inChain ? 46 : 26))
+      .attr('x', d => d.isTarget ? -38 : (d.inChain ? -23 : -13))
+      .attr('y', d => d.isTarget ? -38 : (d.inChain ? -23 : -13))
       .attr('href', d => d.imageUrl || '')
       .attr('clip-path', d => `url(#clip-${d.qid})`)
       .attr('opacity', d => d.imageUrl ? 1 : 0)
@@ -228,10 +223,10 @@ export function NetworkView({ chain, people, onPersonClick, hoveredQid, setHover
     node.append('text')
       .text(d => d.name.split(' ').pop()) // Last name
       .attr('text-anchor', 'middle')
-      .attr('dy', 50)
-      .attr('font-size', '12px')
-      .attr('font-weight', 'bold')
-      .attr('fill', '#1f2937')
+      .attr('dy', d => d.isTarget ? 55 : (d.inChain ? 40 : 30))
+      .attr('font-size', d => d.isTarget ? '14px' : '11px')
+      .attr('font-weight', d => d.isTarget ? 'bold' : (d.inChain ? '600' : 'normal'))
+      .attr('fill', d => d.isTarget ? '#7c3aed' : (d.inChain ? '#6366f1' : '#64748b'))
       .attr('pointer-events', 'none');
     
     // Chain number badges
@@ -285,7 +280,7 @@ export function NetworkView({ chain, people, onPersonClick, hoveredQid, setHover
     return () => {
       simulation.stop();
     };
-  }, [chain, dimensions, onPersonClick, setHoveredQid, showAllConnections, people]);
+  }, [chain, dimensions, onPersonClick, setHoveredQid, people]);
   
   if (chain.length === 0) return null;
   
@@ -294,17 +289,20 @@ export function NetworkView({ chain, people, onPersonClick, hoveredQid, setHover
       {/* Info */}
       <div className="glass-strong rounded-2xl p-4 flex items-center justify-between">
         <div>
-          <h3 className="text-sm font-bold text-neutral-800 mb-1">{t('network.title')}</h3>
+          <h3 className="text-sm font-bold text-neutral-800 mb-1">
+            {t('network.title')} - {stats.focusPerson}
+          </h3>
           <p className="text-xs text-neutral-600">
-            {t('network.description')}
+            {t('network.focusDescription', { person: stats.focusPerson })}
           </p>
         </div>
         <div className="flex items-center gap-2 text-xs text-neutral-600">
-          <span className="px-2 py-1 bg-purple-100 rounded-full font-medium">{t('network.inChain', { count: chain.length })}</span>
-          {stats.nearbyPeople > 0 && (
-            <span className="px-2 py-1 bg-neutral-100 rounded-full font-medium">{t('network.contemporaries', { count: stats.nearbyPeople })}</span>
-          )}
-          <span className="px-2 py-1 bg-blue-100 rounded-full font-medium">{t('network.connections', { count: stats.totalLinks })}</span>
+          <span className="px-2 py-1 bg-purple-100 rounded-full font-medium">
+            {stats.totalNodes} {stats.totalNodes === 1 ? 'Person' : 'Personen'}
+          </span>
+          <span className="px-2 py-1 bg-blue-100 rounded-full font-medium">
+            {stats.totalLinks} Verbindungen
+          </span>
         </div>
       </div>
       

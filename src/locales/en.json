@@ -239,6 +239,26 @@
       "contemporary": "Contemporary"
     },
     "shortcut": "Keyboard shortcut: Y"
+  },
+  "footer": {
+    "about": "About",
+    "impressum": "Impressum",
+    "dataSource": "Data: Wikidata",
+    "copyright": "© {{year}} Zeitkette"
+  },
+  "about": {
+    "whatIsThis": "What is Zeitkette?",
+    "description": "Zeitkette (German for 'time chain') connects you to any historical figure through chains of people who could have met during their lifetimes. Explore how ideas, knowledge, and influence traveled through history, one lifetime at a time.",
+    "howItWorks": "How does it work?",
+    "algorithm": "Our algorithm uses a bidirectional breadth-first search to find the shortest chain of people where consecutive individuals had overlapping lifetimes:",
+    "step1": "We start from both ends (you/today and the target person) and search simultaneously",
+    "step2": "Each person in the chain must have lived at the same time as the next (birth-death overlap)",
+    "step3": "The algorithm prioritizes famous people (more Wikipedia articles) to create meaningful connections",
+    "dataSource": "Where does the data come from?",
+    "wikidataInfo": "All historical data comes from Wikidata, the free knowledge base that anyone can edit. It contains information about millions of people, including birth/death dates, occupations, and relationships. The data is licensed under CC0 (public domain).",
+    "technology": "Technology",
+    "credits": "Credits",
+    "creditsText": "Built with React, D3.js, and Tailwind CSS. Data sourced from Wikidata. Profile images from Wikimedia Commons."
   }
 }
 
