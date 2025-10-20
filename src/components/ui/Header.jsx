@@ -1,4 +1,4 @@
-import { List, BarChart3, Network, RotateCcw, Search, Globe } from 'lucide-react';
+import { List, BarChart3, Network, RotateCcw, Search, Globe, Calendar } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 /**
@@ -93,7 +93,7 @@ export function Header({
               className="p-1.5 bg-white/80 backdrop-blur-sm rounded-md hover:bg-white hover:shadow-sm transition-all"
               title={t('yearExplorer.title')}
             >
-              <span className="text-sm">🗓️</span>
+              <Calendar className="w-3.5 h-3.5" />
             </button>
             
             <button

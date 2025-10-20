@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo, useCallback, useRef } from 'react';
-import { ArrowRight, Clock, Users, RotateCcw, List, BarChart3, Image as ImageIcon, Search, Network } from 'lucide-react';
+import { ArrowRight, Clock, Users, RotateCcw, List, BarChart3, Image as ImageIcon, Search, Network, Hourglass, Handshake, Zap, Cake, Sparkles, Calendar, Frown, Link } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { loadAllData } from './dataLoader';
 import * as d3 from 'd3';
@@ -170,7 +170,7 @@ function App() {
     if (chainMode === 'toToday') {
       const personName = typeof targetPerson === 'string' ? targetPerson : targetPerson?.name;
       facts.push({
-        icon: '⏳',
+        icon: 'Hourglass',
         text: t('funFacts.lifetimes', { count: lifetimeCount, person: personName }),
         type: 'primary'
       });
@@ -178,7 +178,7 @@ function App() {
       const startName = typeof startPerson === 'string' ? startPerson : startPerson?.name;
       const endName = typeof endPerson === 'string' ? endPerson : endPerson?.name;
       facts.push({
-        icon: '🔗',
+        icon: 'Link',
         text: t('funFacts.stepsApart', { start: startName, end: endName, count: chain.length }),
         type: 'primary'
       });
@@ -200,7 +200,7 @@ function App() {
     }
     if (overlapPair && maxOverlap > 30) {
       facts.push({
-        icon: '🤝',
+        icon: 'Handshake',
         text: t('funFacts.overlap', { person1: overlapPair[0].name, person2: overlapPair[1].name, years: maxOverlap }),
         type: 'info'
       });
@@ -221,7 +221,7 @@ function App() {
     }
     if (gapPair && maxGap > 50) {
       facts.push({
-        icon: '⚡',
+        icon: 'Zap',
         text: t('funFacts.gap', { years: maxGap, person1: gapPair[0].name, person2: gapPair[1].name }),
         type: 'warning'
       });
@@ -236,7 +236,7 @@ function App() {
     const oldestAge = (oldest.died === 9999 ? THIS_YEAR : oldest.died) - oldest.born;
     if (oldestAge > 85) {
       facts.push({
-        icon: '🎂',
+        icon: 'Cake',
         text: t('funFacts.longevity', { person: oldest.name, age: oldestAge }),
         type: 'success'
       });
@@ -246,7 +246,7 @@ function App() {
     const allDomains = new Set(chain.flatMap(p => p.domains || []));
     if (allDomains.size >= 4) {
       facts.push({
-        icon: '🌟',
+        icon: 'Sparkles',
         text: t('funFacts.diversity', { count: allDomains.size, domains: Array.from(allDomains).slice(0, 3).join(', ') }),
         type: 'info'
       });
@@ -256,7 +256,7 @@ function App() {
     const centuries = Math.floor(totalYears / 100);
     if (centuries >= 5) {
       facts.push({
-        icon: '📅',
+        icon: 'Calendar',
         text: t('funFacts.centuries', { count: centuries }),
         type: 'info'
       });
@@ -265,26 +265,44 @@ function App() {
     return facts;
   }, [chain, chainMode, targetPerson, startPerson, endPerson, totalYears, lifetimeCount]);
 
+  // Helper function to determine era from birth year
+  const getEraFromYear = (year) => {
+    if (year < 500) return 'Antike';
+    if (year < 1000) return 'Mittelalter';
+    if (year < 1400) return 'Mittelalter';
+    if (year < 1600) return 'Renaissance';
+    if (year < 1800) return 'Aufklärung';
+    if (year < 1900) return 'Industrialisierung';
+    return 'Modern';
+  };
+
   const popularTargets = useMemo(() => {
     if (!people.length) return [];
-    return [
-      { name: 'Leonardo da Vinci', era: 'Renaissance' },
-      { name: 'Albert Einstein', era: 'Modern' },
-      { name: 'Kleopatra', era: 'Antike' },
-      { name: 'William Shakespeare', era: 'Renaissance' },
-      { name: 'Isaac Newton', era: 'Aufklärung' },
-      { name: 'Napoleon Bonaparte', era: 'Modern' },
-    ].map(target => ({
-      ...target,
-      person: people.find(p => p.name === target.name)
-    })).filter(t => t.person);
+    
+    // Get random selection of people with good sitelinks (famous enough)
+    const famousPeople = people
+      .filter(p => (p.sitelinks || 0) >= 50) // Minimum fame threshold
+      .sort((a, b) => (b.sitelinks || 0) - (a.sitelinks || 0)) // Sort by fame
+      .slice(0, 100); // Top 100 most famous
+    
+    // Shuffle and take 6 random ones
+    const shuffled = [...famousPeople].sort(() => Math.random() - 0.5);
+    const selected = shuffled.slice(0, 6);
+    
+    return selected.map(person => ({
+      name: person.name,
+      era: getEraFromYear(person.born),
+      person: person
+    }));
   }, [people]);
 
   if (loading) {
   return (
       <div className="min-h-screen bg-gradient-to-br from-violet-50 via-purple-50 to-fuchsia-50 flex items-center justify-center p-4">
         <div className="text-center max-w-2xl w-full">
-          <div className="text-8xl mb-8 animate-bounce drop-shadow-lg">⏳</div>
+          <div className="mb-8 animate-bounce drop-shadow-lg">
+            <Hourglass className="w-24 h-24 mx-auto text-purple-600" />
+          </div>
           <div className="text-4xl font-extrabold bg-gradient-to-r from-violet-600 via-purple-600 to-fuchsia-600 bg-clip-text text-transparent animate-pulse mb-6">
             {t('app.name')}
           </div>
@@ -376,7 +394,9 @@ function App() {
           /* No Path Found */
           <div className="max-w-2xl mx-auto text-center py-12">
             <div className="glass-strong rounded-3xl p-12 animate-fade-in">
-              <div className="text-7xl mb-6">😔</div>
+              <div className="mb-6 flex justify-center">
+                <Frown className="w-20 h-20 text-neutral-400" />
+              </div>
               <h2 className="text-3xl font-bold mb-4 text-neutral-800">
                 Keine Verbindung gefunden
               </h2>

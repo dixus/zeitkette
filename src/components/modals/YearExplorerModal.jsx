@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import { PersonAvatar } from '../ui/PersonAvatar';
 import { THIS_YEAR, getOccupation } from '../../utils';
+import { Calendar } from 'lucide-react';
 
 /**
  * YearExplorerModal Component
@@ -38,7 +39,7 @@ export function YearExplorerModal({
         {/* Header */}
         <div className="mb-6">
           <h3 className="text-3xl font-bold mb-2 text-neutral-900 flex items-center gap-2">
-            <span className="text-3xl">🗓️</span>
+            <Calendar className="w-7 h-7 text-purple-600" />
             {t('yearExplorer.title').replace('🗓️ ', '')}
           </h3>
           <p className="text-sm text-neutral-600">{t('yearExplorer.subtitle')}</p>

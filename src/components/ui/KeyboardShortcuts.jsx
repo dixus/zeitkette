@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next';
+import { Keyboard } from 'lucide-react';
 
 /**
  * KeyboardShortcuts Component
@@ -13,7 +14,7 @@ export function KeyboardShortcuts({ showLanding }) {
     <div className="fixed bottom-3 right-3 z-40">
       <details className="group">
         <summary className="glass-strong rounded-lg px-3 py-1.5 cursor-pointer hover:shadow-md transition-all flex items-center gap-1.5 font-semibold text-xs list-none">
-          <span>⌨️</span>
+          <Keyboard className="w-4 h-4 text-purple-600" />
           <span className="hidden md:inline">{t('keyboard.title')}</span>
         </summary>
         <div className="absolute bottom-full right-0 mb-2 glass-strong rounded-lg p-3 w-56 shadow-lg animate-fade-in">

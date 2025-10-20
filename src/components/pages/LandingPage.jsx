@@ -1,4 +1,4 @@
-import { Globe, Sparkles } from 'lucide-react';
+import { Globe, Sparkles, Clock, Target, Flag, Link, Search, Calendar } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { PersonAvatar } from '../ui/PersonAvatar';
 import { SearchModal } from '../modals/SearchModal';
@@ -68,46 +68,52 @@ export function LandingPage({
       
       <div className="max-w-4xl w-full">
         {/* Hero */}
-        <div className="text-center mb-4 animate-fade-in">
-          <div className="text-3xl mb-2 animate-bounce drop-shadow-lg">⏳</div>
-          <h1 className="text-3xl md:text-4xl font-extrabold mb-2 bg-gradient-to-r from-violet-600 via-purple-600 to-fuchsia-600 bg-clip-text text-transparent leading-tight">
+        <div className="text-center mb-6 animate-fade-in">
+          <div className="mb-3 animate-bounce drop-shadow-lg">
+            <Clock className="w-12 h-12 mx-auto text-purple-600" />
+          </div>
+          <h1 className="text-4xl md:text-5xl font-extrabold mb-3 bg-gradient-to-r from-violet-600 via-purple-600 to-fuchsia-600 bg-clip-text text-transparent leading-tight">
             {t('app.name')}
           </h1>
-          <p className="text-lg md:text-xl font-bold text-neutral-800 mb-2 leading-tight">
+          <p className="text-xl md:text-2xl font-bold text-neutral-800 mb-3 leading-tight">
             {t('landing.title')}
           </p>
-          <p className="text-sm md:text-base text-neutral-600 max-w-2xl mx-auto">
+          <p className="text-base md:text-lg text-neutral-600 max-w-3xl mx-auto leading-relaxed">
             {t('landing.subtitle')}
           </p>
         </div>
 
         {/* Mode Selection */}
-        <div className="glass-strong rounded-2xl p-4 mb-4 shadow-2xl animate-scale-in">
-          <h2 className="text-base font-bold text-center mb-3 text-neutral-800">{t('landing.modeTitle')}</h2>
-          <div className="grid grid-cols-2 gap-2">
+        <div className="glass-strong rounded-2xl p-5 mb-6 shadow-2xl animate-scale-in">
+          <h2 className="text-lg font-bold text-center mb-4 text-neutral-800">{t('landing.modeTitle')}</h2>
+          <div className="grid grid-cols-2 gap-3">
             <button
               onClick={() => setChainMode('toToday')}
-              className={`p-3 rounded-xl border-2 transition-all ${
+              className={`p-4 rounded-xl border-2 transition-all duration-300 hover:scale-105 hover:shadow-lg ${
                 chainMode === 'toToday'
                   ? 'bg-gradient-to-br from-violet-500 to-purple-500 text-white border-violet-600 shadow-lg scale-105'
-                  : 'bg-white/90 text-neutral-800 border-neutral-300 hover:border-purple-400'
+                  : 'bg-white/90 text-neutral-800 border-neutral-300 hover:border-purple-400 hover:bg-purple-50'
               }`}
             >
-              <div className="text-xl mb-1">📅</div>
-              <div className="font-bold text-xs">{t('landing.modeToToday')}</div>
-              <div className="text-[10px] mt-0.5 opacity-90">{t('landing.modeToTodayDesc')}</div>
+              <div className="mb-2 flex justify-center">
+                <Calendar className={`w-7 h-7 ${chainMode === 'toToday' ? 'text-white' : 'text-purple-600'}`} />
+              </div>
+              <div className="font-bold text-sm">{t('landing.modeToToday')}</div>
+              <div className="text-xs mt-1 opacity-90 leading-tight">{t('landing.modeToTodayDesc')}</div>
             </button>
             <button
               onClick={() => setChainMode('between')}
-              className={`p-3 rounded-xl border-2 transition-all ${
+              className={`p-4 rounded-xl border-2 transition-all duration-300 hover:scale-105 hover:shadow-lg ${
                 chainMode === 'between'
                   ? 'bg-gradient-to-br from-violet-500 to-purple-500 text-white border-violet-600 shadow-lg scale-105'
-                  : 'bg-white/90 text-neutral-800 border-neutral-300 hover:border-purple-400'
+                  : 'bg-white/90 text-neutral-800 border-neutral-300 hover:border-purple-400 hover:bg-purple-50'
               }`}
             >
-              <div className="text-xl mb-1">🔗</div>
-              <div className="font-bold text-xs">{t('landing.modeBetween')}</div>
-              <div className="text-[10px] mt-0.5 opacity-90">{t('landing.modeBetweenDesc')}</div>
+              <div className="mb-2 flex justify-center">
+                <Link className={`w-7 h-7 ${chainMode === 'between' ? 'text-white' : 'text-purple-600'}`} />
+              </div>
+              <div className="font-bold text-sm">{t('landing.modeBetween')}</div>
+              <div className="text-xs mt-1 opacity-90 leading-tight">{t('landing.modeBetweenDesc')}</div>
             </button>
           </div>
         </div>
@@ -121,21 +127,22 @@ export function LandingPage({
           
           {chainMode === 'toToday' ? (
             // Single person selector for "To Today" mode
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-3 mb-4">
-            {popularTargets.map((target) => (
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4 mb-6">
+            {popularTargets.map((target, idx) => (
               <button
                 key={target.name}
                 onClick={() => {
                   setTargetPerson(target.name);
                   setShowLanding(false);
                 }}
-                  className="group p-3 md:p-4 bg-white/90 backdrop-blur-sm rounded-xl hover:shadow-xl transition-all duration-300 hover:scale-105 border-2 border-white hover:border-purple-400 hover:-translate-y-1"
+                className="group p-4 md:p-5 bg-white/90 backdrop-blur-sm rounded-xl hover:shadow-xl transition-all duration-300 hover:scale-105 border-2 border-white hover:border-purple-400 hover:-translate-y-1"
+                style={{ animationDelay: `${idx * 100}ms` }}
               >
-                  <div className="mb-2 group-hover:scale-110 transition-transform duration-300 flex justify-center">
-                    <PersonAvatar person={target.person} size="md" className="rounded-xl" />
-                  </div>
-                  <div className="font-bold text-xs mb-0.5 text-neutral-800">{target.name}</div>
-                  <div className="text-[10px] text-purple-600 font-medium">{target.era}</div>
+                <div className="mb-3 group-hover:scale-110 transition-transform duration-300 flex justify-center">
+                  <PersonAvatar person={target.person} size="lg" className="rounded-xl shadow-md" />
+                </div>
+                <div className="font-bold text-sm mb-1 text-neutral-800 group-hover:text-purple-700 transition-colors">{target.name}</div>
+                <div className="text-xs text-purple-600 font-medium">{target.era}</div>
               </button>
             ))}
             </div>
@@ -146,7 +153,7 @@ export function LandingPage({
                 {/* Start Person */}
                 <div className="bg-white/70 backdrop-blur-sm rounded-xl p-3 border-2 border-violet-300">
                   <div className="text-xs font-bold mb-1.5 text-violet-700 flex items-center gap-1.5">
-                    <span>🎯</span> {t('landing.startPerson')}
+                    <Target className="w-3 h-3" /> {t('landing.startPerson')}
                   </div>
                   <button
                     onClick={() => {
@@ -155,14 +162,18 @@ export function LandingPage({
                     }}
                     className="w-full px-2.5 py-1.5 rounded-lg border-2 border-violet-300 hover:border-violet-500 focus:border-violet-500 focus:ring-2 focus:ring-violet-200 outline-none transition-all text-xs bg-white font-medium text-violet-700 hover:text-violet-800 text-left"
                   >
-                    {typeof startPerson === 'string' ? startPerson : startPerson?.name || '🔍 ' + t('search.title')}
+                    {typeof startPerson === 'string' ? startPerson : startPerson?.name || (
+                      <span className="flex items-center gap-1">
+                        <Search className="w-3 h-3" /> {t('search.title')}
+                      </span>
+                    )}
                   </button>
           </div>
 
                 {/* End Person */}
                 <div className="bg-white/70 backdrop-blur-sm rounded-xl p-3 border-2 border-fuchsia-300">
                   <div className="text-xs font-bold mb-1.5 text-fuchsia-700 flex items-center gap-1.5">
-                    <span>🏁</span> {t('landing.endPerson')}
+                    <Flag className="w-3 h-3" /> {t('landing.endPerson')}
                   </div>
                   <button
                     onClick={() => {
@@ -171,7 +182,11 @@ export function LandingPage({
                     }}
                     className="w-full px-2.5 py-1.5 rounded-lg border-2 border-fuchsia-300 hover:border-fuchsia-500 focus:border-fuchsia-500 focus:ring-2 focus:ring-fuchsia-200 outline-none transition-all text-xs bg-white font-medium text-fuchsia-700 hover:text-fuchsia-800 text-left"
                   >
-                    {typeof endPerson === 'string' ? endPerson : endPerson?.name || '🔍 ' + t('search.title')}
+                    {typeof endPerson === 'string' ? endPerson : endPerson?.name || (
+                      <span className="flex items-center gap-1">
+                        <Search className="w-3 h-3" /> {t('search.title')}
+                      </span>
+                    )}
                   </button>
                 </div>
               </div>
@@ -222,7 +237,9 @@ export function LandingPage({
                 }}
                 className="px-4 py-2 rounded-lg border-2 border-purple-300 hover:border-purple-500 focus:border-purple-500 focus:ring-2 focus:ring-purple-200 outline-none transition-all text-sm bg-white/90 backdrop-blur-sm font-medium text-purple-700 hover:text-purple-800"
               >
-                🔍 {t('search.title')} ({people.length} {t('stats.peopleInChain').replace(' in der Kette', '').replace(' in Chain', '')})
+                <span className="flex items-center gap-1.5">
+                  <Search className="w-4 h-4" /> {t('search.title')} ({people.length} {t('stats.peopleInChain').replace(' in der Kette', '').replace(' in Chain', '')})
+                </span>
               </button>
             </div>
           )}
@@ -230,26 +247,27 @@ export function LandingPage({
 
         <button
           onClick={() => setShowLanding(false)}
-          className="w-full py-3 bg-gradient-to-r from-violet-600 via-purple-600 to-fuchsia-600 text-white text-base md:text-lg font-bold rounded-xl hover:shadow-2xl transition-all duration-300 hover:scale-[1.02] hover:-translate-y-1"
+          className="w-full py-4 bg-gradient-to-r from-violet-600 via-purple-600 to-fuchsia-600 text-white text-lg md:text-xl font-bold rounded-xl hover:shadow-2xl transition-all duration-300 hover:scale-[1.02] hover:-translate-y-1 active:scale-[0.98] group"
         >
-          <span className="drop-shadow-lg">
+          <span className="drop-shadow-lg flex items-center justify-center gap-3">
+            <Target className="w-6 h-6 group-hover:rotate-12 transition-transform duration-300" />
             {t('landing.goButton')}
           </span>
-      </button>
+        </button>
 
         {/* Stats Preview */}
-        <div className="mt-4 grid grid-cols-3 gap-2 md:gap-3 text-center">
-          <div className="glass rounded-xl p-2.5 hover:scale-105 transition-transform duration-300">
-            <div className="text-lg md:text-xl font-bold text-purple-600 mb-0.5">{people.length}</div>
-            <div className="text-[10px] text-neutral-600 font-medium">{t('stats.peopleInChain').replace(' in der Kette', '').replace(' in Chain', '')}</div>
+        <div className="mt-6 grid grid-cols-3 gap-3 md:gap-4 text-center">
+          <div className="glass-strong rounded-xl p-4 hover:scale-105 transition-all duration-300 hover:shadow-lg group">
+            <div className="text-2xl md:text-3xl font-bold text-purple-600 mb-1 group-hover:text-purple-700 transition-colors">{people.length}</div>
+            <div className="text-sm text-neutral-600 font-medium">{t('stats.peopleInChain').replace(' in der Kette', '').replace(' in Chain', '')}</div>
           </div>
-          <div className="glass rounded-xl p-2.5 hover:scale-105 transition-transform duration-300">
-            <div className="text-lg md:text-xl font-bold text-violet-600 mb-0.5">2654</div>
-            <div className="text-[10px] text-neutral-600 font-medium">{t('stats.yearsSpanned').replace(' überbrückt', '').replace(' Spanned', '')}</div>
+          <div className="glass-strong rounded-xl p-4 hover:scale-105 transition-all duration-300 hover:shadow-lg group">
+            <div className="text-2xl md:text-3xl font-bold text-violet-600 mb-1 group-hover:text-violet-700 transition-colors">2654</div>
+            <div className="text-sm text-neutral-600 font-medium">{t('stats.yearsSpanned').replace(' überbrückt', '').replace(' Spanned', '')}</div>
           </div>
-          <div className="glass rounded-xl p-2.5 hover:scale-105 transition-transform duration-300">
-            <div className="text-lg md:text-xl font-bold text-fuchsia-600 mb-0.5">{Object.keys(relations).length}</div>
-            <div className="text-[10px] text-neutral-600 font-medium">{t('modal.relations')}</div>
+          <div className="glass-strong rounded-xl p-4 hover:scale-105 transition-all duration-300 hover:shadow-lg group">
+            <div className="text-2xl md:text-3xl font-bold text-fuchsia-600 mb-1 group-hover:text-fuchsia-700 transition-colors">{Object.keys(relations).length}</div>
+            <div className="text-sm text-neutral-600 font-medium">{t('modal.relations')}</div>
           </div>
         </div>
       </div>

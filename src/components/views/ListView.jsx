@@ -1,4 +1,4 @@
-import { ArrowRight, Clock, Users } from 'lucide-react';
+import { ArrowRight, Clock, Users, Dice5, Target, Link, Share2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { PersonAvatar } from '../ui/PersonAvatar';
 import { THIS_YEAR, getOccupation } from '../../utils';
@@ -122,10 +122,10 @@ export function ListView({
                       
                       setPinnedWaypoints(newWaypoints);
                     }}
-                    className="absolute top-1.5 right-1.5 w-5 h-5 rounded-full bg-gradient-to-br from-purple-500 to-fuchsia-500 text-white flex items-center justify-center hover:scale-110 transition-all shadow-md hover:shadow-lg z-10 text-[10px]"
+                    className="absolute top-1.5 right-1.5 w-5 h-5 rounded-full bg-gradient-to-br from-purple-500 to-fuchsia-500 text-white flex items-center justify-center hover:scale-110 transition-all shadow-md hover:shadow-lg z-10"
                     title="Zufällig ersetzen"
                   >
-                    🎲
+                    <Dice5 className="w-3 h-3" />
                   </button>
                 )}
                 
@@ -334,7 +334,11 @@ export function ListView({
         {/* End Marker - Compact & Modern */}
         <div className="mt-2 glass-strong rounded-lg p-4 text-center shadow-md">
           <div className="flex items-center justify-center gap-2 mb-3">
-            <span className="text-xl">{chainMode === 'toToday' ? '🎯' : '🔗'}</span>
+            {chainMode === 'toToday' ? (
+              <Target className="w-5 h-5 text-purple-600" />
+            ) : (
+              <Link className="w-5 h-5 text-purple-600" />
+            )}
             <h2 className="text-sm font-bold text-neutral-800">
               {chainMode === 'toToday' ? 'Ziel erreicht!' : 'Verbindung gefunden!'}
             </h2>
@@ -381,7 +385,10 @@ export function ListView({
               }}
               className="px-3 py-1.5 bg-gradient-to-r from-violet-600 to-fuchsia-600 text-white rounded-md text-xs font-semibold hover:shadow-md transition-all hover:scale-105"
             >
-              📤 {t('endMarker.shareButton')}
+              <span className="flex items-center gap-1.5">
+                <Share2 className="w-3 h-3" />
+                {t('endMarker.shareButton')}
+              </span>
             </button>
           </div>
         </div>

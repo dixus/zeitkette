@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { ArrowLeft, ZoomIn, ZoomOut, Maximize2 } from 'lucide-react';
+import { ArrowLeft, ZoomIn, ZoomOut, Maximize2, Lightbulb } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import * as d3 from 'd3';
 import { THIS_YEAR } from '../../utils';
@@ -426,7 +426,9 @@ export function ChainNetworkView({ chain, people, relations, onClose, onPersonCl
         
         {/* Instructions */}
         <div className="absolute bottom-6 left-1/2 -translate-x-1/2 glass rounded-2xl px-6 py-3 text-sm text-neutral-700">
-          <span className="font-semibold text-purple-700">💡 Tip:</span> Click & drag to move • Scroll to zoom • Click nodes to highlight connections
+          <span className="font-semibold text-purple-700 inline-flex items-center gap-1">
+            <Lightbulb className="w-4 h-4" /> Tip:
+          </span> Click & drag to move • Scroll to zoom • Click nodes to highlight connections
         </div>
       </div>
       

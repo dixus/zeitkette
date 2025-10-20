@@ -2,6 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { PersonAvatar } from '../ui/PersonAvatar';
 import { getOccupation } from '../../utils/getOccupation';
 import { THIS_YEAR } from '../../utils/constants';
+import { useMemo } from 'react';
 
 /**
  * Timeline View Component
@@ -16,14 +17,54 @@ export function TimelineView({ chain, people, targetPerson, zoom, setZoom, onPer
   const maxYear = Math.max(...chain.map(p => p.died === 9999 ? THIS_YEAR : p.died));
   const timeSpan = maxYear - minYear;
   
-  const SVG_WIDTH = 1200;
-  const SVG_HEIGHT = 400;
-  const PADDING = 60;
+  // Dynamic sizing based on chain length and timespan
+  const BASE_WIDTH = 1400;
+  const SVG_HEIGHT = Math.min(600, 150 + chain.length * 8); // Dynamic height
+  const PADDING = 80;
   const TIMELINE_Y = SVG_HEIGHT - 60;
-  const BAR_HEIGHT = 30;
+  const BAR_HEIGHT = 24;
+  const ROW_HEIGHT = 45;
+  const MAX_ROWS = Math.max(5, Math.ceil(chain.length / 8)); // More rows for better spacing
   
-  // Calculate positions
-  const yearToX = (year) => PADDING + ((year - minYear) / timeSpan) * (SVG_WIDTH - 2 * PADDING) * zoom;
+  // Calculate positions with collision detection
+  const yearToX = (year) => PADDING + ((year - minYear) / timeSpan) * (BASE_WIDTH - 2 * PADDING) * zoom;
+  
+  // Assign rows to minimize overlaps
+  const personLayouts = useMemo(() => {
+    const layouts = [];
+    const rowOccupancy = Array(MAX_ROWS).fill(null).map(() => []);
+    
+    chain.forEach((person, idx) => {
+      const startX = yearToX(person.born);
+      const endX = yearToX(person.died === 9999 ? THIS_YEAR : person.died);
+      
+      // Find the first row where this person fits without overlap
+      let assignedRow = 0;
+      for (let row = 0; row < MAX_ROWS; row++) {
+        const hasOverlap = rowOccupancy[row].some(([existingStart, existingEnd]) => {
+          return !(endX < existingStart - 30 || startX > existingEnd + 30); // 30px padding
+        });
+        
+        if (!hasOverlap) {
+          assignedRow = row;
+          break;
+        }
+      }
+      
+      rowOccupancy[assignedRow].push([startX, endX]);
+      
+      layouts.push({
+        person,
+        idx,
+        startX,
+        endX,
+        row: assignedRow,
+        y: 50 + assignedRow * ROW_HEIGHT
+      });
+    });
+    
+    return layouts;
+  }, [chain, zoom, minYear, timeSpan]);
   
   return (
     <div className="space-y-6">
@@ -86,12 +127,12 @@ export function TimelineView({ chain, people, targetPerson, zoom, setZoom, onPer
             {t('timeline.scrollHint')}
           </div>
         )}
-        <svg width={SVG_WIDTH * zoom} height={SVG_HEIGHT} style={{ minWidth: '100%' }}>
+        <svg width={BASE_WIDTH * zoom} height={SVG_HEIGHT} style={{ minWidth: '100%' }}>
           {/* Timeline axis */}
           <line
             x1={PADDING}
             y1={TIMELINE_Y}
-            x2={(SVG_WIDTH - PADDING) * zoom}
+            x2={(BASE_WIDTH - PADDING) * zoom}
             y2={TIMELINE_Y}
             stroke="#cbd5e1"
             strokeWidth="2"
@@ -125,11 +166,8 @@ export function TimelineView({ chain, people, targetPerson, zoom, setZoom, onPer
           })}
           
           {/* Person lifespans */}
-          {chain.map((person, idx) => {
-            const startX = yearToX(person.born);
-            const endX = yearToX(person.died === 9999 ? THIS_YEAR : person.died);
+          {personLayouts.map(({ person, idx, startX, endX, y }) => {
             const width = endX - startX;
-            const y = 50 + (idx % 3) * 50; // Stagger vertically
             const isHovered = hoveredQid === person.qid;
             
             // Color gradient based on position in chain
@@ -137,45 +175,32 @@ export function TimelineView({ chain, people, targetPerson, zoom, setZoom, onPer
             const color = `hsl(${hue}, 70%, 60%)`;
             const darkColor = `hsl(${hue}, 70%, 50%)`;
             
+            // Determine if name should be shown (enough space)
+            const showName = width > 80;
+            
             return (
               <g key={person.qid}>
                 {/* Life span bar */}
                 <rect
                   x={startX}
                   y={y}
-                  width={Math.max(width, 4)}
+                  width={Math.max(width, 8)}
                   height={BAR_HEIGHT}
                   fill={color}
                   stroke={darkColor}
                   strokeWidth="2"
-                  rx="6"
-                  className={`cursor-pointer transition-all ${isHovered ? 'opacity-100 drop-shadow-lg' : 'opacity-80'}`}
+                  rx="4"
+                  className={`cursor-pointer transition-all ${isHovered ? 'opacity-100 drop-shadow-lg' : 'opacity-85'}`}
                   onMouseEnter={() => setHoveredQid(person.qid)}
                   onMouseLeave={() => setHoveredQid(null)}
                   onClick={() => onPersonClick(person)}
                 />
                 
-                {/* Person avatar at end of bar */}
-                <foreignObject
-                  x={endX - 20}
-                  y={y + BAR_HEIGHT / 2 - 20}
-                  width="40"
-                  height="40"
-                  className="cursor-pointer overflow-visible"
-                  onClick={() => onPersonClick(person)}
-                  onMouseEnter={() => setHoveredQid(person.qid)}
-                  onMouseLeave={() => setHoveredQid(null)}
-                >
-                  <div style={{ width: '40px', height: '40px' }}>
-                    <PersonAvatar person={person} size="sm" className="rounded-full border-3 border-white shadow-lg w-10 h-10" />
-                  </div>
-                </foreignObject>
-                
                 {/* Birth indicator dot */}
                 <circle
                   cx={startX}
                   cy={y + BAR_HEIGHT / 2}
-                  r="6"
+                  r="5"
                   fill="white"
                   stroke={darkColor}
                   strokeWidth="2"
@@ -183,23 +208,50 @@ export function TimelineView({ chain, people, targetPerson, zoom, setZoom, onPer
                   onClick={() => onPersonClick(person)}
                 />
                 
-                {/* Name label */}
-                <text
-                  x={startX + width / 2}
-                  y={y - 8}
-                  textAnchor="middle"
-                  className={`text-xs font-bold fill-neutral-800 cursor-pointer ${isHovered ? 'text-base' : ''}`}
+                {/* Death indicator dot (or living indicator) */}
+                <circle
+                  cx={endX}
+                  cy={y + BAR_HEIGHT / 2}
+                  r="5"
+                  fill={person.died === 9999 ? '#10b981' : 'white'}
+                  stroke={darkColor}
+                  strokeWidth="2"
+                  className="cursor-pointer"
                   onClick={() => onPersonClick(person)}
+                />
+                
+                {/* Person avatar */}
+                <foreignObject
+                  x={startX + width / 2 - 16}
+                  y={y + BAR_HEIGHT / 2 - 16}
+                  width="32"
+                  height="32"
+                  className="cursor-pointer overflow-visible pointer-events-none"
                 >
-                  {person.name}
-                </text>
+                  <div style={{ width: '32px', height: '32px' }} className="pointer-events-auto" onClick={() => onPersonClick(person)}>
+                    <PersonAvatar person={person} size="xs" className="rounded-full border-2 border-white shadow-md" />
+                  </div>
+                </foreignObject>
+                
+                {/* Name label above bar (only if enough space) */}
+                {showName && (
+                  <text
+                    x={startX + width / 2}
+                    y={y - 6}
+                    textAnchor="middle"
+                    className="text-[10px] font-bold fill-neutral-800 cursor-pointer"
+                    onClick={() => onPersonClick(person)}
+                  >
+                    {person.name.length > 20 ? person.name.substring(0, 18) + '...' : person.name}
+                  </text>
+                )}
                 
                 {/* Chain number */}
                 <text
-                  x={startX - 8}
-                  y={y + BAR_HEIGHT / 2 + 4}
+                  x={startX - 6}
+                  y={y + BAR_HEIGHT / 2 + 3}
                   textAnchor="end"
-                  className="text-xs font-bold fill-purple-600"
+                  className="text-[10px] font-bold fill-purple-700"
                 >
                   {chain.length - idx}
                 </text>
@@ -208,10 +260,10 @@ export function TimelineView({ chain, people, targetPerson, zoom, setZoom, onPer
                 {isHovered && (
                   <g>
                     <rect
-                      x={startX + width / 2 - 80}
-                      y={y + BAR_HEIGHT + 10}
-                      width="160"
-                      height="60"
+                      x={Math.max(10, Math.min(startX + width / 2 - 90, BASE_WIDTH * zoom - 190))}
+                      y={y + BAR_HEIGHT + 8}
+                      width="180"
+                      height="70"
                       fill="white"
                       stroke={darkColor}
                       strokeWidth="2"
@@ -219,15 +271,15 @@ export function TimelineView({ chain, people, targetPerson, zoom, setZoom, onPer
                       className="drop-shadow-xl"
                     />
                     <text
-                      x={startX + width / 2}
-                      y={y + BAR_HEIGHT + 28}
+                      x={Math.max(100, Math.min(startX + width / 2, BASE_WIDTH * zoom - 100))}
+                      y={y + BAR_HEIGHT + 26}
                       textAnchor="middle"
-                      className="text-xs font-bold fill-neutral-800"
+                      className="text-sm font-bold fill-neutral-800"
                     >
                       {person.name}
                     </text>
                     <text
-                      x={startX + width / 2}
+                      x={Math.max(100, Math.min(startX + width / 2, BASE_WIDTH * zoom - 100))}
                       y={y + BAR_HEIGHT + 44}
                       textAnchor="middle"
                       className="text-xs fill-purple-600 font-semibold"
@@ -235,8 +287,8 @@ export function TimelineView({ chain, people, targetPerson, zoom, setZoom, onPer
                       {getOccupation(person)}
                     </text>
                     <text
-                      x={startX + width / 2}
-                      y={y + BAR_HEIGHT + 60}
+                      x={Math.max(100, Math.min(startX + width / 2, BASE_WIDTH * zoom - 100))}
+                      y={y + BAR_HEIGHT + 62}
                       textAnchor="middle"
                       className="text-xs fill-neutral-600"
                     >

@@ -1,4 +1,4 @@
-import { Search } from 'lucide-react';
+import { Search, Lightbulb } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { PersonAvatar } from '../ui/PersonAvatar';
 import { getOccupation } from '../../utils';
@@ -77,7 +77,9 @@ export function SearchModal({
         </div>
         
         <div className="mt-4 pt-4 border-t border-neutral-200 text-xs text-neutral-500 flex items-center justify-between">
-          <span>💡 {t('keyboard.search')}: <kbd className="px-2 py-1 bg-neutral-100 rounded font-mono">/</kbd></span>
+          <span className="flex items-center gap-1">
+            <Lightbulb className="w-3 h-3" /> {t('keyboard.search')}: <kbd className="px-2 py-1 bg-neutral-100 rounded font-mono">/</kbd>
+          </span>
           <span>{people.length} {t('stats.peopleInChain').replace(' in der Kette', '').replace(' in Chain', '')}</span>
         </div>
         
