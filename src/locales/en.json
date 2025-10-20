@@ -118,7 +118,7 @@
     "titleBetween": "Connection Found!",
     "descriptionToday": "From {{person}} to today in just {{count}} steps!",
     "descriptionBetween": "{{start}} and {{end}} connected in {{count}} steps!",
-    "shareButton": "📤 Share",
+    "shareButton": "Share",
     "newChain": "🔗 Start New Chain"
   },
   "timeline": {
@@ -152,13 +152,13 @@
     }
   },
   "funFacts": {
-    "lifetimes": "⏳ Only {{count}} lifetimes separate us from {{person}}!",
-    "stepsApart": "🔗 {{start}} and {{end}} are only {{count}} people apart!",
-    "overlap": "🤝 {{person1}} and {{person2}} lived {{years}} years at the same time!",
-    "gap": "⚡ Largest time gap: {{years}} years between {{person1}} and {{person2}}",
-    "longevity": "🎂 {{person}} lived {{age}} years - a long life!",
-    "diversity": "🌟 This chain connects {{count}} different domains: {{domains}}...",
-    "centuries": "📅 This connection spans {{count}} centuries of history!"
+    "lifetimes": "Only {{count}} lifetimes separate us from {{person}}!",
+    "stepsApart": "{{start}} and {{end}} are only {{count}} people apart!",
+    "overlap": "{{person1}} and {{person2}} lived {{years}} years at the same time!",
+    "gap": "Largest time gap: {{years}} years between {{person1}} and {{person2}}",
+    "longevity": "{{person}} lived {{age}} years - a long life!",
+    "diversity": "This chain connects {{count}} different domains: {{domains}}...",
+    "centuries": "This connection spans {{count}} centuries of history!"
   },
   "search": {
     "title": "Search",
@@ -180,7 +180,7 @@
     "contemporaries": "Lived at the Same Time"
   },
   "keyboard": {
-    "title": "⌨️ Shortcuts",
+    "title": "Shortcuts",
     "shortcutsTitle": "Keyboard Shortcuts",
     "search": "Open search",
     "close": "Close",

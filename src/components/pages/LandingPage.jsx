@@ -27,6 +27,7 @@ export function LandingPage({
   // Search modal state
   const [showSearchModal, setShowSearchModal] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const [searchModalTarget, setSearchModalTarget] = useState('target'); // 'target', 'start', or 'end'
   
   // Search results
   const searchResults = useMemo(() => {
@@ -42,16 +43,12 @@ export function LandingPage({
   }, [people, searchQuery]);
   
   const handleSelectPerson = (person) => {
-    if (chainMode === 'toToday') {
+    if (searchModalTarget === 'target') {
       setTargetPerson(person);
-    } else {
-      // For "Between" mode, we need to determine which person to set
-      // This is a simplified approach - in a real app you'd have separate modals
-      if (!startPerson || typeof startPerson === 'string') {
-        setStartPerson(person);
-      } else {
-        setEndPerson(person);
-      }
+    } else if (searchModalTarget === 'start') {
+      setStartPerson(person);
+    } else if (searchModalTarget === 'end') {
+      setEndPerson(person);
     }
     setShowSearchModal(false);
     setSearchQuery('');
@@ -152,7 +149,10 @@ export function LandingPage({
                     <span>🎯</span> {t('landing.startPerson')}
                   </div>
                   <button
-                    onClick={() => setShowSearchModal(true)}
+                    onClick={() => {
+                      setSearchModalTarget('start');
+                      setShowSearchModal(true);
+                    }}
                     className="w-full px-2.5 py-1.5 rounded-lg border-2 border-violet-300 hover:border-violet-500 focus:border-violet-500 focus:ring-2 focus:ring-violet-200 outline-none transition-all text-xs bg-white font-medium text-violet-700 hover:text-violet-800 text-left"
                   >
                     {typeof startPerson === 'string' ? startPerson : startPerson?.name || '🔍 ' + t('search.title')}
@@ -165,7 +165,10 @@ export function LandingPage({
                     <span>🏁</span> {t('landing.endPerson')}
                   </div>
                   <button
-                    onClick={() => setShowSearchModal(true)}
+                    onClick={() => {
+                      setSearchModalTarget('end');
+                      setShowSearchModal(true);
+                    }}
                     className="w-full px-2.5 py-1.5 rounded-lg border-2 border-fuchsia-300 hover:border-fuchsia-500 focus:border-fuchsia-500 focus:ring-2 focus:ring-fuchsia-200 outline-none transition-all text-xs bg-white font-medium text-fuchsia-700 hover:text-fuchsia-800 text-left"
                   >
                     {typeof endPerson === 'string' ? endPerson : endPerson?.name || '🔍 ' + t('search.title')}
@@ -213,7 +216,10 @@ export function LandingPage({
             <div className="text-center">
               <p className="text-xs text-neutral-600 mb-2 font-medium">{t('landing.orChooseFrom', { count: people.length })}</p>
               <button
-                onClick={() => setShowSearchModal(true)}
+                onClick={() => {
+                  setSearchModalTarget('target');
+                  setShowSearchModal(true);
+                }}
                 className="px-4 py-2 rounded-lg border-2 border-purple-300 hover:border-purple-500 focus:border-purple-500 focus:ring-2 focus:ring-purple-200 outline-none transition-all text-sm bg-white/90 backdrop-blur-sm font-medium text-purple-700 hover:text-purple-800"
               >
                 🔍 {t('search.title')} ({people.length} {t('stats.peopleInChain').replace(' in der Kette', '').replace(' in Chain', '')})

@@ -16,7 +16,7 @@ export function findPathBetween(startPerson, endPerson, people, minOverlap = 20,
   const topPeople = people.filter(p => (p.sitelinks || 0) >= minFame);
   const peopleByName = new Map(topPeople.map(p => [p.name, p]));
   
-  // Helper: Check if two people can be connected (bidirectional, allow gaps)
+  // Helper: Check if two people can be connected (respecting minOverlap)
   const canConnect = (p1, p2) => {
     const p1End = p1.died === 9999 ? THIS_YEAR : p1.died;
     const p2End = p2.died === 9999 ? THIS_YEAR : p2.died;
@@ -26,13 +26,8 @@ export function findPathBetween(startPerson, endPerson, people, minOverlap = 20,
     const overlapEnd = Math.min(p1End, p2End);
     const overlap = overlapEnd - overlapStart;
     
-    // Prefer connections with good overlap
-    if (overlap >= minOverlap) return true;
-    
-    // Fallback: Allow connections with gaps up to 200 years in either direction
-    // This ensures we can find paths even across time periods
-    const timeDiff = Math.abs(p1.born - p2.born);
-    return timeDiff <= 200;
+    // RESPECT the minOverlap filter - only connect if they have enough overlap
+    return overlap >= minOverlap;
   };
   
   // BFS from both ends

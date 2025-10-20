@@ -370,8 +370,8 @@ function App() {
         setPinnedWaypoints={setPinnedWaypoints}
       />
 
-          {/* The Chain - Views */}
-      <main className="max-w-7xl mx-auto px-4 pb-12">
+          {/* The Chain - Views - Compact & Innovative */}
+      <main className="max-w-4xl mx-auto px-3 pb-8">
         {chain.length === 0 ? (
           /* No Path Found */
           <div className="max-w-2xl mx-auto text-center py-12">

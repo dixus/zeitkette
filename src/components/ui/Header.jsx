@@ -19,98 +19,89 @@ export function Header({
   const { t, i18n } = useTranslation();
 
   return (
-    <header className="sticky top-0 z-20 glass-strong border-b border-white/30 backdrop-blur-xl shadow-lg">
-      <div className="max-w-7xl mx-auto px-3 md:px-4 py-1.5 md:py-2">
-        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-1.5">
-          <div className="flex-1 min-w-0">
-            <h1 className="text-base md:text-lg font-extrabold bg-gradient-to-r from-violet-600 via-purple-600 to-fuchsia-600 bg-clip-text text-transparent mb-0.5 leading-tight">
+    <header className="sticky top-0 z-20 glass-strong border-b border-white/20 backdrop-blur-xl shadow-sm">
+      <div className="max-w-4xl mx-auto px-3 py-2">
+        <div className="flex items-center justify-between gap-2">
+          {/* Title - Compact */}
+          <div className="flex items-center gap-2 min-w-0 flex-1">
+            <button
+              onClick={onShowLanding}
+              className="text-sm font-black bg-gradient-to-r from-violet-600 via-purple-600 to-fuchsia-600 bg-clip-text text-transparent hover:scale-105 transition-transform whitespace-nowrap"
+              title={t('header.otherPerson')}
+            >
               {t('app.name')}
-            </h1>
-            <p className="text-[10px] md:text-xs text-neutral-700 font-semibold truncate">
+            </button>
+            <div className="h-3 w-px bg-purple-300"></div>
+            <p className="text-[11px] text-neutral-600 font-medium truncate">
               {chainMode === 'toToday' ? (
-                <>{t('header.to')} <strong className="text-purple-700">{typeof targetPerson === 'string' ? targetPerson : targetPerson?.name}</strong></>
+                <span className="text-purple-700 font-semibold">{typeof targetPerson === 'string' ? targetPerson : targetPerson?.name}</span>
               ) : (
-                <><strong className="text-violet-700">{typeof startPerson === 'string' ? startPerson : startPerson?.name}</strong> → <strong className="text-fuchsia-700">{typeof endPerson === 'string' ? endPerson : endPerson?.name}</strong></>
+                <><span className="text-violet-700 font-semibold">{typeof startPerson === 'string' ? startPerson : startPerson?.name}</span> → <span className="text-fuchsia-700 font-semibold">{typeof endPerson === 'string' ? endPerson : endPerson?.name}</span></>
               )}
             </p>
           </div>
-          <div className="flex items-center gap-1 md:gap-1.5 flex-wrap md:flex-nowrap">
-            {/* View Toggle */}
-            <div className="flex items-center gap-0.5 bg-white/90 backdrop-blur-sm rounded-md p-0.5 border border-white">
+          {/* Actions - Ultra Compact */}
+          <div className="flex items-center gap-1">
+            {/* View Toggle - Minimal */}
+            <div className="flex items-center gap-px bg-white/80 backdrop-blur-sm rounded-md p-px">
               <button
                 onClick={() => setViewMode('list')}
-                className={`px-1.5 py-1 rounded-sm transition-all flex items-center gap-1 ${
+                className={`p-1.5 rounded transition-all ${
                   viewMode === 'list' 
-                    ? 'bg-gradient-to-r from-purple-600 to-fuchsia-600 text-white shadow-md' 
-                    : 'text-neutral-600 hover:bg-neutral-100'
+                    ? 'bg-gradient-to-r from-purple-600 to-fuchsia-600 text-white shadow-sm' 
+                    : 'text-neutral-500 hover:text-neutral-700 hover:bg-white/50'
                 }`}
                 title={t('views.listView')}
               >
-                <List className="w-3 h-3" />
-                <span className="hidden md:inline text-[10px] font-semibold">{t('views.list')}</span>
+                <List className="w-3.5 h-3.5" />
               </button>
               <button
                 onClick={() => setViewMode('timeline')}
-                className={`px-1.5 py-1 rounded-sm transition-all flex items-center gap-1 ${
+                className={`p-1.5 rounded transition-all ${
                   viewMode === 'timeline' 
-                    ? 'bg-gradient-to-r from-purple-600 to-fuchsia-600 text-white shadow-md' 
-                    : 'text-neutral-600 hover:bg-neutral-100'
+                    ? 'bg-gradient-to-r from-purple-600 to-fuchsia-600 text-white shadow-sm' 
+                    : 'text-neutral-500 hover:text-neutral-700 hover:bg-white/50'
                 }`}
                 title={t('views.timelineView')}
               >
-                <BarChart3 className="w-3 h-3" />
-                <span className="hidden md:inline text-[10px] font-semibold">{t('views.timeline')}</span>
+                <BarChart3 className="w-3.5 h-3.5" />
               </button>
               <button
                 onClick={() => setViewMode('network')}
-                className={`px-1.5 py-1 rounded-sm transition-all flex items-center gap-1 ${
+                className={`p-1.5 rounded transition-all ${
                   viewMode === 'network' 
-                    ? 'bg-gradient-to-r from-purple-600 to-fuchsia-600 text-white shadow-md' 
-                    : 'text-neutral-600 hover:bg-neutral-100'
+                    ? 'bg-gradient-to-r from-purple-600 to-fuchsia-600 text-white shadow-sm' 
+                    : 'text-neutral-500 hover:text-neutral-700 hover:bg-white/50'
                 }`}
                 title={t('views.networkView')}
               >
-                <Network className="w-3 h-3" />
-                <span className="hidden md:inline text-[10px] font-semibold">{t('views.network')}</span>
+                <Network className="w-3.5 h-3.5" />
               </button>
             </div>
             
-          <button
-            onClick={onShowLanding}
-              className="px-2 py-1 bg-white/90 backdrop-blur-sm rounded-md hover:shadow-lg transition-all duration-300 flex items-center gap-1 border border-white hover:border-purple-300 active:scale-95 md:hover:scale-105 font-semibold text-[10px]"
-              title="Keyboard shortcut: R"
-            >
-              <RotateCcw className="w-3 h-3" />
-              <span className="hidden sm:inline">{t('header.otherPerson')}</span>
-            </button>
-            
+            {/* Utility Buttons - Icon Only */}
             <button
               onClick={onShowSearch}
-              className="px-2 py-1 bg-white/90 backdrop-blur-sm rounded-md hover:shadow-lg transition-all duration-300 flex items-center gap-1 border border-white hover:border-purple-300 active:scale-95 md:hover:scale-105 font-semibold text-[10px]"
-              title="Keyboard shortcut: /"
+              className="p-1.5 bg-white/80 backdrop-blur-sm rounded-md hover:bg-white hover:shadow-sm transition-all text-neutral-600 hover:text-purple-600"
+              title="Search (Press /)"
             >
-              <Search className="w-3 h-3" />
-              <span className="hidden sm:inline">{t('header.search')}</span>
+              <Search className="w-3.5 h-3.5" />
             </button>
             
-            {/* Year Explorer */}
             <button
               onClick={onShowYearExplorer}
-              className="px-2 py-1 bg-white/90 backdrop-blur-sm rounded-md hover:shadow-lg transition-all duration-300 flex items-center gap-1 border border-white hover:border-purple-300 active:scale-95 md:hover:scale-105 font-semibold text-[10px]"
-              title={t('yearExplorer.shortcut')}
+              className="p-1.5 bg-white/80 backdrop-blur-sm rounded-md hover:bg-white hover:shadow-sm transition-all"
+              title={t('yearExplorer.title')}
             >
-              <span className="text-xs">🗓️</span>
-              <span className="hidden sm:inline">{t('yearExplorer.title').replace('🗓️ ', '')}</span>
+              <span className="text-sm">🗓️</span>
             </button>
             
-            {/* Language Switcher */}
             <button
               onClick={() => i18n.changeLanguage(i18n.language === 'en' ? 'de' : 'en')}
-              className="px-1.5 py-1 bg-white/90 backdrop-blur-sm rounded-md hover:shadow-lg transition-all duration-300 flex items-center gap-1 border border-white hover:border-purple-300 active:scale-95 md:hover:scale-105 font-semibold text-[10px]"
+              className="p-1.5 bg-white/80 backdrop-blur-sm rounded-md hover:bg-white hover:shadow-sm transition-all"
               title={`Switch to ${i18n.language === 'en' ? 'Deutsch' : 'English'}`}
             >
-              <Globe className="w-3 h-3" />
-              <span className="text-xs">{i18n.language === 'en' ? '🇩🇪' : '🇬🇧'}</span>
+              <span className="text-sm">{i18n.language === 'en' ? '🇩🇪' : '🇬🇧'}</span>
             </button>
           </div>
         </div>

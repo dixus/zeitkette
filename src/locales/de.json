@@ -118,7 +118,7 @@
     "titleBetween": "Verbindung gefunden!",
     "descriptionToday": "Von {{person}} bis heute in nur {{count}} Schritten!",
     "descriptionBetween": "{{start}} und {{end}} verbunden in {{count}} Schritten!",
-    "shareButton": "📤 Teilen",
+    "shareButton": "Teilen",
     "newChain": "🔗 Neue Kette starten"
   },
   "timeline": {
@@ -152,13 +152,13 @@
     }
   },
   "funFacts": {
-    "lifetimes": "⏳ Nur {{count}} Lebenszeiten trennen uns von {{person}}!",
-    "stepsApart": "🔗 {{start}} und {{end}} sind nur {{count}} Menschen voneinander entfernt!",
-    "overlap": "🤝 {{person1}} und {{person2}} lebten {{years}} Jahre zur gleichen Zeit!",
-    "gap": "⚡ Größte Zeitlücke: {{years}} Jahre zwischen {{person1}} und {{person2}}",
-    "longevity": "🎂 {{person}} wurde {{age}} Jahre alt - ein langes Leben!",
-    "diversity": "🌟 Diese Kette verbindet {{count}} verschiedene Bereiche: {{domains}}...",
-    "centuries": "📅 Diese Verbindung überspannt {{count}} Jahrhunderte Geschichte!"
+    "lifetimes": "Nur {{count}} Lebenszeiten trennen uns von {{person}}!",
+    "stepsApart": "{{start}} und {{end}} sind nur {{count}} Menschen voneinander entfernt!",
+    "overlap": "{{person1}} und {{person2}} lebten {{years}} Jahre zur gleichen Zeit!",
+    "gap": "Größte Zeitlücke: {{years}} Jahre zwischen {{person1}} und {{person2}}",
+    "longevity": "{{person}} wurde {{age}} Jahre alt - ein langes Leben!",
+    "diversity": "Diese Kette verbindet {{count}} verschiedene Bereiche: {{domains}}...",
+    "centuries": "Diese Verbindung überspannt {{count}} Jahrhunderte Geschichte!"
   },
   "search": {
     "title": "Suchen",
@@ -180,7 +180,7 @@
     "contemporaries": "Lebte zur gleichen Zeit"
   },
   "keyboard": {
-    "title": "⌨️ Shortcuts",
+    "title": "⌨Shortcuts",
     "shortcutsTitle": "Tastaturkürzel",
     "search": "Suche öffnen",
     "close": "Schließen",

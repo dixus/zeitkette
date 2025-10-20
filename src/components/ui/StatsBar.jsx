@@ -18,28 +18,28 @@ export function StatsBar({
   const { t } = useTranslation();
 
   return (
-    <div className="max-w-7xl mx-auto px-3 md:px-4 py-1.5 md:py-2">
-      <div className="grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-2">
-        <div className="grid grid-cols-3 gap-2">
-          <div className="glass-strong rounded-lg p-2 hover:scale-105 active:scale-95 transition-transform duration-300 flex flex-col items-center justify-center">
-            <div className="text-xl md:text-2xl font-extrabold bg-gradient-to-br from-purple-600 to-purple-400 bg-clip-text text-transparent mb-0.5">{chain.length}</div>
-            <div className="text-[9px] md:text-[10px] text-neutral-700 font-semibold text-center leading-tight">{t('stats.peopleInChain')}</div>
+    <div className="max-w-4xl mx-auto px-3 py-2">
+      <div className="grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-1.5">
+        <div className="grid grid-cols-3 gap-1.5">
+          <div className="glass-strong rounded-lg p-1.5 hover:scale-[1.02] transition-transform flex flex-col items-center justify-center">
+            <div className="text-lg font-extrabold bg-gradient-to-br from-purple-600 to-purple-400 bg-clip-text text-transparent">{chain.length}</div>
+            <div className="text-[9px] text-neutral-700 font-semibold text-center leading-tight">{t('stats.peopleInChain')}</div>
           </div>
-          <div className="glass-strong rounded-lg p-2 hover:scale-105 active:scale-95 transition-transform duration-300 flex flex-col items-center justify-center">
-            <div className="text-xl md:text-2xl font-extrabold bg-gradient-to-br from-violet-600 to-violet-400 bg-clip-text text-transparent mb-0.5">{lifetimeCount}</div>
-            <div className="text-[9px] md:text-[10px] text-neutral-700 font-semibold text-center leading-tight">{t('stats.lifetimesBack')}</div>
+          <div className="glass-strong rounded-lg p-1.5 hover:scale-[1.02] transition-transform flex flex-col items-center justify-center">
+            <div className="text-lg font-extrabold bg-gradient-to-br from-violet-600 to-violet-400 bg-clip-text text-transparent">{lifetimeCount}</div>
+            <div className="text-[9px] text-neutral-700 font-semibold text-center leading-tight">{t('stats.lifetimesBack')}</div>
           </div>
-          <div className="glass-strong rounded-lg p-2 hover:scale-105 active:scale-95 transition-transform duration-300 flex flex-col items-center justify-center">
-            <div className="text-xl md:text-2xl font-extrabold bg-gradient-to-br from-fuchsia-600 to-fuchsia-400 bg-clip-text text-transparent mb-0.5">{totalYears}</div>
-            <div className="text-[9px] md:text-[10px] text-neutral-700 font-semibold text-center leading-tight">{t('stats.yearsSpanned')}</div>
+          <div className="glass-strong rounded-lg p-1.5 hover:scale-[1.02] transition-transform flex flex-col items-center justify-center">
+            <div className="text-lg font-extrabold bg-gradient-to-br from-fuchsia-600 to-fuchsia-400 bg-clip-text text-transparent">{totalYears}</div>
+            <div className="text-[9px] text-neutral-700 font-semibold text-center leading-tight">{t('stats.yearsSpanned')}</div>
           </div>
         </div>
         
-        {/* Controls */}
-        <div className="glass-strong rounded-lg p-2.5 space-y-2">
+        {/* Controls - Compact */}
+        <div className="glass-strong rounded-lg p-2 space-y-1.5">
         {/* Overlap Control */}
           <div>
-            <label className="block text-[10px] font-bold text-neutral-800 mb-0.5">
+            <label className="block text-[9px] font-bold text-neutral-800 mb-0.5">
             {t('stats.minOverlap', { years: minOverlapYears })}
           </label>
           <input
@@ -59,7 +59,7 @@ export function StatsBar({
 
           {/* Fame Control */}
           <div>
-            <label className="block text-[10px] font-bold text-neutral-800 mb-0.5">
+            <label className="block text-[9px] font-bold text-neutral-800 mb-0.5">
               {t('stats.minFame', { count: minFame })}
             </label>
             <input

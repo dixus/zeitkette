@@ -32,12 +32,12 @@ export function ListView({
   const { t } = useTranslation();
 
   return (
-    <div className="relative grid grid-cols-1 lg:grid-cols-[1fr_260px] gap-3">
-      {/* Timeline Line */}
-      <div className="absolute left-5 top-0 bottom-0 w-0.5 bg-gradient-to-b from-purple-200 via-indigo-200 to-pink-200"></div>
+    <div className="relative grid grid-cols-1 lg:grid-cols-[1fr_240px] gap-2">
+      {/* Timeline Line - Compact */}
+      <div className="absolute left-3 top-0 bottom-0 w-0.5 bg-gradient-to-b from-purple-200 via-indigo-200 to-pink-200"></div>
 
-      {/* Chain Cards */}
-      <div className="space-y-2">
+      {/* Chain Cards - Compact Spacing */}
+      <div className="space-y-1.5">
         {chain.map((person, idx) => {
           const isLast = idx === chain.length - 1;
           const nextPerson = !isLast ? chain[idx + 1] : null;
@@ -58,18 +58,18 @@ export function ListView({
           }
 
           return (
-            <div key={person.qid} id={`card-${person.qid}`} className="relative pl-10 md:pl-12 animate-fade-in" style={{ animationDelay: `${idx * 0.1}s` }}>
-              {/* Timeline Dot */}
-              <div className="absolute left-0.5 md:left-1 top-3 w-7 h-7 rounded-full bg-gradient-to-br from-violet-500 via-purple-500 to-fuchsia-500 border-2 border-white shadow-lg flex items-center justify-center text-white text-[10px] font-bold">
+            <div key={person.qid} id={`card-${person.qid}`} className="relative pl-8 animate-fade-in" style={{ animationDelay: `${idx * 0.05}s` }}>
+              {/* Timeline Dot - Compact */}
+              <div className="absolute left-0 top-2 w-6 h-6 rounded-full bg-gradient-to-br from-violet-500 via-purple-500 to-fuchsia-500 border-2 border-white shadow-md flex items-center justify-center text-white text-[9px] font-bold">
                 {chain.length - idx}
               </div>
 
-              {/* Person Card */}
+              {/* Person Card - Compact */}
               <div
                 onClick={() => onPersonClick(person)}
                 onMouseEnter={() => setHoveredQid(person.qid)}
                 onMouseLeave={() => setHoveredQid(null)}
-                className={`relative glass-strong rounded-lg p-2.5 md:p-3 hover:shadow-xl transition-all duration-300 cursor-pointer hover:scale-[1.01] hover:-translate-y-1 ${hoveredQid === person.qid ? 'ring-2 ring-purple-400 shadow-xl' : ''}`}
+                className={`relative glass-strong rounded-lg p-2 hover:shadow-lg transition-all duration-200 cursor-pointer hover:scale-[1.005] ${hoveredQid === person.qid ? 'ring-2 ring-purple-400 shadow-lg' : ''}`}
               >
                 {/* Replace Icon - Don't show for first person in toToday mode */}
                 {!(chainMode === 'toToday' && idx === 0) && (
@@ -129,14 +129,14 @@ export function ListView({
                   </button>
                 )}
                 
-                <div className="flex items-start gap-2">
+                <div className="flex items-start gap-2.5">
                   {/* Avatar with Image */}
                   <PersonAvatar person={person} size="xs" />
 
                   {/* Info */}
                   <div className="flex-1 min-w-0">
-                    <h3 className="text-sm md:text-base font-bold mb-0.5 text-neutral-800 leading-tight">{person.name}</h3>
-                    <div className="text-[10px] text-purple-700 font-semibold mb-0.5">{getOccupation(person)}</div>
+                    <h3 className="text-sm font-bold mb-1 text-neutral-800 leading-tight">{person.name}</h3>
+                    <div className="text-[10px] text-purple-700 font-semibold mb-1">{getOccupation(person)}</div>
                     <div className="flex flex-wrap items-center gap-1 text-neutral-700 mb-1">
                       <span className="flex items-center gap-0.5 font-semibold text-[10px]">
                         <Clock className="w-2.5 h-2.5 text-purple-600" />
@@ -331,33 +331,34 @@ export function ListView({
           );
         })}
 
-        {/* End Marker */}
-        <div className="mt-3 glass-strong rounded-lg p-3 md:p-4 text-center shadow-xl">
-          <div className="text-2xl md:text-3xl mb-1.5 drop-shadow-lg">
-            {chainMode === 'toToday' ? '🎯' : '🔗'}
+        {/* End Marker - Compact & Modern */}
+        <div className="mt-2 glass-strong rounded-lg p-4 text-center shadow-md">
+          <div className="flex items-center justify-center gap-2 mb-3">
+            <span className="text-xl">{chainMode === 'toToday' ? '🎯' : '🔗'}</span>
+            <h2 className="text-sm font-bold text-neutral-800">
+              {chainMode === 'toToday' ? 'Ziel erreicht!' : 'Verbindung gefunden!'}
+            </h2>
           </div>
-          <h2 className="text-base md:text-lg font-bold mb-1.5 text-neutral-800">
-            {chainMode === 'toToday' ? 'Ziel erreicht!' : 'Verbindung gefunden!'}
-          </h2>
-          <p className="text-xs text-neutral-700 mb-3 font-medium">
-            {chainMode === 'toToday' ? (
-              <>Von <strong className="text-purple-700">{t('person.today')}</strong> bis <strong className="text-purple-700">{typeof targetPerson === 'string' ? targetPerson : targetPerson?.name}</strong></>
-            ) : (
-              <>Von <strong className="text-violet-700">{typeof startPerson === 'string' ? startPerson : startPerson?.name}</strong> bis <strong className="text-fuchsia-700">{typeof endPerson === 'string' ? endPerson : endPerson?.name}</strong></>
-            )}
-          </p>
-          <div className="space-y-2">
-            <div className="inline-block px-3 md:px-4 py-2 bg-gradient-to-r from-purple-100 via-fuchsia-100 to-pink-100 rounded-lg shadow-md">
-              <div className="text-base md:text-lg font-extrabold bg-gradient-to-r from-violet-600 via-purple-600 to-fuchsia-600 bg-clip-text text-transparent">
-                {chainMode === 'toToday' ? (
-                  <>Nur {lifetimeCount} Lebenszeiten!</>
-                ) : (
-                  <>Nur {chain.length} {chain.length === 1 ? 'Person' : 'Personen'}!</>
-                )}
-            </div>
-            </div>
-            
-            {/* Share Button */}
+          
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-gradient-to-r from-purple-100 via-fuchsia-100 to-pink-100 rounded-lg mb-3">
+            <span className="text-sm font-extrabold bg-gradient-to-r from-violet-600 via-purple-600 to-fuchsia-600 bg-clip-text text-transparent">
+              {chainMode === 'toToday' ? (
+                <>Nur {lifetimeCount} Lebenszeiten</>
+              ) : (
+                <>Nur {chain.length} {chain.length === 1 ? 'Person' : 'Personen'}</>
+              )}
+            </span>
+            <span className="text-[10px] text-neutral-600">
+              {chainMode === 'toToday' ? (
+                <>von heute bis <strong className="text-purple-700">{typeof targetPerson === 'string' ? targetPerson : targetPerson?.name}</strong></>
+              ) : (
+                <><strong className="text-violet-700">{typeof startPerson === 'string' ? startPerson : startPerson?.name}</strong> → <strong className="text-fuchsia-700">{typeof endPerson === 'string' ? endPerson : endPerson?.name}</strong></>
+              )}
+            </span>
+          </div>
+          
+          {/* Share Button - Compact with proper spacing */}
+          <div className="mt-1">
             <button
               onClick={() => {
                 const personName = typeof targetPerson === 'string' ? targetPerson : targetPerson?.name;
@@ -378,9 +379,9 @@ export function ListView({
                   alert(t('share.copied'));
                 }
               }}
-              className="px-3 py-1.5 bg-gradient-to-r from-violet-600 to-fuchsia-600 text-white rounded-lg text-xs font-semibold hover:shadow-lg transition-all hover:scale-105"
+              className="px-3 py-1.5 bg-gradient-to-r from-violet-600 to-fuchsia-600 text-white rounded-md text-xs font-semibold hover:shadow-md transition-all hover:scale-105"
             >
-              {t('endMarker.shareButton')}
+              📤 {t('endMarker.shareButton')}
             </button>
           </div>
         </div>
