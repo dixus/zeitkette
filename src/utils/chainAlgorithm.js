@@ -4,7 +4,7 @@ import { THIS_YEAR } from './constants';
  * Find shortest path between two people using bidirectional BFS
  * Allows gaps in time for connections across different eras
  */
-export function findPathBetween(startPerson, endPerson, people, minOverlap = 20, minFame = 100) {
+export function findPathBetween(startPerson, endPerson, people, minOverlap = 20) {
   const byName = new Map(people.map(p => [p.name, p]));
   const start = typeof startPerson === 'string' ? byName.get(startPerson) : startPerson;
   const end = typeof endPerson === 'string' ? byName.get(endPerson) : endPerson;
@@ -12,9 +12,9 @@ export function findPathBetween(startPerson, endPerson, people, minOverlap = 20,
   if (!start || !end) return [];
   if (start.name === end.name) return [start];
   
-  // Filter for well-known people
-  const topPeople = people.filter(p => (p.sitelinks || 0) >= minFame);
-  const peopleByName = new Map(topPeople.map(p => [p.name, p]));
+  // Fame-first strategy: consider ALL people, but iterate neighbors by fame (sitelinks) descending
+  // We keep the minFame param for API compatibility, but it no longer hard-filters the graph
+  const allPeopleByFame = [...people].sort((a, b) => (b.sitelinks || 0) - (a.sitelinks || 0));
   
   // Helper: Check if two people can be connected (respecting minOverlap)
   const canConnect = (p1, p2) => {
@@ -54,8 +54,8 @@ export function findPathBetween(startPerson, endPerson, people, minOverlap = 20,
         return [...path, ...endTail];
       }
       
-      // Find neighbors
-      for (const neighbor of topPeople) {
+      // Find neighbors (fame-first ordering)
+      for (const neighbor of allPeopleByFame) {
         if (!visitedStart.has(neighbor.name) && canConnect(current, neighbor)) {
           const newPath = [...path, neighbor];
           visitedStart.set(neighbor.name, newPath);
@@ -80,8 +80,8 @@ export function findPathBetween(startPerson, endPerson, people, minOverlap = 20,
         return [...startPath, ...startTail];
       }
       
-      // Find neighbors
-      for (const neighbor of topPeople) {
+      // Find neighbors (fame-first ordering)
+      for (const neighbor of allPeopleByFame) {
         if (!visitedEnd.has(neighbor.name) && canConnect(current, neighbor)) {
           const newPath = [...path, neighbor];
           visitedEnd.set(neighbor.name, newPath);
@@ -98,13 +98,13 @@ export function findPathBetween(startPerson, endPerson, people, minOverlap = 20,
  * Build chain through specific waypoints
  * Creates a complete chain that passes through each specified waypoint
  */
-export function buildChainThroughWaypoints(startPerson, waypoints, endPerson, people, minOverlap = 20, minFame = 100) {
+export function buildChainThroughWaypoints(startPerson, waypoints, endPerson, people, minOverlap = 20) {
   if (!waypoints || waypoints.length === 0) {
     // No waypoints, use regular pathfinding
     if (endPerson) {
-      return findPathBetween(startPerson, endPerson, people, minOverlap, minFame);
+      return findPathBetween(startPerson, endPerson, people, minOverlap);
     } else {
-      return chainFrom(startPerson, people, minOverlap, minFame);
+      return chainFrom(startPerson, people, minOverlap);
     }
   }
   
@@ -129,7 +129,7 @@ export function buildChainThroughWaypoints(startPerson, waypoints, endPerson, pe
     }
     
     // Find path from current to waypoint
-    const segment = findPathBetween(currentStart, waypoint, people, minOverlap, minFame);
+    const segment = findPathBetween(currentStart, waypoint, people, minOverlap);
     
     if (segment.length === 0) {
       // Can't reach this waypoint, skip it
@@ -145,7 +145,7 @@ export function buildChainThroughWaypoints(startPerson, waypoints, endPerson, pe
   if (endPerson) {
     const end = typeof endPerson === 'string' ? byName.get(endPerson) : endPerson;
     if (end && currentStart.name !== end.name) {
-      const finalSegment = findPathBetween(currentStart, end, people, minOverlap, minFame);
+      const finalSegment = findPathBetween(currentStart, end, people, minOverlap);
       if (finalSegment.length > 0) {
         segments.push(finalSegment);
       }
@@ -154,7 +154,7 @@ export function buildChainThroughWaypoints(startPerson, waypoints, endPerson, pe
     }
   } else {
     // No end specified, chain to today
-    const toTodaySegment = chainFrom(currentStart, people, minOverlap, minFame);
+    const toTodaySegment = chainFrom(currentStart, people, minOverlap);
     if (toTodaySegment.length > 0) {
       segments.push(toTodaySegment);
     }
@@ -187,9 +187,9 @@ export function buildChainThroughWaypoints(startPerson, waypoints, endPerson, pe
  * Chain algorithm - shortest path from start to today
  * Each person's BIRTH should be close to the previous person's DEATH
  * minOverlap controls how much people's lives should overlap for realistic connections
- * minFame controls minimum sitelinks required
+ * Uses fame-first strategy: tries most famous people first, relaxes only when needed
  */
-export function chainFrom(start, people, minOverlap = 20, minFame = 100) {
+export function chainFrom(start, people, minOverlap = 20) {
   const byName = new Map(people.map(p => [p.name, p]));
   const visited = new Set();
   const result = [];
@@ -199,10 +199,9 @@ export function chainFrom(start, people, minOverlap = 20, minFame = 100) {
   // Prevent infinite loops
   const MAX_CHAIN_LENGTH = 50;
   
-  // Filter for well-known people (using user's fame filter)
-  const topPeople = people
-    .filter(p => (p.sitelinks || 0) >= minFame) // Use minFame parameter for filtering
-    .sort((a, b) => (b.sitelinks || 0) - (a.sitelinks || 0));
+  // Fame-first strategy: do NOT hard-filter by minFame. Iterate by fame descending.
+  // minFame is ignored for pruning; we always try the most famous first and only use less famous when necessary.
+  const candidatesByFame = [...people].sort((a, b) => (b.sitelinks || 0) - (a.sitelinks || 0));
   
   while (result.length < MAX_CHAIN_LENGTH) {
     // Check for duplicates before adding (safety check)
@@ -221,7 +220,7 @@ export function chainFrom(start, people, minOverlap = 20, minFame = 100) {
     
     // Strategy: Find person whose life overlaps by at least minOverlap years
     // Higher minOverlap = more realistic connections but longer chains
-    let candidates = topPeople.filter(p => {
+    let candidates = candidatesByFame.filter(p => {
       if (visited.has(p.name)) return false;
       // Must be born after current person's birth (forward in time)
       // Must be born early enough to have minOverlap years of overlap
@@ -230,7 +229,7 @@ export function chainFrom(start, people, minOverlap = 20, minFame = 100) {
     
     // Fallback: If no candidates with required overlap, allow gaps
     if (candidates.length === 0) {
-      candidates = topPeople.filter(p => {
+      candidates = candidatesByFame.filter(p => {
         if (visited.has(p.name)) return false;
         // Born after current person, within reasonable range (max 150 years gap)
         return p.born > curr.born && p.born <= currEnd + 150;
@@ -240,7 +239,7 @@ export function chainFrom(start, people, minOverlap = 20, minFame = 100) {
     }
     
     // Find person whose birth is CLOSEST to current person's death
-    // This creates the shortest chain
+    // Score combines proximity and fame, but proximity dominates; fame breaks ties and steers to famous nodes
     let best = null;
     let bestScore = -Infinity;
     
@@ -251,9 +250,9 @@ export function chainFrom(start, people, minOverlap = 20, minFame = 100) {
       // We want births CLOSE to death (small distance = high score)
       const proximityScore = 200 - distanceToDeath; // Closer = higher score
       
-      // Bonus for popular people (but less influential)
-      const popularity = c.sitelinks || 0;
-      const popularityBonus = Math.min(50, popularity / 10);
+      // Fame bonus (tie-breaker). Keep small to prefer realistic proximity first.
+      const popularity = c.sitelinks || 0; // e.g., 0..2000
+      const popularityBonus = Math.min(40, Math.log10(Math.max(1, popularity + 1)) * 10);
       
       const totalScore = proximityScore + popularityBonus;
       

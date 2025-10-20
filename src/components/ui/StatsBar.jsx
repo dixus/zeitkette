@@ -10,8 +10,6 @@ export function StatsBar({
   totalYears,
   minOverlapYears,
   setMinOverlapYears,
-  minFame,
-  setMinFame,
   pinnedWaypoints,
   setPinnedWaypoints
 }) {
@@ -56,29 +54,6 @@ export function StatsBar({
             <span>{t('stats.overlapRealistic')}</span>
           </div>
         </div>
-
-          {/* Fame Control */}
-          <div>
-            <label className="block text-[9px] font-bold text-neutral-800 mb-0.5">
-              {t('stats.minFame', { count: minFame })}
-            </label>
-            <input
-              type="range"
-              min="100"
-              max="220"
-              step="10"
-              value={minFame}
-              onChange={(e) => {
-                const newValue = parseInt(e.target.value);
-                setMinFame(newValue);
-              }}
-              className="w-full h-1 bg-gradient-to-r from-blue-300 via-purple-300 to-pink-300 rounded-lg appearance-none cursor-pointer slider touch-pan-y"
-            />
-            <div className="flex justify-between text-[8px] text-neutral-600 mt-0.5 font-medium">
-              <span>{t('stats.fameLess')}</span>
-              <span>{t('stats.fameVery')}</span>
-      </div>
-    </div>
 
           {/* Reset Edits Button */}
           {pinnedWaypoints.length > 0 && (

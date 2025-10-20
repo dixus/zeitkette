@@ -33,7 +33,6 @@ function App() {
   const [showLanding, setShowLanding] = useState(true);
   const [hoveredQid, setHoveredQid] = useState(null);
   const [minOverlapYears, setMinOverlapYears] = useState(20); // Minimum overlap for realistic connections
-  const [minFame, setMinFame] = useState(100); // Minimum sitelinks (fame level)
   const [expandedGap, setExpandedGap] = useState(null); // Which gap is expanded (index)
   const [pinnedWaypoints, setPinnedWaypoints] = useState([]); // Array of person names to route through
   const [viewMode, setViewMode] = useState('list'); // 'list', 'timeline', or 'network'
@@ -65,14 +64,14 @@ function App() {
     if (chainMode === 'toToday') {
       if (!targetPerson) return [];
       // Use waypoints if specified
-      return buildChainThroughWaypoints(targetPerson, pinnedWaypoints, null, people, minOverlapYears, minFame);
+      return buildChainThroughWaypoints(targetPerson, pinnedWaypoints, null, people, minOverlapYears);
     } else {
       // 'between' mode
       if (!startPerson || !endPerson) return [];
       // Use waypoints if specified
-      return buildChainThroughWaypoints(startPerson, pinnedWaypoints, endPerson, people, minOverlapYears, minFame);
+      return buildChainThroughWaypoints(startPerson, pinnedWaypoints, endPerson, people, minOverlapYears);
     }
-  }, [people, chainMode, targetPerson, startPerson, endPerson, pinnedWaypoints, minOverlapYears, minFame]);
+  }, [people, chainMode, targetPerson, startPerson, endPerson, pinnedWaypoints, minOverlapYears]);
 
   // Search filtered people
   const searchResults = useMemo(() => {
@@ -382,8 +381,6 @@ function App() {
         totalYears={totalYears}
         minOverlapYears={minOverlapYears}
         setMinOverlapYears={setMinOverlapYears}
-        minFame={minFame}
-        setMinFame={setMinFame}
         pinnedWaypoints={pinnedWaypoints}
         setPinnedWaypoints={setPinnedWaypoints}
       />
@@ -457,7 +454,6 @@ function App() {
             setExpandedGap={setExpandedGap}
             onPersonClick={setSelectedPerson}
             minOverlapYears={minOverlapYears}
-            minFame={minFame}
             pinnedWaypoints={pinnedWaypoints}
             setPinnedWaypoints={setPinnedWaypoints}
             lifetimeCount={lifetimeCount}

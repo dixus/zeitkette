@@ -22,7 +22,6 @@ export function ListView({
   setExpandedGap,
   onPersonClick,
   minOverlapYears,
-  minFame,
   pinnedWaypoints,
   setPinnedWaypoints,
   lifetimeCount,
@@ -84,7 +83,6 @@ export function ListView({
                       const allAlternatives = people
                         .filter(p => {
                           if (chain.find(c => c.qid === p.qid)) return false;
-                          if (p.sitelinks < minFame) return false;
                           
                           const pEnd = p.died === 9999 ? THIS_YEAR : p.died;
                           
